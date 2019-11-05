@@ -118,7 +118,7 @@
                     <daemons>
                         <daemon>
                             <id>push-svr</id>
-                            <mainClass>cc.itsc.push.PushApplication</mainClass>
+                            <mainClass>com.upuphub.dew.community.push.DewPushApplication</mainClass>
                             <!--<commandLineArguments>-->
                             <!--<commandLineArgument>start</commandLineArgument>-->
                             <!--</commandLineArguments>-->
