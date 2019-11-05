@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: dew-smart-community-general-api-feign
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 119.3.147.11:8848
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: 119.3.147.11:18020
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+  datasource:
+    url: jdbc:mysql://localhost:3306/rbc_api_svr?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    name: rbc_api_svr
+    username: rubbish
+    password: Pwd2Rbc_DB
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    timeout: 5000
+
+server:
+  port: 15413
+
+mybatis:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+feign:
+  sentinel:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+dew:
+  image:
+    accessKey: Mt6fBM0NAN4FIYLDQGOkoCse09OTdqEIELdLmx_z
+    secretKey: yDarC-phfP-_nWFgEnEP5R3gB0w59M9YdVmYvHOe
+  sensitive:
+    dict: classpath:sensitive/SensitiveKeys.dict
+  mqtt:
+    username: DewApiSvr
+    password: DewApiSvr
+    # 推送信息的连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613,tcp://192.168.1.61:616
+    url: tcp://119.3.147.11:19099
+    producer:
+      # 连接服务器默认客户端ID
+      clientId: RbcApiProducer
+      # 默认的推送主题，实际可在调用接口时指定
+      defaultTopic: RbcApiSvr

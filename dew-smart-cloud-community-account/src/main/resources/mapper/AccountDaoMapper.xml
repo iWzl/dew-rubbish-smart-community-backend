@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphub.dew.community.account.dao.AccountDao">
+
+    <resultMap id="AccountCommonResultMap" type="com.upuphub.dew.community.account.bean.po.AccountBasicPO">
+        <result column="id" jdbcType="BIGINT" property="uin"/>
+        <result column="key" jdbcType="VARCHAR" property="accountType"/>
+        <result column="" jdbcType="BIGINT" property="uin"/>
+    </resultMap>
+
+    <insert id="insertAccountLogin" useGeneratedKeys="true" keyProperty="login.id" keyColumn="id">
+        insert into account_login(login_key, uin, id_type, status, create_time)
+        values (#{login.loginKey}, #{login.uin}, #{login.idType}, #{login.status}, #{login.createTime})
+    </insert>
+
+    <insert id="insertAccountUin" useGeneratedKeys="true" keyProperty="uin.uin" keyColumn="uin">
+        insert into account_uin(id, id_type, secret, password, status, type, platform, create_time, update_time)
+        VALUES (#{uin.id}, #{uin.idType}, #{uin.secret}, #{uin.password}, #{uin.status}, #{uin.type}, #{uin.platform},
+                #{uin.createTime},
+                #{uin.updateTime})
+    </insert>
+
+    <insert id="insertAccountTrack">
+        insert into account_track(uin, imei, ip, app_version, system_version, device_model, device_name, create_time)
+        values (#{track.uin}, #{track.imei}, #{track.ip}, #{track.appVersion}, #{track.systemVersion},
+                #{track.deviceModel}, #{track.deviceName}, #{track.createTime})
+    </insert>
+
+    <update id="updateAccountLoginStatus">
+        update account_login
+        set status = #{status}
+        where uin = #{uin}
+          and id_type = #{idType}
+    </update>
+
+
+    <update id="updateAccountPassword">
+        update account_uin
+        <set>
+            <if test="password != null and password != ''">
+                password = #{password}
+            </if>
+        </set>
+        <where>
+            <if test="uin != null and uin != 0">
+                uin = #{uin}
+            </if>
+            <if test="email != null and email != ''">
+               and id = #{email}
+            </if>
+        </where>
+    </update>
+
+    <select id="selectAccountLoginRecordByKey"
+            resultType="com.upuphub.dew.community.account.bean.po.AccountLoginPO">
+        select id, login_key, uin, status, create_time
+        from account_login
+        where login_key = #{loginKey}
+        limit 1
+    </select>
+
+    <select id="selectAccountBasicInfoWithKeyAndPwd"
+            resultType="com.upuphub.dew.community.account.bean.po.AccountBasicPO">
+        select u.uin         as uin,
+               u.secret      as secret,
+               u.`status`    as accountStatus,
+               u.type        as accountType,
+               u.platform    as platform,
+               u.create_time as createTime,
+               u.update_time as updateTime,
+               l.id_type     as idType,
+               l.`status`    as loginStatus
+        from account_uin u
+                 left join account_login l on l.uin = u.uin
+        where l.login_key = #{loginKey}
+          and u.`password` = #{password};
+    </select>
+
+
+    <select id="selectAccountLastedLoginInfoByUin"
+            resultType="com.upuphub.dew.community.account.bean.po.AccountTrackPO">
+        select id,
+               uin,
+               imei,
+               ip,
+               app_version,
+               system_version,
+               device_model,
+               device_name,
+               create_time
+        from account_track
+        where uin = #{uin}
+        order by create_time desc
+        limit 1;
+    </select>
+
+    <select id="selectAccountLoginRecordByUin" resultType="com.upuphub.dew.community.account.bean.po.AccountLoginPO">
+        select id, login_key, uin, status, id_type, create_time
+        from account_login
+        where uin = #{uin}
+    </select>
+
+    <select id="selectAccountUinByUin" resultType="com.upuphub.dew.community.account.bean.po.AccountUinPO">
+        select uin,
+               id,
+               id_type,
+               secret,
+               password,
+               status,
+               type,
+               platform,
+               create_time,
+               update_time
+        from account_uin
+        where uin = #{uin}
+        limit 1
+    </select>
+
+</mapper>

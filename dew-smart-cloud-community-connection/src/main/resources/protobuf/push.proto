@@ -1,0 +1,10 @@
+syntax = "proto3"; // 定义语法类型，通常proto3好于proto2，proto2好于proto1
+
+
+option java_package = "com.upuphub.dew.community.connection.protobuf.push";      // 定义报名
+option java_multiple_files = true;
+
+message EmailAndCode{
+    string code = 1;
+    string email = 2;
+}

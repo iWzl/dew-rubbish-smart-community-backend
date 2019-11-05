@@ -1,0 +1,110 @@
+syntax = "proto3"; // 定义语法类型，通常proto3好于proto2，proto2好于proto1
+
+
+option java_package = "com.upuphub.dew.community.connection.protobuf.account";      // 定义报名
+option java_multiple_files = true;
+
+message UsernameAndPassword {
+    string username = 1;     // 用户名
+    string password = 2;     // 密码
+    Device device = 3;       // 设备信息
+    int32 idType = 4;
+
+    message Device {
+        string imei = 1;          // 设备imei
+        string systemModel = 2;   // 设备型号
+        string OSVersion = 3;     // 系统版本
+        string appVersion = 4;    // app版本
+        string ip = 5;            // IP地址
+        string devName = 6;       // 设备名称
+        string platform = 7;      // 设备的平台
+    }
+}
+
+message Location{
+    double longitude = 1;     // 经度
+    double latitude = 2;      // 纬度
+    string country = 3;       // 国家
+    string province = 4;      // 省份
+    string city = 5;          // 城市
+    string district = 6;      // 县/区
+    string street = 7;        // 街道
+    int64 uin = 8;          // 用户Uin
+}
+
+message BaseProfile{
+    string name = 1;         // 用户名
+    string avatar = 2;       // 用户头像
+    int64 birthday = 3;      // 用户生日
+    string gender = 4;      // 用户性别
+    int64 uin = 5;          // 用户Uin
+    int32 idType = 6;       // ID类型
+}
+
+message Profile{
+    int64 uin = 1 ;                  // 用户uin
+    string secretKey = 2;            // 用户SecretKey
+    UsrProfile usrProfile = 3;       // 用户基础信息
+    UsrStatusFlag usrStatusFlag = 4; // 用户账号标识
+    LastLoginInfo lastLoginInfo = 5; // 用户最后登录信息
+    int32 errorCode = 6;             // 请求错误码
+    int32 profileCompletion = 7;    // 信息完成度
+}
+
+message UsrProfile{
+    string name = 1;         // 用户名
+    string avatar = 2;       // 用户头像
+    string country = 3;      // 用户所在国家
+    string province = 4;     // 用户所在省份
+    string city = 5;         // 用户所在城市
+    string district = 6;     // 县/区
+    string street = 7;       // 用户所在街道
+    int64 birthday = 8;      // 用户生日
+    int32 age = 9;           // 用户年龄
+    string profession = 10;   // 用户职业
+    string gender = 11;      // 用户性别
+    string signature = 12;   // 用户宣言
+    int32 level = 13;        // 用户等级
+    string aboutMe = 14;     // 关于我
+    string school = 15;      // 用户学校
+    string company = 16;     // 用户公司
+    string degree = 17;      // 用户教育水平
+    string language = 18;    // 用户使用语言
+    string backgroundImage = 19;  // 用户信息背景图像
+}
+
+message UsrStatusFlag{
+    bool emailVerifiedFlag = 1;             // 用户邮箱验证状态
+    bool disableFlag = 2;                   // 用户可使用验证状态
+    bool needMoreInfoFlag = 3;              // 需要用户完善信息
+    bool completelyRegistrationFlag = 4;    // 完成注册标记
+}
+
+message LastLoginInfo{
+    string device = 1;            // 用户最后登录设备
+    int64 LastLoginTime = 2;      // 用户最后登录时间
+    string lastLoginIpAddr = 3;   // 最后登录的Ip地址
+}
+
+message GeneralProfile{
+    int64 uin = 1;                             // 通用Profile的uin
+    map<string,string> profile = 2;            // 通用Profile的具体信息
+}
+
+message ProfileFilterCond{
+    int64 uin = 1;                             // 通用Profile的uin
+    repeated string keys = 2;                  // 通用Profile的具体信息
+}
+
+message Uin{
+    int64 uin = 1;                             // 用户Uin
+}
+
+message ResetPassword{
+    int64 uin = 1;                             // 重置用户密码的Uin
+    string email = 2;                          // 用户邮箱
+    string password = 3;                       // 需要重置的用户新密码
+}
+
+
+

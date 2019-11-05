@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<profiles>
+    <original  service = "ProfileMongoService" selectMethod = "pullProfile" updateMethod="pushProfile" initMethod = "initProfile">
+        <profile key="name" type="String" readonly="false" spread="true" verify="true" default="微露用户" description="用户姓名"  />
+        <profile key="avatar" type="String" readonly="false" verify="true" default=""  description="用户头像"/>
+        <profile key="backgroundImage" type="String" readonly="false" verify="true" default=""  description="用户头像背景图像"/>
+        <profile key="country" type="String" readonly="false" default=""  description="用户所在国家" />
+        <profile key="province" type="String" readonly="false"  default="" description="用户所在省"/>
+        <profile key="district" type="String" readonly="false" default=""  description="用户所在县/区"/>
+        <profile key="city" type="String" readonly="false" default=""  description="用户所在城市"/>
+        <profile key="street" type="String" readonly="false" default=""  description="用户所在街道"/>
+        <profile key="birthday" type="Long" readonly="false" default=""  description="用户生日"/>
+        <profile key="profession" type="String" readonly="false" default="" description="用户职业"/>
+        <profile key="gender" type="String" readonly="false" default=""  description="用户性别"/>
+        <profile key="signature" type="String" readonly="false" default=""  description="用户个性签名"/>
+        <profile key="level" type="Integer" spread="true" sreadonly="false" default="1"  description="用户等级"/>
+        <profile key="aboutMe" type="String" readonly="false" default="" description="用户个人信息"/>
+        <profile key="school" type="String" readonly="false"  default=""  description="用户学校"/>
+        <profile key="company" type="String" readonly="false" default=""  description="用户公司"/>
+        <profile key="degree" type="String" readonly="false" default=""  description="用户学历"/>
+        <profile key="language" type="String" readonly="false" default=""  description="语言"/>
+        <profile key="longitude" type="Double" readonly="false" default=""  description="经度"/>
+        <profile key="latitude" type="Double" readonly="false" default=""  description="纬度"/>
+        <profile key="completelyRegistrationFlag" type="Boolean" spread = "true"  readonly="false" default="false"  description="完成注册标记"/>
+    </original>
+
+    <original service = "ProfileMysqlService" selectMethod = "fetchLoginStatus">
+        <profile key="email" type="string" readonly="true" description="账号邮箱地址"/>
+        <profile key="flagEmailVerify" type="Boolean" readonly="true" description="邮箱验证状态"/>
+    </original>
+
+    <original service = "ProfileMysqlService" selectMethod = "fetchUinStatus">
+        <profile key="registerIdType" type="string" readonly="true" description="注册使用的ID类型"/>
+        <profile key="registerId" type="string" readonly="true" description="注册使用的ID"/>
+        <profile key="uinStatus" type="string" readonly="true" description="账号当前的状态 'DELETED','DISABLED','ENABLE','DEACTIVATED'"/>
+        <profile key="uinPlatform" type="string" readonly="true" description="注册使用的平台"/>
+        <profile key="uinType" type="string" readonly="true" description="账号当前的类别 'NORMAL','GRAY','AUDITOR'"/>
+    </original>
+
+    <original service = "ProfileMysqlService" selectMethod = "fetchLastLoginInfo">
+        <profile key="lastDeviceImei" type="string" readonly="true" description="手机IMEI"/>
+        <profile key="lastIp" type="string" readonly="true" description="最后登录的IP"/>
+        <profile key="lastAppVersion" type="string" readonly="true" description="最后登录的APP版本"/>
+        <profile key="lastSystemVersion" type="string" readonly="true" description="最后登录的系统版本"/>
+        <profile key="lastDeviceModel" type="string" readonly="true" description="最后登录的手机型号"/>
+        <profile key="lastDeviceName" type="string" readonly="true" description="账号最后登录的设备名称"/>
+        <profile key="lastLoginTime" type="string" readonly="true" description="账号最后等登录时间"/>
+    </original>
+
+
+
+    <transfer service = "ProfileTransferService">
+        <!--  基本属性拓展 -->
+        <profile key="age" type="Integer" readonly="true"  transMethod="birthToAge" description="计算实际年龄"/>
+    </transfer>
+
+</profiles>
