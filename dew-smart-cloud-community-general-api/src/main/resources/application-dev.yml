@@ -7,7 +7,7 @@ spring:
         server-addr: 119.3.147.11:8848
     sentinel:
       transport:
-        port: 8719
+        port: 18719
         dashboard: 119.3.147.11:18020
   thymeleaf:
     cache: false

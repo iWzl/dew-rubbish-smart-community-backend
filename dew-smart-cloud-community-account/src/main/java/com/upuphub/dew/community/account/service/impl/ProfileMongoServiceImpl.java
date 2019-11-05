@@ -41,7 +41,7 @@ public class ProfileMongoServiceImpl implements ProfileMongoService {
             mongoTemplate.updateFirst(createEasyQuery(null, where, null), createEasyUpdate(paramsMap), ProfilePO.class);
             return paramsMap.size();
         }
-        return Integer.MIN_VALUE;
+        return paramsMap.size();
     }
 
     @Override
