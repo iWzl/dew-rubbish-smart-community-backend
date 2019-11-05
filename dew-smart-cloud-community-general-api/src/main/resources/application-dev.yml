@@ -1,6 +1,6 @@
 spring:
   application:
-    name: dew-smart-community-general-api-feign
+    name: dew-smart-community-general-api
   cloud:
     nacos:
       discovery:
@@ -35,17 +35,6 @@ mybatis:
   mapper-locations: classpath:/mapper/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
-
-hystrix:
-  command:
-    default:  #default全局有效，service id指定应用有效
-      execution:
-        timeout:
-          #是否开启超时熔断
-          enabled: true
-        isolation:
-          thread:
-            timeoutInMilliseconds: 4000 #断路器超时时间，默认1000ms
 
 feign:
   sentinel:

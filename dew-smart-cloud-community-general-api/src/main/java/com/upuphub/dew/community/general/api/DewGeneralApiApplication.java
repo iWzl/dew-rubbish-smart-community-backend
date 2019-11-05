@@ -8,9 +8,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = {"cc.itsc.rbc.api.service.rpc"})
+@EnableFeignClients(basePackages = {"com.upuphub.dew.community.general.api.service.remote"})
 @SpringBootApplication
-@MapperScan(basePackages = "cc.itsc.rbc.api.dao")
+@MapperScan(basePackages = "com.upuphub.dew.community.general.api.dao")
 public class DewGeneralApiApplication {
 
     public static void main(String[] args) {

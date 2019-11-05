@@ -25,7 +25,7 @@ import static com.google.common.collect.Lists.newArrayList;
  * @date 2019/7/25 23:11
  */
 
-@ComponentScan("cc.itsc.rbc.api.controller")
+@ComponentScan("com.upuphub.dew.community.general.api.controller")
 @Configuration
 @EnableSwagger2
 public class Swagger2Configuration {
@@ -44,7 +44,7 @@ public class Swagger2Configuration {
                 .securityContexts(securityContexts())
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("cc.itsc.rbc.api.controller"))//扫描Api包
+                .apis(RequestHandlerSelectors.basePackage("com.upuphub.dew.community.general.api.controller"))//扫描Api包
                 .paths(PathSelectors.any())
                 .build();
     }

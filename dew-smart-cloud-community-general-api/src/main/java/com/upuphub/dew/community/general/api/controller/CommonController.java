@@ -1,10 +1,10 @@
 package com.upuphub.dew.community.general.api.controller;
 
-import cc.itsc.rbc.api.bean.req.QiNiuTokenReq;
-import cc.itsc.rbc.api.bean.vo.common.ServiceResponseMessage;
-import cc.itsc.rbc.api.service.GarbageSearchService;
-import cc.itsc.rbc.api.service.PushService;
-import cc.itsc.rbc.api.service.QiNiuCloudService;
+import com.upuphub.dew.community.general.api.bean.req.QiNiuTokenReq;
+import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
+import com.upuphub.dew.community.general.api.service.GarbageSearchService;
+import com.upuphub.dew.community.general.api.service.PushService;
+import com.upuphub.dew.community.general.api.service.QiNiuCloudService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

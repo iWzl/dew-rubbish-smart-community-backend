@@ -1,6 +1,6 @@
 package com.upuphub.dew.community.general.api.utils;
 
-import cc.itsc.rbc.api.shiro.JWTUtil;
+import com.upuphub.dew.community.general.api.shiro.JWTUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

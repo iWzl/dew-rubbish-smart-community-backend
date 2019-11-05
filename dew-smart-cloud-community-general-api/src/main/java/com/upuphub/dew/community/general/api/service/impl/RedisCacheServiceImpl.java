@@ -1,7 +1,7 @@
 package com.upuphub.dew.community.general.api.service.impl;
 
-import cc.itsc.rbc.api.service.RedisCacheService;
-import cc.itsc.rbc.api.utils.RedisCacheUtil;
+import com.upuphub.dew.community.general.api.service.RedisCacheService;
+import com.upuphub.dew.community.general.api.utils.RedisCacheUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 

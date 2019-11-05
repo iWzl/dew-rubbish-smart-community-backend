@@ -1,9 +1,9 @@
 package com.upuphub.dew.community.general.api.bean.vo.common;
 
-import cc.itsc.rbc.api.utils.basic.ResultCodeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.upuphub.dew.community.general.api.utils.basic.ResultCodeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

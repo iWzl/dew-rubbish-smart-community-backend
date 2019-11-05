@@ -1,6 +1,6 @@
 spring:
   application:
-    name: dew-smart-community-account-provider
+    name: dew-smart-community-account
   cloud:
     # SpringCloud-Alibaba-Nacos服务注册中心配置
     nacos:

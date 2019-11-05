@@ -1,6 +1,6 @@
 package com.upuphub.dew.community.general.api.bean.vo.resp;
 
-import cc.itsc.rbc.api.utils.DateUtil;
+import com.upuphub.dew.community.general.api.utils.DateUtil;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 

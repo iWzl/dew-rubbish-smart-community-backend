@@ -1,7 +1,7 @@
 package com.upuphub.dew.community.general.api.dao;
 
-import cc.itsc.rbc.api.bean.po.GarbageCategoriesPO;
-import cc.itsc.rbc.api.bean.po.GarbageClassSearchPO;
+import com.upuphub.dew.community.general.api.bean.po.GarbageCategoriesPO;
+import com.upuphub.dew.community.general.api.bean.po.GarbageClassSearchPO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

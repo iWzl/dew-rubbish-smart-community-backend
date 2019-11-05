@@ -1,6 +1,6 @@
 package com.upuphub.dew.community.general.api.config;
 
-import cc.itsc.rbc.api.shiro.Base64RedisSerializer;
+import com.upuphub.dew.community.general.api.shiro.Base64RedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;

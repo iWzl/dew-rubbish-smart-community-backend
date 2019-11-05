@@ -1,11 +1,12 @@
 package com.upuphub.dew.community.general.api.service.impl;
 
-import cc.itsc.rbc.api.bean.po.GarbageCategoriesPO;
-import cc.itsc.rbc.api.bean.po.GarbageClassSearchPO;
-import cc.itsc.rbc.api.bean.vo.common.ServiceResponseMessage;
-import cc.itsc.rbc.api.bean.vo.resp.GarbageClassResp;
-import cc.itsc.rbc.api.dao.GarbageClassSearchDao;
-import cc.itsc.rbc.api.service.GarbageSearchService;
+
+import com.upuphub.dew.community.general.api.bean.po.GarbageCategoriesPO;
+import com.upuphub.dew.community.general.api.bean.po.GarbageClassSearchPO;
+import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
+import com.upuphub.dew.community.general.api.bean.vo.resp.GarbageClassResp;
+import com.upuphub.dew.community.general.api.dao.GarbageClassSearchDao;
+import com.upuphub.dew.community.general.api.service.GarbageSearchService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

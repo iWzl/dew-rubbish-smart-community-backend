@@ -1,17 +1,17 @@
 package com.upuphub.dew.community.general.api.service.impl;
 
-import cc.itsc.rbc.api.bean.vo.common.ServiceResponseMessage;
-import cc.itsc.rbc.api.service.MqttSenderService;
-import cc.itsc.rbc.api.service.PushService;
-import cc.itsc.rbc.api.service.RedisCacheService;
-import cc.itsc.rbc.api.service.rpc.RpcAccountService;
-import cc.itsc.rbc.api.utils.basic.ResultCodeEnum;
-import cc.itsc.rbc.api.utils.basic.ResultMessageConst;
-import cc.itsc.utils.common.MessageUtil;
-import cc.itsc.utils.common.RegexUtils;
-import cc.itsc.utils.constant.MqttConst;
-import cc.itsc.utils.protobuf.push.EmailAndCode;
 import com.google.protobuf.Message;
+import com.upuphub.dew.community.connection.common.MessageUtil;
+import com.upuphub.dew.community.connection.common.RegexUtils;
+import com.upuphub.dew.community.connection.constant.MqttConst;
+import com.upuphub.dew.community.connection.protobuf.push.EmailAndCode;
+import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
+import com.upuphub.dew.community.general.api.service.MqttSenderService;
+import com.upuphub.dew.community.general.api.service.PushService;
+import com.upuphub.dew.community.general.api.service.RedisCacheService;
+import com.upuphub.dew.community.general.api.service.remote.DewAccountService;
+import com.upuphub.dew.community.general.api.utils.basic.ResultCodeEnum;
+import com.upuphub.dew.community.general.api.utils.basic.ResultMessageConst;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,7 +25,7 @@ import java.util.UUID;
 @Service
 public class PushServiceImpl implements PushService {
     @Resource
-    RpcAccountService rpcAccountService;
+    DewAccountService romoteAccountService;
     @Resource
     MqttSenderService mqttSenderService;
     @Resource

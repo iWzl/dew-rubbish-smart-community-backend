@@ -1,11 +1,12 @@
 package com.upuphub.dew.community.general.api.service;
 
 
-import cc.itsc.rbc.api.bean.req.LocationReq;
-import cc.itsc.rbc.api.bean.req.NewProfileReq;
-import cc.itsc.rbc.api.bean.req.UsernameAndPasswordReq;
-import cc.itsc.rbc.api.bean.vo.common.ServiceResponseMessage;
-import cc.itsc.rbc.api.bean.vo.resp.SimpleProfileResp;
+
+import com.upuphub.dew.community.general.api.bean.req.LocationReq;
+import com.upuphub.dew.community.general.api.bean.req.NewProfileReq;
+import com.upuphub.dew.community.general.api.bean.req.UsernameAndPasswordReq;
+import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
+import com.upuphub.dew.community.general.api.bean.vo.resp.SimpleProfileResp;
 
 import java.util.Map;
 

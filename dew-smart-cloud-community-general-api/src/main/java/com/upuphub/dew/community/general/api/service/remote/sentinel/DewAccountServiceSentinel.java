@@ -1,9 +1,9 @@
-package com.upuphub.dew.community.general.api.service.rpc.hystrix;
+package com.upuphub.dew.community.general.api.service.remote.sentinel;
 
-import cc.itsc.rbc.api.exception.RpcServiceConnectionException;
-import cc.itsc.rbc.api.service.rpc.RpcAccountService;
-import cc.itsc.utils.protobuf.account.*;
-import cc.itsc.utils.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.account.*;
+import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.general.api.exception.RpcServiceConnectionException;
+import com.upuphub.dew.community.general.api.service.remote.DewAccountService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @date 2019/8/6 21:52
  */
 @Component
-public class RpcAccountServiceHystrix implements RpcAccountService {
+public class DewAccountServiceSentinel implements DewAccountService {
 
     @Override
     public Profile signUp(UsernameAndPassword usernameAndPassword) {

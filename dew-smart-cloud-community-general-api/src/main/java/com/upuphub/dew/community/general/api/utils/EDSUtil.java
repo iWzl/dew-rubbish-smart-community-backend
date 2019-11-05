@@ -1,14 +1,14 @@
 package com.upuphub.dew.community.general.api.utils;
 
-import cc.itsc.rbc.api.bean.req.LocationReq;
-import cc.itsc.rbc.api.bean.req.NewProfileReq;
-import cc.itsc.rbc.api.bean.req.UsernameAndPasswordReq;
-import cc.itsc.rbc.api.bean.vo.resp.*;
-import cc.itsc.utils.common.MessageUtil;
-import cc.itsc.utils.protobuf.account.BaseProfile;
-import cc.itsc.utils.protobuf.account.Location;
-import cc.itsc.utils.protobuf.account.Profile;
-import cc.itsc.utils.protobuf.account.UsernameAndPassword;
+import com.upuphub.dew.community.connection.common.MessageUtil;
+import com.upuphub.dew.community.connection.protobuf.account.BaseProfile;
+import com.upuphub.dew.community.connection.protobuf.account.Location;
+import com.upuphub.dew.community.connection.protobuf.account.Profile;
+import com.upuphub.dew.community.connection.protobuf.account.UsernameAndPassword;
+import com.upuphub.dew.community.general.api.bean.req.LocationReq;
+import com.upuphub.dew.community.general.api.bean.req.NewProfileReq;
+import com.upuphub.dew.community.general.api.bean.req.UsernameAndPasswordReq;
+import com.upuphub.dew.community.general.api.bean.vo.resp.*;
 
 /**
  * @author Leo Wang

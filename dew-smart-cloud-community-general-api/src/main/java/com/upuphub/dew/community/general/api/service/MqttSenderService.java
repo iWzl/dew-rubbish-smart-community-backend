@@ -1,6 +1,6 @@
 package com.upuphub.dew.community.general.api.service;
 
-import cc.itsc.rbc.api.config.MqttConfiguration;
+import com.upuphub.dew.community.general.api.config.MqttConfiguration;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.handler.annotation.Header;

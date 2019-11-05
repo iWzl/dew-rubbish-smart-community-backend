@@ -1,9 +1,9 @@
 package com.upuphub.dew.community.general.api.service.impl;
 
-import cc.itsc.rbc.api.service.QiNiuCloudService;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import com.qiniu.util.UrlSafeBase64;
+import com.upuphub.dew.community.general.api.service.QiNiuCloudService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

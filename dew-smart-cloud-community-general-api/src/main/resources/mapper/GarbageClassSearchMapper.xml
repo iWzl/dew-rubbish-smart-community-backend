@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cc.itsc.rbc.api.dao.GarbageClassSearchDao">
+<mapper namespace="com.upuphub.dew.community.general.api.dao.GarbageClassSearchDao">
 
-    <select id="selectGarbageClassByLikeSearchKey" resultType="cc.itsc.rbc.api.bean.po.GarbageClassSearchPO">
+    <select id="selectGarbageClassByLikeSearchKey" resultType="com.upuphub.dew.community.general.api.bean.po.GarbageClassSearchPO">
         select name, sortId
         from rbc_garbage_search
         where name like concat('%', #{searchKey}, '%');
     </select>
-    <select id="selectGarbageCategoriesByNum" resultType="cc.itsc.rbc.api.bean.po.GarbageCategoriesPO">
+    <select id="selectGarbageCategoriesByNum" resultType="com.upuphub.dew.community.general.api.bean.po.GarbageCategoriesPO">
         select id,
                color,
                bg_color,

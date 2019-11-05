@@ -1,7 +1,7 @@
 package com.upuphub.dew.community.general.api.bean.vo.common;
 
-import cc.itsc.rbc.api.utils.basic.ResultCodeEnum;
-import cc.itsc.utils.constant.AccountConst;
+import com.upuphub.dew.community.connection.constant.AccountConst;
+import com.upuphub.dew.community.general.api.utils.basic.ResultCodeEnum;
 
 import java.util.HashMap;
 import java.util.Map;

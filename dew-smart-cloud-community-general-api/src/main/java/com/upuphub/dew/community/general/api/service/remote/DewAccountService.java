@@ -1,9 +1,10 @@
-package com.upuphub.dew.community.general.api.service.rpc;
+package com.upuphub.dew.community.general.api.service.remote;
 
-import cc.itsc.rbc.api.config.ProtoFeignConfiguration;
-import cc.itsc.rbc.api.service.rpc.hystrix.RpcAccountServiceHystrix;
-import cc.itsc.utils.protobuf.account.*;
-import cc.itsc.utils.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.account.*;
+import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.general.api.config.ProtoFeignConfiguration;
+
+import com.upuphub.dew.community.general.api.service.remote.sentinel.DewAccountServiceSentinel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @date 2019/8/6 21:20
  */
 
-@FeignClient(value = "account",configuration = ProtoFeignConfiguration.class,fallback = RpcAccountServiceHystrix.class)
-public interface RpcAccountService {
-
+@FeignClient(value = "dew-smart-community-account",configuration = ProtoFeignConfiguration.class,fallback = DewAccountServiceSentinel.class)
+public interface DewAccountService {
 
     /**
      * 用户注册

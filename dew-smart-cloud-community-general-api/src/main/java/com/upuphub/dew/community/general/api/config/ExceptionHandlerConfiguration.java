@@ -1,7 +1,6 @@
 package com.upuphub.dew.community.general.api.config;
-
-import cc.itsc.rbc.api.bean.vo.common.ServiceResponseMessage;
-import cc.itsc.rbc.api.exception.SourceNotFoundException;
+import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
+import com.upuphub.dew.community.general.api.exception.SourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;

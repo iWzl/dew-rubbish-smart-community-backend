@@ -1,6 +1,6 @@
 package com.upuphub.dew.community.general.api.config;
 
-import cc.itsc.rbc.api.shiro.*;
+import com.upuphub.dew.community.general.api.shiro.*;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;

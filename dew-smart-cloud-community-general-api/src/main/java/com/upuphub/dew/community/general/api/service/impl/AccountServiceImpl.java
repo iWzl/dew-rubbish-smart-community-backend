@@ -1,30 +1,31 @@
 package com.upuphub.dew.community.general.api.service.impl;
 
-import cc.itsc.rbc.api.bean.req.LocationReq;
-import cc.itsc.rbc.api.bean.req.NewProfileReq;
-import cc.itsc.rbc.api.bean.req.UsernameAndPasswordReq;
-import cc.itsc.rbc.api.bean.vo.common.AccountResponseMessage;
-import cc.itsc.rbc.api.bean.vo.common.ServiceResponseMessage;
-import cc.itsc.rbc.api.bean.vo.resp.*;
-import cc.itsc.rbc.api.service.AccountService;
-import cc.itsc.rbc.api.service.RedisCacheService;
-import cc.itsc.rbc.api.service.rpc.RpcAccountService;
-import cc.itsc.rbc.api.shiro.AuthRealm;
-import cc.itsc.rbc.api.shiro.JWTUtil;
-import cc.itsc.rbc.api.utils.DewOpenIdUtil;
-import cc.itsc.rbc.api.utils.EDSUtil;
-import cc.itsc.rbc.api.utils.HttpUtil;
-import cc.itsc.rbc.api.utils.basic.ResultCodeEnum;
-import cc.itsc.rbc.api.utils.basic.ResultMessageConst;
-import cc.itsc.utils.common.MessageUtil;
-import cc.itsc.utils.common.RegexUtils;
-import cc.itsc.utils.constant.AccountConst;
-import cc.itsc.utils.protobuf.account.*;
+import com.upuphub.dew.community.connection.common.MessageUtil;
+import com.upuphub.dew.community.connection.common.RegexUtils;
+import com.upuphub.dew.community.connection.constant.AccountConst;
+import com.upuphub.dew.community.connection.protobuf.account.*;
+import com.upuphub.dew.community.general.api.bean.req.LocationReq;
+import com.upuphub.dew.community.general.api.bean.req.NewProfileReq;
+import com.upuphub.dew.community.general.api.bean.req.UsernameAndPasswordReq;
+import com.upuphub.dew.community.general.api.bean.vo.common.AccountResponseMessage;
+import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
+import com.upuphub.dew.community.general.api.bean.vo.resp.*;
+import com.upuphub.dew.community.general.api.service.AccountService;
+import com.upuphub.dew.community.general.api.service.RedisCacheService;
+import com.upuphub.dew.community.general.api.service.remote.DewAccountService;
+import com.upuphub.dew.community.general.api.shiro.AuthRealm;
+import com.upuphub.dew.community.general.api.shiro.JWTUtil;
+import com.upuphub.dew.community.general.api.utils.DewOpenIdUtil;
+import com.upuphub.dew.community.general.api.utils.EDSUtil;
+import com.upuphub.dew.community.general.api.utils.HttpUtil;
+import com.upuphub.dew.community.general.api.utils.basic.ResultCodeEnum;
+import com.upuphub.dew.community.general.api.utils.basic.ResultMessageConst;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -45,7 +46,7 @@ import java.util.UUID;
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    private RpcAccountService rpcAccountService;
+    private DewAccountService remoteAccountService;
     @Autowired
     private RedisCacheService redisCacheService;
 
@@ -56,10 +57,10 @@ public class AccountServiceImpl implements AccountService {
         Profile profile;
         if (usernameAndPasswordReq.isRegister()) {
             // 用户注册
-            profile = rpcAccountService.signUp(usernameAndPassword);
+            profile = remoteAccountService.signUp(usernameAndPassword);
         } else {
             // 用户登录
-            profile = rpcAccountService.login(usernameAndPassword);
+            profile = remoteAccountService.login(usernameAndPassword);
         }
         // 判断处理结果的正确性
         if (profile.getErrorCode() != AccountConst.ERROR_CODE_SUCCESS) {
@@ -80,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
         if (uin == null) {
             return null;
         }
-        GeneralProfile generalProfile = rpcAccountService.pullGeneralProfile(ProfileFilterCond.newBuilder()
+        GeneralProfile generalProfile = remoteAccountService.pullGeneralProfile(ProfileFilterCond.newBuilder()
                 .setUin(uin)
                 .addAllKeys(MessageUtil.getProtobufKeys(SimpleProfileResp.class))
                 .build());
@@ -99,9 +100,9 @@ public class AccountServiceImpl implements AccountService {
         if (!profileReq.getCode().equals(redisCacheService.getEmailVerifyCode(profileReq.getEmail()))) {
             return ServiceResponseMessage.createByFailCodeMessage(ResultMessageConst.EMAIL_VERIFY_CODE_ERROR);
         }
-        int error = rpcAccountService.improveUserRegistration(EDSUtil.toProtobufMessage(profileReq)).getCode();
+        int error = remoteAccountService.improveUserRegistration(EDSUtil.toProtobufMessage(profileReq)).getCode();
         if (error == AccountConst.ERROR_CODE_SUCCESS) {
-            error = rpcAccountService.refreshLocation(EDSUtil.toProtobufMessage(profileReq.getLocationReq())).getCode();
+            error = remoteAccountService.refreshLocation(EDSUtil.toProtobufMessage(profileReq.getLocationReq())).getCode();
         } else {
             return ServiceResponseMessage.createByFailCodeMessage(ResultMessageConst.COMPLETE_PROFILE_FAIL);
         }
@@ -117,7 +118,7 @@ public class AccountServiceImpl implements AccountService {
         Long uin = HttpUtil.getUserUin();
         List<String> refreshUserProfileKeys = MessageUtil.getProtobufKeys(UsrProfileResp.class);
         refreshUserProfileKeys.addAll(MessageUtil.getProtobufKeys(ProfileStatusResp.class));
-        GeneralProfile generalProfile = rpcAccountService.pullGeneralProfile(ProfileFilterCond.newBuilder()
+        GeneralProfile generalProfile = remoteAccountService.pullGeneralProfile(ProfileFilterCond.newBuilder()
                 .setUin(uin)
                 .addAllKeys(refreshUserProfileKeys)
                 .build());
@@ -142,7 +143,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ServiceResponseMessage refreshLocation(LocationReq locationReq) {
-        rpcAccountService.refreshLocation(EDSUtil.toProtobufMessage(locationReq));
+        remoteAccountService.refreshLocation(EDSUtil.toProtobufMessage(locationReq));
         return ServiceResponseMessage.createBySuccessCodeMessage(ResultMessageConst.UPDATE_USER_LOCATION_SUCCESS);
     }
 
@@ -153,7 +154,7 @@ public class AccountServiceImpl implements AccountService {
         } else if (code.length() != 6 || !redisCacheService.getEmailVerifyCode(email).toUpperCase().equals(code.toUpperCase())) {
             return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.UNAUTHORIZED.getCode(), ResultMessageConst.EMAIL_VERIFY_CODE_ERROR);
         }
-        int error = rpcAccountService.resetPassword(ResetPassword.newBuilder()
+        int error = remoteAccountService.resetPassword(ResetPassword.newBuilder()
                 .setUin(HttpUtil.getUserUin())
                 .setPassword(password)
                 .setEmail(email)
@@ -172,7 +173,7 @@ public class AccountServiceImpl implements AccountService {
                     ResultCodeEnum.UNAUTHORIZED.getCode(),
                     ResultMessageConst.RESET_PROFILE_PARAMS_IS_NULL);
         } else {
-            int error = rpcAccountService.pushGeneralProfile(GeneralProfile.newBuilder()
+            int error = remoteAccountService.pushGeneralProfile(GeneralProfile.newBuilder()
                     .setUin(HttpUtil.getUserUin())
                     .putAllProfile(modifyMap)
                     .build())

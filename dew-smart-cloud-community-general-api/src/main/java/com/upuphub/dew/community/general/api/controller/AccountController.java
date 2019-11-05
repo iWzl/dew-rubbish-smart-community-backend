@@ -1,11 +1,13 @@
 package com.upuphub.dew.community.general.api.controller;
 
-
-import cc.itsc.rbc.api.bean.req.*;
-import cc.itsc.rbc.api.bean.vo.common.ServiceResponseMessage;
-import cc.itsc.rbc.api.bean.vo.resp.SimpleProfileResp;
-import cc.itsc.rbc.api.service.AccountService;
-import cc.itsc.rbc.api.service.PushService;
+import com.upuphub.dew.community.general.api.bean.req.LocationReq;
+import com.upuphub.dew.community.general.api.bean.req.NewProfileReq;
+import com.upuphub.dew.community.general.api.bean.req.PasswordReq;
+import com.upuphub.dew.community.general.api.bean.req.UsernameAndPasswordReq;
+import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
+import com.upuphub.dew.community.general.api.bean.vo.resp.SimpleProfileResp;
+import com.upuphub.dew.community.general.api.service.AccountService;
+import com.upuphub.dew.community.general.api.service.PushService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

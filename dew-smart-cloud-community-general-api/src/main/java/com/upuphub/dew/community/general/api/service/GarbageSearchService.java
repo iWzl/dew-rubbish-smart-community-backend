@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.general.api.service;
 
-import cc.itsc.rbc.api.bean.vo.common.ServiceResponseMessage;
+
+import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
 
 public interface GarbageSearchService {
     /**
