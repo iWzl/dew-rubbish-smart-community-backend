@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rubbish Communicate Verification Code</title>
+</head>
+<blockquote>
+<body>
+<!--/*@thymesVar id="code" type="cc.itsc.push.bean.vo.MailData"*/-->
+<div style="font-size: 10px;background-color: #2e7d32;height: 3px;color: aliceblue;text-align: center"></div>
+<div style="color: #2e7d32;text-align: right;font-size: 10px">青山青我目 流水静我耳</div>
+<div style="font-size: 20px">
+    <p style="font-weight: bold">欢迎您使用 Rubbish Community</p>
+    在这里，您将与我们一起，为环境贡献一份力量<br>
+    以下是您的验证码:
+</div>
+<h1>
+    <div th:text="${code}" style="font-size: 54px; font-weight: bold;color: aliceblue; text-align: center;background-color: #2e7d32;height: 100px;line-height: 100px;" ></div>
+</h1>
+<h5>
+    验证码10分钟内有效，仅用于 Rubbish Community 的注册/验证<br>如果您没有注册/验证,可能是其他人邮箱填写错误，请忽略。
+</h5>
+<div style="color: #2e7d32;text-align: right;font-size: 10px">Rubbish Community 开发者团队</div>
+<div style="font-size: 10px;background-color: #2e7d32;height: 3px;color: aliceblue;text-align: center"></div>
+</body>
+</blockquote>
+</html>
+
