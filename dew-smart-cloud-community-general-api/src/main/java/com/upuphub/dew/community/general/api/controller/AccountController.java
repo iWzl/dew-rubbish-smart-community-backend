@@ -27,7 +27,7 @@ import java.util.Map;
  * @date 2019/8/6 21:27
  */
 @RestController
-@RequestMapping(value = "css/api/account",produces =  MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/api/account",produces =  MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Api(value = "账户模块",tags = "账户相关模块")
 public class AccountController {
 

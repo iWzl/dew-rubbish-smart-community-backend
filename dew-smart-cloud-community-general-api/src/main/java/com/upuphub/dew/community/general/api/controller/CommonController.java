@@ -26,7 +26,7 @@ import javax.validation.constraints.NotBlank;
  * @date 2019/8/6 21:27
  */
 @RestController
-@RequestMapping(value = "css/api/common",produces =  MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/api/common",produces =  MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Api(value = "辅助功能",tags = "辅助功能模块")
 public class CommonController {
     @Autowired
