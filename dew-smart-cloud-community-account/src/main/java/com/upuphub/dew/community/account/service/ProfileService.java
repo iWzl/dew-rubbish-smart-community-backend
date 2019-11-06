@@ -30,7 +30,7 @@ public class ProfileService extends BaseProfileService {
 
     @Override
     protected void handlingProfileSpread(Map<String, Object> spreadProfileMap) {
-        Long  uin = (Long) spreadProfileMap.get("uin");
+        long uin = Long.parseLong((String) spreadProfileMap.get("uin")) ;
         spreadProfileMap.remove("uin");
         ProfileMapMessage profileMapMessage = ProfileMapMessage.newBuilder()
                 .setUin(uin)

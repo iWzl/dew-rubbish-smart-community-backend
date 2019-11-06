@@ -1,5 +1,6 @@
 package com.upuphub.dew.community.general.api.service.remote.sentinel;
 
+import com.upuphub.dew.community.connection.constant.AccountConst;
 import com.upuphub.dew.community.connection.protobuf.account.*;
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.general.api.exception.RpcServiceConnectionException;
@@ -36,7 +37,7 @@ public class DewAccountServiceSentinel implements DewAccountService {
 
     @Override
     public RpcResultCode pushGeneralProfile(GeneralProfile generalProfile) {
-        throw new RpcServiceConnectionException("Call Rpc Account Model Error");
+        return RpcResultCode.newBuilder().setCode(AccountConst.ERROR_CODE_COMMON_FAIL).build();
     }
 
     @Override

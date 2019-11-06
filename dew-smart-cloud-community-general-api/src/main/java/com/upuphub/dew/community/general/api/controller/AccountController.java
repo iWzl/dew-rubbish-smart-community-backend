@@ -1,5 +1,6 @@
 package com.upuphub.dew.community.general.api.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.upuphub.dew.community.general.api.bean.req.LocationReq;
 import com.upuphub.dew.community.general.api.bean.req.NewProfileReq;
 import com.upuphub.dew.community.general.api.bean.req.PasswordReq;
@@ -88,7 +89,6 @@ public class AccountController {
     public ServiceResponseMessage modifyUserProfile(@RequestBody Map<String,String> modifyMap){
         return accountService.resetUserProfile(modifyMap);
     }
-
 
 
     @ApiOperation(value = "重置用户密码")
