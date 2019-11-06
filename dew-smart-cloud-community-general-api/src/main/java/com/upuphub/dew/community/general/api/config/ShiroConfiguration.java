@@ -52,7 +52,7 @@ public class ShiroConfiguration {
         final Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //配置不登录可以访问的资源，anon 表示资源都可以匿名访问
         //配置记住我或认证通过可以访问的地址
-        filterChainDefinitionMap.put("/api/account/login", "anon");
+        filterChainDefinitionMap.put("/css/api/account/login", "anon");
         filterChainDefinitionMap.put("/swagger-resources/**", "anon");
         filterChainDefinitionMap.put("/v2/api-docs", "anon");
         filterChainDefinitionMap.put("/webjars/**", "anon");
@@ -63,10 +63,10 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/doc.html","anon");
 
-        filterChainDefinitionMap.put("/api/common/tools/code/*/send","anon");
-        filterChainDefinitionMap.put("/api/common/tools/*/categories","anon");
-        filterChainDefinitionMap.put("/api/common/tools/*/search","anon");
-        filterChainDefinitionMap.put("api/account/password/reset","anon");
+        filterChainDefinitionMap.put("/css/api/common/tools/code/*/send","anon");
+        filterChainDefinitionMap.put("/css/api/common/tools/*/categories","anon");
+        filterChainDefinitionMap.put("/css/api/common/tools/*/search","anon");
+        filterChainDefinitionMap.put("/css/api/account/password/reset","anon");
         //logout是shiro提供的过滤器,这是走自定义的 shiroLogoutFilter 上面有配置
         //filterChainDefinitionMap.put("/logout", "logout");
         //此时访问/user/delete需要delete权限,在自定义Realm中为用户授权。
@@ -74,8 +74,8 @@ public class ShiroConfiguration {
 
         //其他资源都需要认证  authc 表示需要认证才能进行访问 user表示配置记住我或认证通过可以访问的地址
         //如果开启限制同一账号登录,改为 .put("/**", "kickOut,user");
-        filterChainDefinitionMap.put("/api/account/logout","logout");
-        filterChainDefinitionMap.put("/api/**", "JWT");
+        filterChainDefinitionMap.put("/css/api/account/logout","logout");
+        filterChainDefinitionMap.put("/css/api/**", "JWT");
 
         // 添加连接信息到拦截工厂中
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
