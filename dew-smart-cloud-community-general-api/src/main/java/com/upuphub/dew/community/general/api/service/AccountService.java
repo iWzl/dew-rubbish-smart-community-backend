@@ -2,9 +2,9 @@ package com.upuphub.dew.community.general.api.service;
 
 
 
-import com.upuphub.dew.community.general.api.bean.req.LocationReq;
-import com.upuphub.dew.community.general.api.bean.req.NewProfileReq;
-import com.upuphub.dew.community.general.api.bean.req.UsernameAndPasswordReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.LocationReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.NewProfileReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.UsernameAndPasswordReq;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
 import com.upuphub.dew.community.general.api.bean.vo.resp.SimpleProfileResp;
 

@@ -1,4 +1,4 @@
-package com.upuphub.dew.community.general.api.bean.req;
+package com.upuphub.dew.community.general.api.bean.vo.req;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

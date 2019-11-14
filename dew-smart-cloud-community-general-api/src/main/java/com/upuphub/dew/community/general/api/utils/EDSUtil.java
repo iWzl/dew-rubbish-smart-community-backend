@@ -5,9 +5,9 @@ import com.upuphub.dew.community.connection.protobuf.account.BaseProfile;
 import com.upuphub.dew.community.connection.protobuf.account.Location;
 import com.upuphub.dew.community.connection.protobuf.account.Profile;
 import com.upuphub.dew.community.connection.protobuf.account.UsernameAndPassword;
-import com.upuphub.dew.community.general.api.bean.req.LocationReq;
-import com.upuphub.dew.community.general.api.bean.req.NewProfileReq;
-import com.upuphub.dew.community.general.api.bean.req.UsernameAndPasswordReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.LocationReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.NewProfileReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.UsernameAndPasswordReq;
 import com.upuphub.dew.community.general.api.bean.vo.resp.*;
 
 /**

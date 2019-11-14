@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.moments.bean.po;
 
 
+import com.upuphub.dew.community.connection.annotation.ProtobufMapper;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -40,6 +41,7 @@ public class MomentDynamicPO implements Serializable {
      */
     @Field("founder")
     @Indexed
+    @ProtobufMapper("uin")
     private Long founderUin;
 
     /**
@@ -54,31 +56,51 @@ public class MomentDynamicPO implements Serializable {
      */
     @Field("topic")
     @Indexed
+    @ProtobufMapper("topic")
     private String topic;
 
     /**
      * 动态消息的分类信息
      */
     @Field("classify")
+    @ProtobufMapper("dynamic")
     private Integer classify;
 
     /**
      * 动态消息的正文
      */
     @Field("content")
+    @ProtobufMapper("dynamic")
     private String content;
 
     /**
      * 动态消息的图片列表
      */
-    @Field("pics")
-    private List<String> picList;
+    @Field("pictures")
+    @ProtobufMapper("pictures")
+    private List<String> pictures;
 
     /**
      * 动态消息的创建时间
      */
     @Field("create_time")
+    @ProtobufMapper("createTime")
     private Long createTime;
+
+    /**
+     * 纬度
+     */
+    @Field("latitude")
+    @ProtobufMapper("latitude")
+    private Double latitude;
+
+    /**
+     * 经度
+     */
+    @Field("longitude")
+    @ProtobufMapper("longitude")
+    private Double longitude;
+
 
     /**
      * 动态消息的更新时间

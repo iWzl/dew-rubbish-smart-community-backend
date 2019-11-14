@@ -5,6 +5,7 @@ package com.upuphub.dew.community.connection.common;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.Message;
+import com.upuphub.dew.community.connection.annotation.ProtobufMapper;
 import com.upuphub.dew.community.connection.protobuf.account.GeneralProfile;
 import com.upuphub.dew.community.connection.protobuf.mqtt.MqttMessage;
 
@@ -98,8 +99,16 @@ public class MessageUtil {
             // todo 嵌套循环的处理
             CommonBean commonBean = clazz.newInstance();
             for (Field declaredField : clazz.getDeclaredFields()) {
+                ProtobufMapper protobufMapper = declaredField.getDeclaredAnnotation(ProtobufMapper.class);
+                String protobufFieldName = null;
+                if(null != protobufMapper && !"".equals(protobufMapper.value())){
+                   protobufFieldName = protobufMapper.value();
+                }
+                if(null == protobufFieldName || "".equals(protobufFieldName)){
+                    protobufFieldName = declaredField.getName();
+                }
                 declaredField.setAccessible(true);
-                Object value = messageMap.get(declaredField.getName());
+                Object value = messageMap.get(protobufFieldName);
                 if (value != null) {
                     declaredField.set(commonBean, value);
                 }

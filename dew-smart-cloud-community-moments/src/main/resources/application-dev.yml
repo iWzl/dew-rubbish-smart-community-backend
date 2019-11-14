@@ -28,3 +28,27 @@ mybatis:
 logging:
   level:
     root: debug
+
+# Dew 服务器相关配置
+dew:
+  work-id: 1
+  data-center-id: 1
+  password:
+    salt: RUBBISH-COMMUNITY-SVR
+  mqtt:
+    topic:
+      template: Dew:User:%s
+    username: DewMoments
+    password: DewMoments
+    # 推送信息的连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613,tcp://192.168.1.61:616
+    url: tcp://119.3.147.11:19099
+    producer:
+      # 连接服务器默认客户端ID
+      clientId: AccountProducer
+      # 默认的推送主题，实际可在调用接口时指定
+      defaultTopic: RBC_MOMENTS_SVR
+    consumer:
+      # 连接服务器默认客户端ID
+      clientId: MomentsConsumer
+      # 默认的接收主题，可以订阅多个Topic，逗号分隔
+      defaultTopic: System

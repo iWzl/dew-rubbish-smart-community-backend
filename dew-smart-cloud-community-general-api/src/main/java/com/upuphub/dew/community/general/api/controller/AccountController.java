@@ -1,10 +1,9 @@
 package com.upuphub.dew.community.general.api.controller;
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.upuphub.dew.community.general.api.bean.req.LocationReq;
-import com.upuphub.dew.community.general.api.bean.req.NewProfileReq;
-import com.upuphub.dew.community.general.api.bean.req.PasswordReq;
-import com.upuphub.dew.community.general.api.bean.req.UsernameAndPasswordReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.LocationReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.NewProfileReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.PasswordReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.UsernameAndPasswordReq;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
 import com.upuphub.dew.community.general.api.bean.vo.resp.SimpleProfileResp;
 import com.upuphub.dew.community.general.api.service.AccountService;

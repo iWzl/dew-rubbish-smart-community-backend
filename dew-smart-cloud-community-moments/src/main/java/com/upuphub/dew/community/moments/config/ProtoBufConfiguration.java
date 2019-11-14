@@ -22,7 +22,6 @@ import org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter;
  * @version 1.0
  * @date 2019/8/6 20:41
  */
-
 @Configuration
 public class ProtoBufConfiguration {
     @Bean

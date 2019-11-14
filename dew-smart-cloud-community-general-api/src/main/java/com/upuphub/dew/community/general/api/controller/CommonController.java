@@ -1,6 +1,6 @@
 package com.upuphub.dew.community.general.api.controller;
 
-import com.upuphub.dew.community.general.api.bean.req.QiNiuTokenReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.QiNiuTokenReq;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
 import com.upuphub.dew.community.general.api.service.GarbageSearchService;
 import com.upuphub.dew.community.general.api.service.PushService;

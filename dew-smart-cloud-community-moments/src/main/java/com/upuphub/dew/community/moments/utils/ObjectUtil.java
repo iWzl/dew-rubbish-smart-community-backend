@@ -25,6 +25,10 @@ public class ObjectUtil {
         return list == null || list.size() == 0;
     }
 
+    public static boolean isEmpty(Long object){
+        return object == null || object == 0L;
+    }
+
     public static boolean isEmpty(Object object){
         return object == null;
     }
