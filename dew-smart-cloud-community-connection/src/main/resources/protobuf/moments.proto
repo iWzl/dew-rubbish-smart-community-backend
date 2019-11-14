@@ -1,0 +1,18 @@
+syntax = "proto3"; // 定义语法类型，通常proto3好于proto2，proto2好于proto1
+
+
+option java_package = "com.upuphub.dew.community.connection.protobuf.moments";      // 定义报名
+option java_multiple_files = true;
+
+message MomentDynamicContent {
+    int64 uin = 1;
+    int64 createTime = 2;
+    double longitude = 3;
+    double latitude = 4;
+    string dynamic = 5;
+    repeated string pictures = 6;
+    string topic = 7;
+    int32 classify = 8;
+}
+
+

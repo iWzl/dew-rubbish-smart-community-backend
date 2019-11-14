@@ -13,7 +13,7 @@
         <jackson.version>2.10.0.pr3</jackson.version>
         <protobuf.version>3.9.0</protobuf.version>
         <protobuf-format.version>1.4</protobuf-format.version>
-        <cglib.version>1.4</cglib.version>
+        <cglib.version>3.3.0</cglib.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
     </properties>
 

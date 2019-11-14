@@ -33,14 +33,21 @@ public class MomentDynamicPO implements Serializable {
      */
     @Id
     @Field("id")
-    private String dynamicId;
+    private Long dynamicId;
 
     /**
-     * 消息动态的产生者
+     * 消息动态的生产者
      */
     @Field("founder")
     @Indexed
     private Long founderUin;
+
+    /**
+     * 标记是否未完成
+     */
+    @Field("draft")
+    @Indexed
+    private boolean isDraft;
 
     /**
      * 消息动态的Topic

@@ -1,4 +1,8 @@
 package com.upuphub.dew.community.moments.service.impl;
 
-public class MomentsServiceImpl {
+import com.upuphub.dew.community.moments.service.MomentsService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MomentsServiceImpl implements MomentsService {
 }
