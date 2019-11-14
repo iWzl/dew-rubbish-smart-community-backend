@@ -18,9 +18,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.upuphub.profile</groupId>
+            <groupId>com.upuphub</groupId>
             <artifactId>quick-profile</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
 
         <dependency>
@@ -176,15 +176,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>LeoWangMavenRepository</id>
-            <url>https://raw.github.com/isWangZL/LeoWangMavenRepository/master</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>

@@ -18,13 +18,13 @@ public class JsonHelper {
         mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true)                           //允许字符串中存在注释
                 .configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)               //允许无引号的键
                 .configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true)                      //允许单引号
-                .configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true)             //允许存在换行符等特殊字符
+                .configure(JsonParser.Feature.ALLOW_YAML_COMMENTS, true)             //允许存在换行符等特殊字符
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)          //允许字符串中出现Bean中没有的属性
                 .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))                   //设置日期格式
                 .configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false)         //遇到空值时不抛出异常
                 .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);        //如果列表中只有一条记录，依然处理成列表
         if(underScore){
-            mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+            mapper.setPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CAMEL_CASE);
         }
         return mapper;
     }
@@ -38,7 +38,7 @@ public class JsonHelper {
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL)                      //不准获取空值
                 .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));                  //设置日期格式
         if(underScore){
-            mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+            mapper.setPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CAMEL_CASE);
         }
 
         return mapper;

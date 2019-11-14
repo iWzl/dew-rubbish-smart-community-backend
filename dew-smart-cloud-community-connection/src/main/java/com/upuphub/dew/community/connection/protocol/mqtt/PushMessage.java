@@ -6,6 +6,7 @@ public class PushMessage {
     private int type;
     private String message;
     private Long createTime;
+    private Long version;
 
 
     public PushMessage(int type, Long createTime) {
@@ -13,18 +14,25 @@ public class PushMessage {
         this.createTime = createTime;
     }
 
-    public PushMessage(PUSH_MESSAGE_TYPE type, String message, Long createTime) {
+    public PushMessage(PUSH_MESSAGE_TYPE type, Object message, Long createTime) {
         this.type = type.value();
-        this.message = message;
+        this.message = JsonHelper.allToJson(message);
         this.createTime = createTime;
+    }
+
+    public PushMessage(int type, Object message, Long createTime, Long version) {
+        this.type = type;
+        this.message = JsonHelper.allToJson(message);
+        this.createTime = createTime;
+        this.version = version;
     }
 
     public int getType() {
         return type;
     }
 
-    public void setType(PUSH_MESSAGE_TYPE type) {
-        this.type = type.value();
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getMessage() {
@@ -43,7 +51,11 @@ public class PushMessage {
         this.createTime = createTime;
     }
 
-    public String buildMqttMessage(){
-        return JsonHelper.toJson(this);
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }
