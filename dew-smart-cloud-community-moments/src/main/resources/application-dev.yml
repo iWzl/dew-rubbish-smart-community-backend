@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: dew-smart-community-moments
+  cloud:
+    # SpringCloud-Alibaba-Nacos服务注册中心配置
+    nacos:
+      discovery:
+        server-addr: 119.3.147.11:8848
+  datasource:
+    url: jdbc:mysql://localhost:3306/rbc_account?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    name: rbc_account
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/dew_account
+
+server:
+  port: 15752
+
+mybatis:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    root: debug

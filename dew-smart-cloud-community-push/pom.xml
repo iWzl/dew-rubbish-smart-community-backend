@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.upuphub.dew</groupId>
             <artifactId>smart-cloud-community-connection</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${dew-rbc-connection.version}</version>
         </dependency>
 
         <!-- 服务状态的监控 -->
