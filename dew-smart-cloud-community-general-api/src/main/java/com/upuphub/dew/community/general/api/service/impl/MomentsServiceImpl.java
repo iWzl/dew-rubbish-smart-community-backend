@@ -11,10 +11,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class MomentsServiceImpl implements MomentsService {
     @Autowired
-    DewMomentsService momentsService;
+    DewMomentsService remoteMomentsService;
 
     @Override
     public ServiceResponseMessage postMomentDynamicContent(MomentDynamicContentReq momentDynamicContentReq) {
+       /* MomentDynamicContent momentDynamicContent = MessageUtil.buildMessageByBean(
+                MomentDynamicContent.getDescriptor(),
+                MomentDynamicContent.newBuilder(),
+                momentDynamicContentReq);*/
+        //remoteMomentsService.commitMomentDynamicContent(momentDynamicContent);
         return null;
     }
 }
