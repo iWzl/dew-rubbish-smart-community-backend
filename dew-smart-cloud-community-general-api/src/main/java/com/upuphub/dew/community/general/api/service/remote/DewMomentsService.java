@@ -2,7 +2,6 @@ package com.upuphub.dew.community.general.api.service.remote;
 
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
-import com.upuphub.dew.community.connection.protobuf.push.EmailAndCode;
 import com.upuphub.dew.community.general.api.config.ProtoFeignConfiguration;
 import com.upuphub.dew.community.general.api.service.remote.sentinel.DewPushServiceSentinel;
 import org.springframework.cloud.openfeign.FeignClient;
