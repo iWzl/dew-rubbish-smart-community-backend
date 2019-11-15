@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>${spring-cloud.model}</version>
+            <version>${spring-cloud-model.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
