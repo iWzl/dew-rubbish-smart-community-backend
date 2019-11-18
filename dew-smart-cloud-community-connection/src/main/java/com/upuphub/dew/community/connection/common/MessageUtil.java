@@ -5,11 +5,11 @@ package com.upuphub.dew.community.connection.common;
 import com.google.protobuf.Descriptors;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.Message;
-import com.upuphub.dew.community.connection.annotation.ProtobufMapper;
+import com.google.protobuf.UnmodifiableLazyStringList;
+import com.upuphub.dew.community.connection.annotation.ProtobufField;
 import com.upuphub.dew.community.connection.protobuf.account.GeneralProfile;
 import com.upuphub.dew.community.connection.protobuf.mqtt.MqttMessage;
 import net.sf.cglib.beans.BeanMap;
-import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -62,7 +62,14 @@ public class MessageUtil {
     public static Message buildMessageByBean(Descriptors.Descriptor descriptor, GeneratedMessageV3.Builder builder, Object object) {
         Map<String,Object>params = beanToMap(object);
         for (Descriptors.FieldDescriptor field : descriptor.getFields()) {
-            builder.setField(field, buildValue(field, params.get(field.getName())));
+            Object obj =  params.get(field.getName());
+            if(!(obj instanceof Iterable)){
+                builder.setField(field, buildValue(field, obj));
+            }else if(obj instanceof List){
+                for (int i = 0; i < ((List) obj).size(); i++) {
+                    builder.setRepeatedField(field,i,((List) obj).get(i));
+                }
+            }
         }
         return builder.build();
     }
@@ -188,10 +195,13 @@ public class MessageUtil {
             // todo 嵌套循环的处理
             CommonBean commonBean = clazz.newInstance();
             for (Field declaredField : clazz.getDeclaredFields()) {
-                ProtobufMapper protobufMapper = declaredField.getDeclaredAnnotation(ProtobufMapper.class);
+                ProtobufField protobufField = declaredField.getDeclaredAnnotation(ProtobufField.class);
+                if(null != protobufField &&protobufField.ignore()){
+                    continue;
+                }
                 String protobufFieldName = null;
-                if(null != protobufMapper && !"".equals(protobufMapper.value())){
-                   protobufFieldName = protobufMapper.value();
+                if(null != protobufField && !"".equals(protobufField.value())){
+                   protobufFieldName = protobufField.value();
                 }
                 if(null == protobufFieldName || "".equals(protobufFieldName)){
                     protobufFieldName = declaredField.getName();
@@ -199,7 +209,7 @@ public class MessageUtil {
                 declaredField.setAccessible(true);
                 Object value = messageMap.get(protobufFieldName);
                 if (value != null) {
-                    declaredField.set(commonBean, value);
+                    declaredField.set(commonBean, buildValue(declaredField,value));
                 }
             }
             return commonBean;

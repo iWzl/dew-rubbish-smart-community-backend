@@ -57,28 +57,23 @@ private static final long serialVersionUID = 0L;
             uin_ = input.readInt64();
             break;
           }
-          case 16: {
-
-            createTime_ = input.readInt64();
-            break;
-          }
-          case 25: {
+          case 17: {
 
             longitude_ = input.readDouble();
             break;
           }
-          case 33: {
+          case 25: {
 
             latitude_ = input.readDouble();
             break;
           }
-          case 42: {
+          case 34: {
             java.lang.String s = input.readStringRequireUtf8();
 
             dynamic_ = s;
             break;
           }
-          case 50: {
+          case 42: {
             java.lang.String s = input.readStringRequireUtf8();
             if (!((mutable_bitField0_ & 0x00000001) != 0)) {
               pictures_ = new com.google.protobuf.LazyStringArrayList();
@@ -87,13 +82,13 @@ private static final long serialVersionUID = 0L;
             pictures_.add(s);
             break;
           }
-          case 58: {
+          case 50: {
             java.lang.String s = input.readStringRequireUtf8();
 
             topic_ = s;
             break;
           }
-          case 64: {
+          case 56: {
 
             classify_ = input.readInt32();
             break;
@@ -142,37 +137,28 @@ private static final long serialVersionUID = 0L;
     return uin_;
   }
 
-  public static final int CREATETIME_FIELD_NUMBER = 2;
-  private long createTime_;
-  /**
-   * <code>int64 createTime = 2;</code>
-   */
-  public long getCreateTime() {
-    return createTime_;
-  }
-
-  public static final int LONGITUDE_FIELD_NUMBER = 3;
+  public static final int LONGITUDE_FIELD_NUMBER = 2;
   private double longitude_;
   /**
-   * <code>double longitude = 3;</code>
+   * <code>double longitude = 2;</code>
    */
   public double getLongitude() {
     return longitude_;
   }
 
-  public static final int LATITUDE_FIELD_NUMBER = 4;
+  public static final int LATITUDE_FIELD_NUMBER = 3;
   private double latitude_;
   /**
-   * <code>double latitude = 4;</code>
+   * <code>double latitude = 3;</code>
    */
   public double getLatitude() {
     return latitude_;
   }
 
-  public static final int DYNAMIC_FIELD_NUMBER = 5;
+  public static final int DYNAMIC_FIELD_NUMBER = 4;
   private volatile java.lang.Object dynamic_;
   /**
-   * <code>string dynamic = 5;</code>
+   * <code>string dynamic = 4;</code>
    */
   public java.lang.String getDynamic() {
     java.lang.Object ref = dynamic_;
@@ -187,7 +173,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string dynamic = 5;</code>
+   * <code>string dynamic = 4;</code>
    */
   public com.google.protobuf.ByteString
       getDynamicBytes() {
@@ -203,39 +189,39 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int PICTURES_FIELD_NUMBER = 6;
+  public static final int PICTURES_FIELD_NUMBER = 5;
   private com.google.protobuf.LazyStringList pictures_;
   /**
-   * <code>repeated string pictures = 6;</code>
+   * <code>repeated string pictures = 5;</code>
    */
   public com.google.protobuf.ProtocolStringList
       getPicturesList() {
     return pictures_;
   }
   /**
-   * <code>repeated string pictures = 6;</code>
+   * <code>repeated string pictures = 5;</code>
    */
   public int getPicturesCount() {
     return pictures_.size();
   }
   /**
-   * <code>repeated string pictures = 6;</code>
+   * <code>repeated string pictures = 5;</code>
    */
   public java.lang.String getPictures(int index) {
     return pictures_.get(index);
   }
   /**
-   * <code>repeated string pictures = 6;</code>
+   * <code>repeated string pictures = 5;</code>
    */
   public com.google.protobuf.ByteString
       getPicturesBytes(int index) {
     return pictures_.getByteString(index);
   }
 
-  public static final int TOPIC_FIELD_NUMBER = 7;
+  public static final int TOPIC_FIELD_NUMBER = 6;
   private volatile java.lang.Object topic_;
   /**
-   * <code>string topic = 7;</code>
+   * <code>string topic = 6;</code>
    */
   public java.lang.String getTopic() {
     java.lang.Object ref = topic_;
@@ -250,7 +236,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string topic = 7;</code>
+   * <code>string topic = 6;</code>
    */
   public com.google.protobuf.ByteString
       getTopicBytes() {
@@ -266,10 +252,10 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int CLASSIFY_FIELD_NUMBER = 8;
+  public static final int CLASSIFY_FIELD_NUMBER = 7;
   private int classify_;
   /**
-   * <code>int32 classify = 8;</code>
+   * <code>int32 classify = 7;</code>
    */
   public int getClassify() {
     return classify_;
@@ -292,26 +278,23 @@ private static final long serialVersionUID = 0L;
     if (uin_ != 0L) {
       output.writeInt64(1, uin_);
     }
-    if (createTime_ != 0L) {
-      output.writeInt64(2, createTime_);
-    }
     if (longitude_ != 0D) {
-      output.writeDouble(3, longitude_);
+      output.writeDouble(2, longitude_);
     }
     if (latitude_ != 0D) {
-      output.writeDouble(4, latitude_);
+      output.writeDouble(3, latitude_);
     }
     if (!getDynamicBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, dynamic_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, dynamic_);
     }
     for (int i = 0; i < pictures_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, pictures_.getRaw(i));
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, pictures_.getRaw(i));
     }
     if (!getTopicBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, topic_);
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, topic_);
     }
     if (classify_ != 0) {
-      output.writeInt32(8, classify_);
+      output.writeInt32(7, classify_);
     }
     unknownFields.writeTo(output);
   }
@@ -326,20 +309,16 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt64Size(1, uin_);
     }
-    if (createTime_ != 0L) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(2, createTime_);
-    }
     if (longitude_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(3, longitude_);
+        .computeDoubleSize(2, longitude_);
     }
     if (latitude_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(4, latitude_);
+        .computeDoubleSize(3, latitude_);
     }
     if (!getDynamicBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, dynamic_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, dynamic_);
     }
     {
       int dataSize = 0;
@@ -350,11 +329,11 @@ private static final long serialVersionUID = 0L;
       size += 1 * getPicturesList().size();
     }
     if (!getTopicBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, topic_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, topic_);
     }
     if (classify_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(8, classify_);
+        .computeInt32Size(7, classify_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -373,8 +352,6 @@ private static final long serialVersionUID = 0L;
 
     if (getUin()
         != other.getUin()) return false;
-    if (getCreateTime()
-        != other.getCreateTime()) return false;
     if (java.lang.Double.doubleToLongBits(getLongitude())
         != java.lang.Double.doubleToLongBits(
             other.getLongitude())) return false;
@@ -403,9 +380,6 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + UIN_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         getUin());
-    hash = (37 * hash) + CREATETIME_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getCreateTime());
     hash = (37 * hash) + LONGITUDE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         java.lang.Double.doubleToLongBits(getLongitude()));
@@ -557,8 +531,6 @@ private static final long serialVersionUID = 0L;
       super.clear();
       uin_ = 0L;
 
-      createTime_ = 0L;
-
       longitude_ = 0D;
 
       latitude_ = 0D;
@@ -599,7 +571,6 @@ private static final long serialVersionUID = 0L;
       com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent result = new com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent(this);
       int from_bitField0_ = bitField0_;
       result.uin_ = uin_;
-      result.createTime_ = createTime_;
       result.longitude_ = longitude_;
       result.latitude_ = latitude_;
       result.dynamic_ = dynamic_;
@@ -660,9 +631,6 @@ private static final long serialVersionUID = 0L;
       if (other == com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent.getDefaultInstance()) return this;
       if (other.getUin() != 0L) {
         setUin(other.getUin());
-      }
-      if (other.getCreateTime() != 0L) {
-        setCreateTime(other.getCreateTime());
       }
       if (other.getLongitude() != 0D) {
         setLongitude(other.getLongitude());
@@ -747,41 +715,15 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private long createTime_ ;
-    /**
-     * <code>int64 createTime = 2;</code>
-     */
-    public long getCreateTime() {
-      return createTime_;
-    }
-    /**
-     * <code>int64 createTime = 2;</code>
-     */
-    public Builder setCreateTime(long value) {
-      
-      createTime_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int64 createTime = 2;</code>
-     */
-    public Builder clearCreateTime() {
-      
-      createTime_ = 0L;
-      onChanged();
-      return this;
-    }
-
     private double longitude_ ;
     /**
-     * <code>double longitude = 3;</code>
+     * <code>double longitude = 2;</code>
      */
     public double getLongitude() {
       return longitude_;
     }
     /**
-     * <code>double longitude = 3;</code>
+     * <code>double longitude = 2;</code>
      */
     public Builder setLongitude(double value) {
       
@@ -790,7 +732,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double longitude = 3;</code>
+     * <code>double longitude = 2;</code>
      */
     public Builder clearLongitude() {
       
@@ -801,13 +743,13 @@ private static final long serialVersionUID = 0L;
 
     private double latitude_ ;
     /**
-     * <code>double latitude = 4;</code>
+     * <code>double latitude = 3;</code>
      */
     public double getLatitude() {
       return latitude_;
     }
     /**
-     * <code>double latitude = 4;</code>
+     * <code>double latitude = 3;</code>
      */
     public Builder setLatitude(double value) {
       
@@ -816,7 +758,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>double latitude = 4;</code>
+     * <code>double latitude = 3;</code>
      */
     public Builder clearLatitude() {
       
@@ -827,7 +769,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object dynamic_ = "";
     /**
-     * <code>string dynamic = 5;</code>
+     * <code>string dynamic = 4;</code>
      */
     public java.lang.String getDynamic() {
       java.lang.Object ref = dynamic_;
@@ -842,7 +784,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string dynamic = 5;</code>
+     * <code>string dynamic = 4;</code>
      */
     public com.google.protobuf.ByteString
         getDynamicBytes() {
@@ -858,7 +800,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string dynamic = 5;</code>
+     * <code>string dynamic = 4;</code>
      */
     public Builder setDynamic(
         java.lang.String value) {
@@ -871,7 +813,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string dynamic = 5;</code>
+     * <code>string dynamic = 4;</code>
      */
     public Builder clearDynamic() {
       
@@ -880,7 +822,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string dynamic = 5;</code>
+     * <code>string dynamic = 4;</code>
      */
     public Builder setDynamicBytes(
         com.google.protobuf.ByteString value) {
@@ -902,33 +844,33 @@ private static final long serialVersionUID = 0L;
        }
     }
     /**
-     * <code>repeated string pictures = 6;</code>
+     * <code>repeated string pictures = 5;</code>
      */
     public com.google.protobuf.ProtocolStringList
         getPicturesList() {
       return pictures_.getUnmodifiableView();
     }
     /**
-     * <code>repeated string pictures = 6;</code>
+     * <code>repeated string pictures = 5;</code>
      */
     public int getPicturesCount() {
       return pictures_.size();
     }
     /**
-     * <code>repeated string pictures = 6;</code>
+     * <code>repeated string pictures = 5;</code>
      */
     public java.lang.String getPictures(int index) {
       return pictures_.get(index);
     }
     /**
-     * <code>repeated string pictures = 6;</code>
+     * <code>repeated string pictures = 5;</code>
      */
     public com.google.protobuf.ByteString
         getPicturesBytes(int index) {
       return pictures_.getByteString(index);
     }
     /**
-     * <code>repeated string pictures = 6;</code>
+     * <code>repeated string pictures = 5;</code>
      */
     public Builder setPictures(
         int index, java.lang.String value) {
@@ -941,7 +883,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string pictures = 6;</code>
+     * <code>repeated string pictures = 5;</code>
      */
     public Builder addPictures(
         java.lang.String value) {
@@ -954,7 +896,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string pictures = 6;</code>
+     * <code>repeated string pictures = 5;</code>
      */
     public Builder addAllPictures(
         java.lang.Iterable<java.lang.String> values) {
@@ -965,7 +907,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string pictures = 6;</code>
+     * <code>repeated string pictures = 5;</code>
      */
     public Builder clearPictures() {
       pictures_ = com.google.protobuf.LazyStringArrayList.EMPTY;
@@ -974,7 +916,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string pictures = 6;</code>
+     * <code>repeated string pictures = 5;</code>
      */
     public Builder addPicturesBytes(
         com.google.protobuf.ByteString value) {
@@ -990,7 +932,7 @@ private static final long serialVersionUID = 0L;
 
     private java.lang.Object topic_ = "";
     /**
-     * <code>string topic = 7;</code>
+     * <code>string topic = 6;</code>
      */
     public java.lang.String getTopic() {
       java.lang.Object ref = topic_;
@@ -1005,7 +947,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string topic = 7;</code>
+     * <code>string topic = 6;</code>
      */
     public com.google.protobuf.ByteString
         getTopicBytes() {
@@ -1021,7 +963,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string topic = 7;</code>
+     * <code>string topic = 6;</code>
      */
     public Builder setTopic(
         java.lang.String value) {
@@ -1034,7 +976,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string topic = 7;</code>
+     * <code>string topic = 6;</code>
      */
     public Builder clearTopic() {
       
@@ -1043,7 +985,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string topic = 7;</code>
+     * <code>string topic = 6;</code>
      */
     public Builder setTopicBytes(
         com.google.protobuf.ByteString value) {
@@ -1059,13 +1001,13 @@ private static final long serialVersionUID = 0L;
 
     private int classify_ ;
     /**
-     * <code>int32 classify = 8;</code>
+     * <code>int32 classify = 7;</code>
      */
     public int getClassify() {
       return classify_;
     }
     /**
-     * <code>int32 classify = 8;</code>
+     * <code>int32 classify = 7;</code>
      */
     public Builder setClassify(int value) {
       
@@ -1074,7 +1016,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>int32 classify = 8;</code>
+     * <code>int32 classify = 7;</code>
      */
     public Builder clearClassify() {
       

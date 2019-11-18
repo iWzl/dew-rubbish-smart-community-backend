@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @date 2019/9/5 20:41
  */
 @Component
-public class DewPushMomentsSentinel implements DewMomentsService {
+public class DewMomentsSentinel implements DewMomentsService {
 
     @Override
     public RpcResultCode commitMomentDynamicContent(MomentDynamicContent dynamicContent) {

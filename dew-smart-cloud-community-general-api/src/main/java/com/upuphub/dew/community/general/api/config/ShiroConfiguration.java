@@ -67,6 +67,9 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/api/common/tools/*/categories","anon");
         filterChainDefinitionMap.put("/api/common/tools/*/search","anon");
         filterChainDefinitionMap.put("api/account/password/reset","anon");
+
+        filterChainDefinitionMap.put("/api/moments/**","anon");
+        filterChainDefinitionMap.put("/api/test/**","anon");
         //logout是shiro提供的过滤器,这是走自定义的 shiroLogoutFilter 上面有配置
         //filterChainDefinitionMap.put("/logout", "logout");
         //此时访问/user/delete需要delete权限,在自定义Realm中为用户授权。

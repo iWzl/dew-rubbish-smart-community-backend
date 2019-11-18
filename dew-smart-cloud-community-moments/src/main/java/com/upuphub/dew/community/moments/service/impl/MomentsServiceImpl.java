@@ -13,6 +13,8 @@ import com.upuphub.dew.community.moments.utils.ObjectUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MomentsServiceImpl implements MomentsService {
@@ -30,7 +32,7 @@ public class MomentsServiceImpl implements MomentsService {
             MomentDynamicPO momentDynamicContent =  MessageUtil.messageToCommonPojo(dynamicContent,MomentDynamicPO.class);
             assert momentDynamicContent != null;
             momentDynamicContent.setDynamicId(momentDynamicId);
-            momentDynamicContent.setDraft(true);
+            momentDynamicContent.setPictures(getPicsList(dynamicContent));
             int error =  momentContentService.createMomentDynamicContent(momentDynamicContent);
             if(error == MOMENTS_ERROR_CODE.SUCCESS.value()){
                 return MomentsConst.ERROR_CODE_SUCCESS;
@@ -42,7 +44,7 @@ public class MomentsServiceImpl implements MomentsService {
             MomentDynamicPO momentDynamicContent =  MessageUtil.messageToCommonPojo(dynamicContent,MomentDynamicPO.class);
             assert momentDynamicContent != null;
             momentDynamicContent.setDynamicId(momentDynamicId);
-            momentDynamicContent.setUpdateTime(System.currentTimeMillis());
+            momentDynamicContent.setPictures(getPicsList(dynamicContent));
             // 执行更新新资源操作
             int error = momentContentService.updateMomentDynamicContent(momentDynamicContent);
             if(error == MOMENTS_ERROR_CODE.SUCCESS.value()){
@@ -51,5 +53,13 @@ public class MomentsServiceImpl implements MomentsService {
                 return MomentsConst.ERROR_CODE_COMMON_FAIL;
             }
         }
+    }
+
+    private List<String> getPicsList(MomentDynamicContent dynamicContent){
+        List<String> picList = new ArrayList<>();
+        for (int i = 0; i < dynamicContent.getPicturesCount() ; i++) {
+            picList.add(dynamicContent.getPictures(i));
+        }
+        return picList;
     }
 }

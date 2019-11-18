@@ -13,61 +13,56 @@ public interface MomentDynamicContentOrBuilder extends
   long getUin();
 
   /**
-   * <code>int64 createTime = 2;</code>
-   */
-  long getCreateTime();
-
-  /**
-   * <code>double longitude = 3;</code>
+   * <code>double longitude = 2;</code>
    */
   double getLongitude();
 
   /**
-   * <code>double latitude = 4;</code>
+   * <code>double latitude = 3;</code>
    */
   double getLatitude();
 
   /**
-   * <code>string dynamic = 5;</code>
+   * <code>string dynamic = 4;</code>
    */
   java.lang.String getDynamic();
   /**
-   * <code>string dynamic = 5;</code>
+   * <code>string dynamic = 4;</code>
    */
   com.google.protobuf.ByteString
       getDynamicBytes();
 
   /**
-   * <code>repeated string pictures = 6;</code>
+   * <code>repeated string pictures = 5;</code>
    */
   java.util.List<java.lang.String>
       getPicturesList();
   /**
-   * <code>repeated string pictures = 6;</code>
+   * <code>repeated string pictures = 5;</code>
    */
   int getPicturesCount();
   /**
-   * <code>repeated string pictures = 6;</code>
+   * <code>repeated string pictures = 5;</code>
    */
   java.lang.String getPictures(int index);
   /**
-   * <code>repeated string pictures = 6;</code>
+   * <code>repeated string pictures = 5;</code>
    */
   com.google.protobuf.ByteString
       getPicturesBytes(int index);
 
   /**
-   * <code>string topic = 7;</code>
+   * <code>string topic = 6;</code>
    */
   java.lang.String getTopic();
   /**
-   * <code>string topic = 7;</code>
+   * <code>string topic = 6;</code>
    */
   com.google.protobuf.ByteString
       getTopicBytes();
 
   /**
-   * <code>int32 classify = 8;</code>
+   * <code>int32 classify = 7;</code>
    */
   int getClassify();
 }

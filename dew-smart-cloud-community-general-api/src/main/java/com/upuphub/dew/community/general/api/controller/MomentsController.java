@@ -25,10 +25,10 @@ public class MomentsController {
     @Autowired
     MomentsService momentsService;
 
-    @ApiOperation(value = "获取图片上传凭证")
-    @ApiParam(name = "usernameAndPassword",required = true,value = "用户登录/注册信息，同时包含用户的设备信息")
-    @PostMapping(value = "/image/token",consumes =  MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ServiceResponseMessage qiNiuCloudImageToken(@RequestBody @Validated MomentDynamicContentReq momentDynamicContent){
+    @ApiOperation(value = "上传用户动态信息")
+    @ApiParam(name = "momentDynamicContent",required = true,value = "用户上传编辑文章正文")
+    @PostMapping(value = "/build",consumes =  MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage postMomentsDynamicContent(@RequestBody @Validated MomentDynamicContentReq momentDynamicContent){
         return ServiceResponseMessage.createBySuccessCodeMessage(
                 momentsService.postMomentDynamicContent(momentDynamicContent)
         );

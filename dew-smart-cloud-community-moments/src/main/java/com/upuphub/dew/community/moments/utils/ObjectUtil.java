@@ -1,8 +1,14 @@
 package com.upuphub.dew.community.moments.utils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
+
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 
 /**
  * 对象相关工具
@@ -45,5 +51,27 @@ public class ObjectUtil {
         Map<String,Object> map = new HashMap<>();
         objectMap.forEach(map::put);
         return map;
+    }
+
+
+    public static Map<String,Object> beanToMap(Object bean, Set<String> ignoreSet){
+        Map<String,Object> map = new HashMap<>();
+        try {
+            //获取指定类的BeanInfo 对象
+            BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass(), Object.class);
+            //获取所有的属性描述器
+            PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+            for(PropertyDescriptor pd:pds){
+                String key = pd.getName();
+                Method getter = pd.getReadMethod();
+                Object value = getter.invoke(bean);
+                if(!ignoreSet.contains(key) && null != value){
+                    map.put(key, value);
+                }
+            }
+            return map;
+        } catch (IllegalAccessException | IntrospectionException | InvocationTargetException e) {
+            return Collections.emptyMap();
+        }
     }
 }

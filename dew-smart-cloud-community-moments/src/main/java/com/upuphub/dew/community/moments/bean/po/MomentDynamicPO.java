@@ -1,7 +1,8 @@
 package com.upuphub.dew.community.moments.bean.po;
 
 
-import com.upuphub.dew.community.connection.annotation.ProtobufMapper;
+import com.upuphub.dew.community.connection.annotation.ProtobufField;
+import com.upuphub.dew.community.moments.utils.MongoKeysConst;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -33,79 +34,82 @@ public class MomentDynamicPO implements Serializable {
      * 消息动态的ID
      */
     @Id
-    @Field("id")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_ID)
+    @ProtobufField(ignore = true)
     private Long dynamicId;
 
     /**
      * 消息动态的生产者
      */
-    @Field("founder")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_FOUNDER)
     @Indexed
-    @ProtobufMapper("uin")
+    @ProtobufField("uin")
     private Long founderUin;
 
     /**
      * 标记是否未完成
      */
-    @Field("draft")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_DRAFT)
     @Indexed
+    @ProtobufField(ignore = true)
     private boolean isDraft;
 
     /**
      * 消息动态的Topic
      */
-    @Field("topic")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_TOPIC)
     @Indexed
-    @ProtobufMapper("topic")
+    @ProtobufField("topic")
     private String topic;
 
     /**
      * 动态消息的分类信息
      */
-    @Field("classify")
-    @ProtobufMapper("dynamic")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_CLASSIFY)
+    @ProtobufField("classify")
     private Integer classify;
 
     /**
      * 动态消息的正文
      */
-    @Field("content")
-    @ProtobufMapper("dynamic")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_CONTENT)
+    @ProtobufField("dynamic")
     private String content;
 
     /**
      * 动态消息的图片列表
      */
-    @Field("pictures")
-    @ProtobufMapper("pictures")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_PICTURES)
+    @ProtobufField(ignore = true)
     private List<String> pictures;
 
     /**
      * 动态消息的创建时间
      */
-    @Field("create_time")
-    @ProtobufMapper("createTime")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_CREATE_TIME)
+    @ProtobufField(ignore = true)
     private Long createTime;
 
     /**
      * 纬度
      */
-    @Field("latitude")
-    @ProtobufMapper("latitude")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_LATITUDE)
+    @ProtobufField("latitude")
     private Double latitude;
 
     /**
      * 经度
      */
-    @Field("longitude")
-    @ProtobufMapper("longitude")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_LONGITUDE)
+    @ProtobufField("longitude")
     private Double longitude;
 
 
     /**
      * 动态消息的更新时间
      */
-    @Field("update_time")
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_UPDATE_TIME)
+    @ProtobufField(ignore = true)
     private Long updateTime;
 }
 

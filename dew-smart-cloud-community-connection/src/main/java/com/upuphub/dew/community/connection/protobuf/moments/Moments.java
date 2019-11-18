@@ -28,13 +28,12 @@ public final class Moments {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rmoments.proto\"\240\001\n\024MomentDynamicContent" +
-      "\022\013\n\003uin\030\001 \001(\003\022\022\n\ncreateTime\030\002 \001(\003\022\021\n\tlon" +
-      "gitude\030\003 \001(\001\022\020\n\010latitude\030\004 \001(\001\022\017\n\007dynami" +
-      "c\030\005 \001(\t\022\020\n\010pictures\030\006 \003(\t\022\r\n\005topic\030\007 \001(\t" +
-      "\022\020\n\010classify\030\010 \001(\005B9\n5com.upuphub.dew.co" +
-      "mmunity.connection.protobuf.momentsP\001b\006p" +
-      "roto3"
+      "\n\rmoments.proto\"\214\001\n\024MomentDynamicContent" +
+      "\022\013\n\003uin\030\001 \001(\003\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010lati" +
+      "tude\030\003 \001(\001\022\017\n\007dynamic\030\004 \001(\t\022\020\n\010pictures\030" +
+      "\005 \003(\t\022\r\n\005topic\030\006 \001(\t\022\020\n\010classify\030\007 \001(\005B9" +
+      "\n5com.upuphub.dew.community.connection.p" +
+      "rotobuf.momentsP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -45,7 +44,7 @@ public final class Moments {
     internal_static_MomentDynamicContent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MomentDynamicContent_descriptor,
-        new java.lang.String[] { "Uin", "CreateTime", "Longitude", "Latitude", "Dynamic", "Pictures", "Topic", "Classify", });
+        new java.lang.String[] { "Uin", "Longitude", "Latitude", "Dynamic", "Pictures", "Topic", "Classify", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

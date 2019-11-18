@@ -5,7 +5,9 @@ import com.upuphub.dew.community.connection.protobuf.account.BaseProfile;
 import com.upuphub.dew.community.connection.protobuf.account.Location;
 import com.upuphub.dew.community.connection.protobuf.account.Profile;
 import com.upuphub.dew.community.connection.protobuf.account.UsernameAndPassword;
+import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
 import com.upuphub.dew.community.general.api.bean.vo.req.LocationReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.MomentDynamicContentReq;
 import com.upuphub.dew.community.general.api.bean.vo.req.NewProfileReq;
 import com.upuphub.dew.community.general.api.bean.vo.req.UsernameAndPasswordReq;
 import com.upuphub.dew.community.general.api.bean.vo.resp.*;
@@ -76,6 +78,18 @@ public class EDSUtil {
                 .setLongitude(locationReq.getLongitude())
                 .setLatitude(locationReq.getLatitude())
                 .setUin(HttpUtil.getUserUin())
+                .build();
+    }
+
+    public static MomentDynamicContent toProtobufMessage(MomentDynamicContentReq momentDynamicContentReq) {
+        return MomentDynamicContent.newBuilder()
+                .setUin(HttpUtil.getUserUin())
+                .setLatitude(momentDynamicContentReq.getLatitude())
+                .setLongitude(momentDynamicContentReq.getLongitude())
+                .setDynamic(momentDynamicContentReq.getDynamic())
+                .addAllPictures(momentDynamicContentReq.getPictures())
+                .setTopic(momentDynamicContentReq.getTopic())
+                .setClassify(momentDynamicContentReq.getClassify())
                 .build();
     }
 }

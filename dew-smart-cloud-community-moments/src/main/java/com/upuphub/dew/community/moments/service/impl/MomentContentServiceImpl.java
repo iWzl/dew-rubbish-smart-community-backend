@@ -1,20 +1,22 @@
 package com.upuphub.dew.community.moments.service.impl;
 
+import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
 import com.upuphub.dew.community.moments.service.MomentContentService;
+import com.upuphub.dew.community.moments.utils.MongoKeysConst;
 import com.upuphub.dew.community.moments.utils.ObjectUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Slf4j
 @Service
 public class MomentContentServiceImpl implements MomentContentService {
     @Resource
@@ -23,11 +25,11 @@ public class MomentContentServiceImpl implements MomentContentService {
     @Override
     public Long searchMomentDynamicContentDraftId(long uin) {
         Map<String,Object> where = new HashMap<>();
-        where.put("founderUin",uin);
-        where.put("draft",true);
+        where.put(MongoKeysConst.MOMENTS_DYNAMIC_FOUNDER,uin);
+        where.put(MongoKeysConst.MOMENTS_DYNAMIC_DRAFT,true);
         MomentDynamicPO momentDynamicContent = mongoTemplate
-                .findOne(createEasyQuery(Collections.singletonList("dynamicId"),where, 1)
-                        .with(new Sort(Sort.Direction.DESC,"dynamicId")), MomentDynamicPO.class);
+                .findOne(createEasyQuery(Collections.singletonList(MongoKeysConst.MOMENTS_DYNAMIC_ID),where, 1)
+                        .with(new Sort(Sort.Direction.DESC,MongoKeysConst.MOMENTS_DYNAMIC_ID)), MomentDynamicPO.class);
         if(!ObjectUtil.isEmpty(momentDynamicContent)){
             return momentDynamicContent.getDynamicId();
         }
@@ -36,14 +38,30 @@ public class MomentContentServiceImpl implements MomentContentService {
 
     @Override
     public int createMomentDynamicContent(MomentDynamicPO momentDynamicContent) {
-        System.out.println();
+        momentDynamicContent.setCreateTime(System.currentTimeMillis());
+        momentDynamicContent.setUpdateTime(System.currentTimeMillis());
+        momentDynamicContent.setDraft(true);
+        mongoTemplate.save(momentDynamicContent);
         return 0;
     }
 
     @Override
     public int updateMomentDynamicContent(MomentDynamicPO momentDynamicContent) {
-        System.out.println();
+        momentDynamicContent.setUpdateTime(System.currentTimeMillis());
+        Map<String, Object> where = new LinkedHashMap<>();
+        where.put(MongoKeysConst.MOMENTS_DYNAMIC_ID, momentDynamicContent.getDynamicId());
+        where.put(MongoKeysConst.MOMENTS_DYNAMIC_FOUNDER,momentDynamicContent.getFounderUin());
+        mongoTemplate.updateFirst(createEasyQuery(null,where,null),
+                createEasyUpdate(ObjectUtil.beanToMap(momentDynamicContent,dynamicIgnoreSet())),MomentDynamicPO.class);
         return 0;
+    }
+
+    private Set<String> dynamicIgnoreSet(){
+        Set<String> ignoreSet = new HashSet<>();
+        ignoreSet.add(MongoKeysConst.MOMENTS_DYNAMIC_ID);
+        ignoreSet.add(MongoKeysConst.MOMENTS_DYNAMIC_FOUNDER);
+        ignoreSet.add(MongoKeysConst.MOMENTS_DYNAMIC_DRAFT);
+        return ignoreSet;
     }
 
     /**
@@ -67,4 +85,17 @@ public class MomentContentServiceImpl implements MomentContentService {
         }
         return query;
     }
+    /**
+     * 创建基础的数据更新条件
+     * @param updateData  更新的条件
+     * @return 更新组合条件
+     */
+    private Update createEasyUpdate(Map<String, Object> updateData) {
+        Update update = new Update();
+        if (!ObjectUtil.isEmpty(updateData)) {
+            updateData.forEach(update::set);
+        }
+        return update;
+    }
+
 }

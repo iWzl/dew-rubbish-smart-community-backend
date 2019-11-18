@@ -7,7 +7,7 @@ spring:
       discovery:
         server-addr: 119.3.147.11:8848
   datasource:
-    url: jdbc:mysql://localhost:3306/rbc_account?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/dew_moments?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     name: rbc_account
     username: root
     password: 123456
@@ -15,7 +15,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
   data:
     mongodb:
-      uri: mongodb://localhost:27017/dew_account
+      uri: mongodb://localhost:27017/dew_moments
 
 server:
   port: 15752
