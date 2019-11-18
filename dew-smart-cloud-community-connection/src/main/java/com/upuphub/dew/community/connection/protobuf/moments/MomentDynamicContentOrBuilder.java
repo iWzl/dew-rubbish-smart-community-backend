@@ -65,4 +65,9 @@ public interface MomentDynamicContentOrBuilder extends
    * <code>int32 classify = 7;</code>
    */
   int getClassify();
+
+  /**
+   * <code>int64 updateTime = 8;</code>
+   */
+  long getUpdateTime();
 }

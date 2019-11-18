@@ -12,6 +12,9 @@ import com.upuphub.dew.community.general.api.bean.vo.req.NewProfileReq;
 import com.upuphub.dew.community.general.api.bean.vo.req.UsernameAndPasswordReq;
 import com.upuphub.dew.community.general.api.bean.vo.resp.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Leo Wang
  * @version 1.0
@@ -91,5 +94,26 @@ public class EDSUtil {
                 .setTopic(momentDynamicContentReq.getTopic())
                 .setClassify(momentDynamicContentReq.getClassify())
                 .build();
+    }
+
+    public static MomentDynamicContentResp toHttpVoBean(MomentDynamicContent momentDynamicContent) {
+        MomentDynamicContentResp momentDynamicContentResp = new MomentDynamicContentResp();
+        momentDynamicContentResp.setTopic(momentDynamicContent.getTopic());
+        momentDynamicContentResp.setClassify(momentDynamicContent.getClassify());
+        momentDynamicContentResp.setDynamic(momentDynamicContent.getDynamic());
+        momentDynamicContentResp.setLatitude(momentDynamicContent.getLatitude());
+        momentDynamicContentResp.setLongitude(momentDynamicContent.getLongitude());
+        momentDynamicContentResp.setPictures(getPicsList(momentDynamicContent));
+        momentDynamicContentResp.setUpdateTime(momentDynamicContent.getUpdateTime());
+        return momentDynamicContentResp;
+    }
+
+
+    private static List<String> getPicsList(MomentDynamicContent dynamicContent){
+        List<String> picList = new ArrayList<>();
+        for (int i = 0; i < dynamicContent.getPicturesCount() ; i++) {
+            picList.add(dynamicContent.getPictures(i));
+        }
+        return picList;
     }
 }

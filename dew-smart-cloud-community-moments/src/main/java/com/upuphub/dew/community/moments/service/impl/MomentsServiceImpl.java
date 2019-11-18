@@ -9,6 +9,7 @@ import com.upuphub.dew.community.moments.component.SnowflakeId;
 import com.upuphub.dew.community.moments.service.MomentContentService;
 import com.upuphub.dew.community.moments.service.MomentsService;
 
+import com.upuphub.dew.community.moments.utils.EdsUtil;
 import com.upuphub.dew.community.moments.utils.ObjectUtil;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,12 @@ public class MomentsServiceImpl implements MomentsService {
                 return MomentsConst.ERROR_CODE_COMMON_FAIL;
             }
         }
+    }
+
+    @Override
+    public MomentDynamicContent pullDraftMomentDynamicContent(long founder) {
+        MomentDynamicPO momentDynamicPO = momentContentService.searchMomentDynamicContent(founder);
+        return EdsUtil.toProtobufMessage(momentDynamicPO);
     }
 
     private List<String> getPicsList(MomentDynamicContent dynamicContent){

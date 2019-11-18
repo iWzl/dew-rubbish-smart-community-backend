@@ -1,5 +1,6 @@
 package com.upuphub.dew.community.moments.service.impl;
 
+import com.upuphub.dew.community.connection.annotation.ProtobufField;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
 import com.upuphub.dew.community.moments.service.MomentContentService;
 import com.upuphub.dew.community.moments.utils.MongoKeysConst;
@@ -13,6 +14,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Field;
 import java.util.*;
 
 @Slf4j
@@ -33,6 +35,20 @@ public class MomentContentServiceImpl implements MomentContentService {
             return momentDynamicContent.getDynamicId();
         }
         return 0L;
+    }
+
+    @Override
+    public MomentDynamicPO searchMomentDynamicContent(long uin) {
+        Map<String,Object> where = new HashMap<>();
+        where.put(MongoKeysConst.MOMENTS_DYNAMIC_FOUNDER,uin);
+        where.put(MongoKeysConst.MOMENTS_DYNAMIC_DRAFT,true);
+        MomentDynamicPO momentDynamicContent = mongoTemplate
+                .findOne(createEasyQuery(mongoSelectKeysList(MomentDynamicPO.class,Collections.emptySet()),where, 1)
+                        .with(new Sort(Sort.Direction.DESC,MongoKeysConst.MOMENTS_DYNAMIC_ID)), MomentDynamicPO.class);
+        if(!ObjectUtil.isEmpty(momentDynamicContent)){
+            return momentDynamicContent;
+        }
+        return null;
     }
 
     @Override
@@ -61,6 +77,25 @@ public class MomentContentServiceImpl implements MomentContentService {
         ignoreSet.add(MongoKeysConst.MOMENTS_DYNAMIC_FOUNDER);
         ignoreSet.add(MongoKeysConst.MOMENTS_DYNAMIC_DRAFT);
         return ignoreSet;
+    }
+
+    private List<String> mongoSelectKeysList(Class clazz,Set<String> ignoreSet){
+       List<String> mongoKeysList = new ArrayList<>();
+        for (Field field : clazz.getFields()) {
+            ProtobufField protobufField = field.getAnnotation(ProtobufField.class);
+            if(null != protobufField && !"".equals(protobufField.value())){
+                if(ignoreSet.contains(protobufField.value())){
+                    continue;
+                }
+                mongoKeysList.add(protobufField.value());
+            }else {
+                if(ignoreSet.contains(field.getName())){
+                    continue;
+                }
+                mongoKeysList.add(field.getName());
+            }
+        }
+        return mongoKeysList;
     }
 
     /**

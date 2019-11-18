@@ -93,6 +93,11 @@ private static final long serialVersionUID = 0L;
             classify_ = input.readInt32();
             break;
           }
+          case 64: {
+
+            updateTime_ = input.readInt64();
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -261,6 +266,15 @@ private static final long serialVersionUID = 0L;
     return classify_;
   }
 
+  public static final int UPDATETIME_FIELD_NUMBER = 8;
+  private long updateTime_;
+  /**
+   * <code>int64 updateTime = 8;</code>
+   */
+  public long getUpdateTime() {
+    return updateTime_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -295,6 +309,9 @@ private static final long serialVersionUID = 0L;
     }
     if (classify_ != 0) {
       output.writeInt32(7, classify_);
+    }
+    if (updateTime_ != 0L) {
+      output.writeInt64(8, updateTime_);
     }
     unknownFields.writeTo(output);
   }
@@ -335,6 +352,10 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(7, classify_);
     }
+    if (updateTime_ != 0L) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt64Size(8, updateTime_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -366,6 +387,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getTopic())) return false;
     if (getClassify()
         != other.getClassify()) return false;
+    if (getUpdateTime()
+        != other.getUpdateTime()) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -396,6 +419,9 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getTopic().hashCode();
     hash = (37 * hash) + CLASSIFY_FIELD_NUMBER;
     hash = (53 * hash) + getClassify();
+    hash = (37 * hash) + UPDATETIME_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        getUpdateTime());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -543,6 +569,8 @@ private static final long serialVersionUID = 0L;
 
       classify_ = 0;
 
+      updateTime_ = 0L;
+
       return this;
     }
 
@@ -581,6 +609,7 @@ private static final long serialVersionUID = 0L;
       result.pictures_ = pictures_;
       result.topic_ = topic_;
       result.classify_ = classify_;
+      result.updateTime_ = updateTime_;
       onBuilt();
       return result;
     }
@@ -658,6 +687,9 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getClassify() != 0) {
         setClassify(other.getClassify());
+      }
+      if (other.getUpdateTime() != 0L) {
+        setUpdateTime(other.getUpdateTime());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -1021,6 +1053,32 @@ private static final long serialVersionUID = 0L;
     public Builder clearClassify() {
       
       classify_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private long updateTime_ ;
+    /**
+     * <code>int64 updateTime = 8;</code>
+     */
+    public long getUpdateTime() {
+      return updateTime_;
+    }
+    /**
+     * <code>int64 updateTime = 8;</code>
+     */
+    public Builder setUpdateTime(long value) {
+      
+      updateTime_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int64 updateTime = 8;</code>
+     */
+    public Builder clearUpdateTime() {
+      
+      updateTime_ = 0L;
       onChanged();
       return this;
     }

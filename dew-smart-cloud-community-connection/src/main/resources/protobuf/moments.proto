@@ -12,6 +12,11 @@ message MomentDynamicContent {
     repeated string pictures = 5;
     string topic = 6;
     int32 classify = 7;
+    int64 updateTime = 8;
+}
+
+message Founder{
+    int64 founder = 1;                             // 发布者Uin
 }
 
 

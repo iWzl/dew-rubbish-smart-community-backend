@@ -11,6 +11,15 @@ public interface MomentContentService {
      */
     Long searchMomentDynamicContentDraftId(long uin);
 
+
+    /**
+     * 校验用户是否有未提交的MomentContent信息
+     *
+     * @param uin 用户Uin
+     * @return 未提交的MomentContent
+     */
+    MomentDynamicPO searchMomentDynamicContent(long uin);
+
     /**
      * 创建MomentDynamicContent正文信息
      *

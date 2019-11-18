@@ -2,6 +2,7 @@ package com.upuphub.dew.community.general.api.service.remote.sentinel;
 
 
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.moments.Founder;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
 import com.upuphub.dew.community.connection.protobuf.push.EmailAndCode;
 import com.upuphub.dew.community.general.api.exception.RpcServiceConnectionException;
@@ -19,6 +20,11 @@ public class DewMomentsSentinel implements DewMomentsService {
 
     @Override
     public RpcResultCode commitMomentDynamicContent(MomentDynamicContent dynamicContent) {
+        throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
+    }
+
+    @Override
+    public MomentDynamicContent pullDraftMomentDynamicContent(Founder founder) {
         throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
     }
 }

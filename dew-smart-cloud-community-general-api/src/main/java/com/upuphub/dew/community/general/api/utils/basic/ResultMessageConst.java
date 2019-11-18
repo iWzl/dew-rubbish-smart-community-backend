@@ -20,7 +20,12 @@ public class ResultMessageConst {
     public static final String RESET_PROFILE_PARAMS_SUCCESS = "修改Profile信息成功";
     public static final String RESET_PROFILE_PARAMS_FAIL = "修改Profile信息失败";
 
+    public static final String UPDATE_MOMENTS_DYNAMIC_SUCCESS = "更新动态信息成功";
+
+
+
     public static final String CALL_RPC_ACCOUNT_SVR_ERROR = "Call Rpc Account Model Error";
     public static final String RPC_ACCOUNT_SVR_OPERATION_ERROR = "Rpc Account Model Operation Error";
+    public static final String CALL_RPC_MOMENTS_SVR_ERROR = "Call Rpc Moments Model Error";
 
 }
