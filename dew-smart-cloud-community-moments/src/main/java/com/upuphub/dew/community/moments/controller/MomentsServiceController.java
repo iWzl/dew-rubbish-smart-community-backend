@@ -29,7 +29,7 @@ public class MomentsServiceController {
     }
 
     /**
-     * 创建用户动态信息(草稿)
+     * 拉取用户动态信息(草稿)
      *
      * @param founder 消息发布者Uin
      * @return 用户动态正文的创建结果

@@ -59,6 +59,9 @@ public class MomentsServiceImpl implements MomentsService {
     @Override
     public MomentDynamicContent pullDraftMomentDynamicContent(long founder) {
         MomentDynamicPO momentDynamicPO = momentContentService.searchMomentDynamicContent(founder);
+        if(null == momentDynamicPO){
+            return MomentDynamicContent.newBuilder().build();
+        }
         return EdsUtil.toProtobufMessage(momentDynamicPO);
     }
 
