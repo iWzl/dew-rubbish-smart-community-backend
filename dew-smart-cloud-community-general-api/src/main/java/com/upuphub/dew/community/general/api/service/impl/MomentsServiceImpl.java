@@ -13,7 +13,6 @@ import com.upuphub.dew.community.general.api.utils.EDSUtil;
 import com.upuphub.dew.community.general.api.utils.HttpUtil;
 import com.upuphub.dew.community.general.api.utils.basic.ResultMessageConst;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 
