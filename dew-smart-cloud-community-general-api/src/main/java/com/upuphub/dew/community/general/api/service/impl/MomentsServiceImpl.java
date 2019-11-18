@@ -1,6 +1,5 @@
 package com.upuphub.dew.community.general.api.service.impl;
 
-import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.constant.MomentsConst;
 import com.upuphub.dew.community.connection.protobuf.moments.Founder;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
