@@ -27,17 +27,24 @@ public class MomentsController {
 
     @ApiOperation(value = "上传用户动态信息")
     @ApiParam(name = "momentDynamicContent",required = true,value = "用户上传编辑文章正文")
-    @PostMapping(value = "/build",consumes =  MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/draft",consumes =  MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ServiceResponseMessage postMomentsDynamicContent(@RequestBody @Validated MomentDynamicContentReq momentDynamicContent){
         return momentsService.postMomentDynamicContent(momentDynamicContent);
     }
 
     @ApiOperation(value = "拉取用户动态草稿")
-    @ApiParam(name = "momentDynamicContent",required = true,value = "用户上传编辑文章正文")
-    @GetMapping(value = "/draft/pull",consumes =  MediaType.ALL_VALUE)
+    @GetMapping(value = "/draft",consumes =  MediaType.ALL_VALUE)
     public ServiceResponseMessage pullDraftMomentDynamicContent(){
         return ServiceResponseMessage.createBySuccessCodeMessage(
                 momentsService.pullDraftMomentDynamicContent()
+        );
+    }
+
+    @ApiOperation(value = "删除用户动态草稿")
+    @DeleteMapping(value = "/draft",consumes =  MediaType.ALL_VALUE)
+    public ServiceResponseMessage deleteDraftMomentDynamicContent(){
+        return ServiceResponseMessage.createBySuccessCodeMessage(
+                momentsService.deleteDraftMomentDynamicContent()
         );
     }
 }

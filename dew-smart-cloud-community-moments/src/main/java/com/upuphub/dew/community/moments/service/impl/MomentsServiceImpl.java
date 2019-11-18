@@ -34,7 +34,7 @@ public class MomentsServiceImpl implements MomentsService {
             assert momentDynamicContent != null;
             momentDynamicContent.setDynamicId(momentDynamicId);
             momentDynamicContent.setPictures(getPicsList(dynamicContent));
-            int error =  momentContentService.createMomentDynamicContent(momentDynamicContent);
+            int error =  momentContentService.createDraftMomentDynamicContent(momentDynamicContent);
             if(error == MOMENTS_ERROR_CODE.SUCCESS.value()){
                 return MomentsConst.ERROR_CODE_SUCCESS;
             }else {
@@ -47,7 +47,7 @@ public class MomentsServiceImpl implements MomentsService {
             momentDynamicContent.setDynamicId(momentDynamicId);
             momentDynamicContent.setPictures(getPicsList(dynamicContent));
             // 执行更新新资源操作
-            int error = momentContentService.updateMomentDynamicContent(momentDynamicContent);
+            int error = momentContentService.updateDraftMomentDynamicContent(momentDynamicContent);
             if(error == MOMENTS_ERROR_CODE.SUCCESS.value()){
                 return MomentsConst.ERROR_CODE_SUCCESS;
             }else {
@@ -60,6 +60,12 @@ public class MomentsServiceImpl implements MomentsService {
     public MomentDynamicContent pullDraftMomentDynamicContent(long founder) {
         MomentDynamicPO momentDynamicPO = momentContentService.searchMomentDynamicContent(founder);
         return EdsUtil.toProtobufMessage(momentDynamicPO);
+    }
+
+    @Override
+    public int deleteDraftMomentDynamicContent(long founder) {
+        momentContentService.deleteDraftMomentDynamicContent(founder);
+        return MomentsConst.ERROR_CODE_SUCCESS;
     }
 
     private List<String> getPicsList(MomentDynamicContent dynamicContent){

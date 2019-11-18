@@ -21,7 +21,7 @@ public class MomentsServiceController {
      * @param dynamicContent 用户动态信息正文
      * @return 用户动态正文的创建结果
      */
-    @PostMapping(value = "/dynamic/build")
+    @PostMapping(value = "/dynamic/draft")
     public RpcResultCode commitMomentDynamicContent(@RequestBody MomentDynamicContent dynamicContent) {
         return RpcResultCode.newBuilder().setCode(
                 momentsService.commitMomentDynamicContent(dynamicContent)
@@ -34,9 +34,22 @@ public class MomentsServiceController {
      * @param founder 消息发布者Uin
      * @return 用户动态正文的创建结果
      */
-    @PostMapping(value = "/dynamic/draft/pull")
+    @PutMapping(value = "/dynamic/draft")
     public MomentDynamicContent pullDraftMomentDynamicContent(@RequestBody Founder founder) {
         return momentsService.pullDraftMomentDynamicContent(founder.getFounder());
+    }
+
+    /**
+     * 删除用户动态信息(草稿)
+     *
+     * @param founder 消息发布者Uin
+     * @return 用户动态正文的创建结果
+     */
+    @DeleteMapping(value = "/dynamic/draft")
+    public RpcResultCode deleteDraftMomentDynamicContent(@RequestBody Founder founder) {
+        return RpcResultCode.newBuilder().setCode(
+                momentsService.deleteDraftMomentDynamicContent(founder.getFounder())
+        ).build();
     }
 
 

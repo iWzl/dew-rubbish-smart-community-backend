@@ -27,4 +27,9 @@ public class DewMomentsSentinel implements DewMomentsService {
     public MomentDynamicContent pullDraftMomentDynamicContent(Founder founder) {
         throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
     }
+
+    @Override
+    public RpcResultCode deleteDraftMomentDynamicContent(Founder founder) {
+        throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
+    }
 }

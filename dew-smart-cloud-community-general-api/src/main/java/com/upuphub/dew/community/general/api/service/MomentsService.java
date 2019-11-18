@@ -25,4 +25,11 @@ public interface MomentsService {
      * @return 用户正在编辑动态正文记录
      */
     MomentDynamicContentResp pullDraftMomentDynamicContent();
+
+    /**
+     * 删除用户动态草稿的编辑信息
+     *
+     * @return 用户动态的草稿的删除情况
+     */
+    ServiceResponseMessage deleteDraftMomentDynamicContent();
 }

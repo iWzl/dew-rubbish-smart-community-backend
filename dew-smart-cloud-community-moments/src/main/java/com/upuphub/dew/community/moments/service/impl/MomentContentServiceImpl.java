@@ -52,7 +52,7 @@ public class MomentContentServiceImpl implements MomentContentService {
     }
 
     @Override
-    public int createMomentDynamicContent(MomentDynamicPO momentDynamicContent) {
+    public int createDraftMomentDynamicContent(MomentDynamicPO momentDynamicContent) {
         momentDynamicContent.setCreateTime(System.currentTimeMillis());
         momentDynamicContent.setUpdateTime(System.currentTimeMillis());
         momentDynamicContent.setDraft(true);
@@ -61,13 +61,22 @@ public class MomentContentServiceImpl implements MomentContentService {
     }
 
     @Override
-    public int updateMomentDynamicContent(MomentDynamicPO momentDynamicContent) {
+    public int updateDraftMomentDynamicContent(MomentDynamicPO momentDynamicContent) {
         momentDynamicContent.setUpdateTime(System.currentTimeMillis());
         Map<String, Object> where = new LinkedHashMap<>();
         where.put(MongoKeysConst.MOMENTS_DYNAMIC_ID, momentDynamicContent.getDynamicId());
         where.put(MongoKeysConst.MOMENTS_DYNAMIC_FOUNDER,momentDynamicContent.getFounderUin());
         mongoTemplate.updateFirst(createEasyQuery(null,where,null),
                 createEasyUpdate(ObjectUtil.beanToMap(momentDynamicContent,dynamicIgnoreSet())),MomentDynamicPO.class);
+        return 0;
+    }
+
+    @Override
+    public int deleteDraftMomentDynamicContent(long founder) {
+        Map<String,Object> where = new HashMap<>();
+        where.put(MongoKeysConst.MOMENTS_DYNAMIC_FOUNDER,founder);
+        where.put(MongoKeysConst.MOMENTS_DYNAMIC_DRAFT,true);
+        mongoTemplate.remove(createEasyQuery(null,where,null),MomentDynamicPO.class);
         return 0;
     }
 

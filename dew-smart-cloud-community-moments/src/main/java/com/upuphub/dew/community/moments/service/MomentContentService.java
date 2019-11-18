@@ -26,7 +26,7 @@ public interface MomentContentService {
      * @param momentDynamicContent 用户动态正文得详细信息
      * @return 处理得结果状态
      */
-    int createMomentDynamicContent(MomentDynamicPO momentDynamicContent);
+    int createDraftMomentDynamicContent(MomentDynamicPO momentDynamicContent);
 
     /**
      * 更新MomentDynamicContent正文信息
@@ -34,5 +34,13 @@ public interface MomentContentService {
      * @param momentDynamicContent 用户动态正文得详细信息
      * @return 处理得结果状态
      */
-    int updateMomentDynamicContent(MomentDynamicPO momentDynamicContent);
+    int updateDraftMomentDynamicContent(MomentDynamicPO momentDynamicContent);
+
+    /**
+     * 删除用户动态信息结果
+     *
+     * @param founder 用户Uin
+     * @return 删除用户动态草稿
+     */
+    int deleteDraftMomentDynamicContent(long founder);
 }

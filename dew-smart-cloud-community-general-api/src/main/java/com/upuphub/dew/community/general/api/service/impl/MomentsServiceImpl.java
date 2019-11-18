@@ -35,4 +35,13 @@ public class MomentsServiceImpl implements MomentsService {
         MomentDynamicContent momentDynamicContent = remoteMomentsService.pullDraftMomentDynamicContent(Founder.newBuilder().setFounder(HttpUtil.getUserUin()).build());
         return EDSUtil.toHttpVoBean(momentDynamicContent);
     }
+
+    @Override
+    public ServiceResponseMessage deleteDraftMomentDynamicContent() {
+        int error = remoteMomentsService.deleteDraftMomentDynamicContent(Founder.newBuilder().setFounder(HttpUtil.getUserUin()).build()).getCode();
+        if(error == MomentsConst.ERROR_CODE_SUCCESS){
+            return ServiceResponseMessage.createBySuccessCodeMessage(ResultMessageConst.DELETE_MOMENTS_DRAFT_SUCCESS);
+        }
+        return ServiceResponseMessage.createByFailCodeMessage(ResultMessageConst.DELETE_MOMENTS_DRAFT_FAIL);
+    }
 }

@@ -19,4 +19,12 @@ public interface MomentsService {
      * @return 消息的正文信息
      */
     MomentDynamicContent pullDraftMomentDynamicContent(long founder);
+
+    /**
+     * 放弃动态草稿的修改
+     *
+     * @param founder 消息发送者
+     * @return 动态消息的草稿删除结果
+     */
+    int deleteDraftMomentDynamicContent(long founder);
 }
