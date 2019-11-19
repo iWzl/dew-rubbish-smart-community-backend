@@ -26,27 +26,27 @@ import java.util.zip.GZIPInputStream;
  */
 @RestController
 @RequestMapping(value = "/api/test")
-@Api(value = "ProtobufTest",tags = "测试API")
+@Api(value = "ProtobufTest", tags = "测试API")
 public class ProtobufTestController {
 
     @ApiOperation(value = "ProtobufTest")
-    @ApiParam(name = "inputStream",required = true,value = "ProtobufTest")
-    @PostMapping(value = "/protobuf/base64",consumes = "application/x-protobuf;charset=UTF-8",produces =  MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiParam(name = "inputStream", required = true, value = "ProtobufTest")
+    @PostMapping(value = "/protobuf/base64", consumes = "application/x-protobuf;charset=UTF-8", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ServiceResponseMessage postProtobufBase64(InputStream inputStream) throws IOException {
         byte[] body = input2byte(inputStream);
         String base64 = new String(body, StandardCharsets.UTF_8);
         byte[] protoBytes = Base64.getDecoder().decode(base64);
         Location location = Location.parseFrom(protoBytes);
-        return ServiceResponseMessage.createBySuccessCodeMessage(location.getCity()+location.getCountry()+location.getProvince()+location.getLatitude());
+        return ServiceResponseMessage.createBySuccessCodeMessage(location.getCity() + location.getCountry() + location.getProvince() + location.getLatitude());
     }
 
     @ApiOperation(value = "ProtobufTest")
-    @ApiParam(name = "inputStream",required = true,value = "ProtobufTest")
-    @PostMapping(value = "/protobuf/byte",consumes = "application/x-protobuf;charset=UTF-8",produces =  MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiParam(name = "inputStream", required = true, value = "ProtobufTest")
+    @PostMapping(value = "/protobuf/byte", consumes = "application/x-protobuf;charset=UTF-8", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ServiceResponseMessage postProtobufByte(InputStream inputStream) throws IOException {
         byte[] body = input2byte(inputStream);
         Location location = Location.parseFrom(body);
-        return ServiceResponseMessage.createBySuccessCodeMessage(location.getCity()+location.getCountry()+location.getProvince()+location.getLatitude());
+        return ServiceResponseMessage.createBySuccessCodeMessage(location.getCity() + location.getCountry() + location.getProvince() + location.getLatitude());
     }
 
 
@@ -82,30 +82,26 @@ public class ProtobufTestController {
         httpServletResponse.getOutputStream().write(Base64.getEncoder().encode(location.toByteArray()));
     }
 
-    public static  byte[] input2byte(InputStream inStream) throws IOException {
+    public static byte[] input2byte(InputStream inStream) throws IOException {
         ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
         byte[] buff = new byte[100];
-        int rc = 0;
+        int rc;
         while ((rc = inStream.read(buff, 0, 100)) > 0) {
             swapStream.write(buff, 0, rc);
         }
         return swapStream.toByteArray();
     }
 
-    public static byte[] unCompress(InputStream in) {
+    public static byte[] unCompress(InputStream in) throws IOException {
         if (in == null) {
             return null;
         }
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try {
-            GZIPInputStream unGzip = new GZIPInputStream(in);
-            byte[] buffer = new byte[256];
-            int n;
-            while ((n = unGzip.read(buffer)) >= 0) {
-                out.write(buffer, 0, n);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        GZIPInputStream unGzip = new GZIPInputStream(in);
+        byte[] buffer = new byte[256];
+        int n;
+        while ((n = unGzip.read(buffer)) >= 0) {
+            out.write(buffer, 0, n);
         }
         return out.toByteArray();
     }
