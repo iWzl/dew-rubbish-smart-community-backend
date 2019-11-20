@@ -3,7 +3,7 @@
 <mapper namespace="com.upuphub.dew.community.moments.dao.MomentsPublishMomentsPublishDao">
     <resultMap id="BaseResultMap" type="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="geohash" jdbcType="VARCHAR" property="geohash"/>
+        <result column="geo_hash" jdbcType="VARCHAR" property="geoHash"/>
         <result column="like_number" jdbcType="INTEGER" property="likeNumber"/>
         <result column="dynamic_id" jdbcType="BIGINT" property="dynamicId"/>
         <result column="publish_by" jdbcType="BIGINT" property="publishBy"/>
@@ -15,7 +15,7 @@
         <result column="publish_status" jdbcType="INTEGER" property="publishStatus"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, geohash, like_number, dynamic_id, publish_by, publish_time, publish_type, longitude,latitude, update_time, publish_status
+        id, geo_hash, like_number, dynamic_id, publish_by, publish_time, publish_type, longitude,latitude, update_time, publish_status
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -32,14 +32,13 @@
     </delete>
 
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO" useGeneratedKeys="true">
-        insert into moments_publish (geohash, like_number, dynamic_id,
+        insert into moments_publish (geo_hash, like_number, dynamic_id,
                                      publish_by, publish_time, publish_type,
                                      longitude,latitude,update_time,
                                      publish_status)
         values (#{geohash,jdbcType=VARCHAR}, #{likeNumber,jdbcType=INTEGER}, #{dynamicId,jdbcType=BIGINT},
                 #{publishBy,jdbcType=BIGINT}, #{publishTime,jdbcType=BIGINT}, #{publishType,jdbcType=CHAR},
-                #{longitude,jdbcType=DOUBLE}, #{
-latitude,jdbcType=DOUBLE}, #{updateTime,jdbcType=BIGINT},
+                #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, #{updateTime,jdbcType=BIGINT},
                 #{publishStatus,jdbcType=INTEGER})
     </insert>
 
@@ -47,8 +46,8 @@ latitude,jdbcType=DOUBLE}, #{updateTime,jdbcType=BIGINT},
             useGeneratedKeys="true">
         insert into moments_publish
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="geohash != null">
-                geohash,
+            <if test="geoHash != null">
+                geoHash,
             </if>
             <if test="likeNumber != null">
                 like_number,
@@ -79,8 +78,8 @@ latitude,jdbcType=DOUBLE}, #{updateTime,jdbcType=BIGINT},
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="geohash != null">
-                #{geohash,jdbcType=VARCHAR},
+            <if test="geoHash != null">
+                #{geoHash,jdbcType=VARCHAR},
             </if>
             <if test="likeNumber != null">
                 #{likeNumber,jdbcType=INTEGER},
@@ -115,8 +114,8 @@ latitude,jdbcType=DOUBLE}, #{updateTime,jdbcType=BIGINT},
     <update id="updateByPrimaryKeySelective" parameterType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
         update moments_publish
         <set>
-            <if test="geohash != null">
-                geohash = #{geohash,jdbcType=VARCHAR},
+            <if test="geoHash != null">
+                geoHash = #{geoHash,jdbcType=VARCHAR},
             </if>
             <if test="likeNumber != null">
                 like_number = #{likeNumber,jdbcType=INTEGER},
@@ -151,7 +150,7 @@ latitude,jdbcType=DOUBLE}, #{updateTime,jdbcType=BIGINT},
     </update>
     <update id="updateByPrimaryKey" parameterType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
         update moments_publish
-        set geohash        = #{geohash,jdbcType=VARCHAR},
+        set geo_hash        = #{geoHash,jdbcType=VARCHAR},
             like_number    = #{likeNumber,jdbcType=INTEGER},
             dynamic_id     = #{dynamicId,jdbcType=BIGINT},
             publish_by     = #{publishBy,jdbcType=BIGINT},

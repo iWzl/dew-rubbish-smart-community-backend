@@ -1,22 +1,74 @@
-syntax = "proto3"; // 定义语法类型，通常proto3好于proto2，proto2好于proto1
-
-
-option java_package = "com.upuphub.dew.community.connection.protobuf.moments";      // 定义报名
+syntax = "proto3";
+option java_package = "com.upuphub.dew.community.connection.protobuf.moments";
 option java_multiple_files = true;
 
 message MomentDynamicContent {
-    int64 uin = 1;
-    double longitude = 2;
-    double latitude = 3;
-    string dynamic = 4;
-    repeated string pictures = 5;
-    string topic = 6;
-    int32 classify = 7;
-    int64 updateTime = 8;
+    int64 uin = 1;                      // 消息所属的UIN
+    double longitude = 2;               // 用户发布消息的经度
+    double latitude = 3;                // 用户发布消息的维度
+    string dynamic = 4;                 // 用户发布消息的消息正文
+    repeated string pictures = 5;       // 用户发布消息携带的配图
+    string topic = 6;                   // 用户动态信息参与的话题
+    int32 classify = 7;                 // 用户消息动态的种类
+    int64 updateTime = 8;               // 用户消息动态的更新时间
+    int64 dynamicContentId = 9;         // 用户动态消息的ID
+}
+
+message DynamicContentCell{
+    int64 dynamicContentId = 1;         // 用户动态消息的ID
+    double longitude = 2;               // 用户发布消息的经度
+    double latitude = 3;                // 用户发布消息的维度
+    string dynamic = 4;                 // 用户发布消息的消息正文
+    repeated string pictures = 5;       // 用户发布消息携带的配图
+    string topic = 6;                   // 用户动态信息参与的话题
+    int32 classify = 7;                 // 用户消息动态的种类
+    int64 publishTime = 8;              // 用户消息动态的更新时间
+    int64 originUin = 9;                // 消息原始Uin
+    int64 likeNumber = 10;              // 动态消息的点赞数量
+    MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 11;  // 消息的发布类型
+}
+
+message DynamicsContentResult{
+    repeated DynamicContentCell DynamicContentCells = 1;    // 消息发布的时间
+    PageInfo pageInfo = 2;                                  // 分页信息
+}
+
+message DynamicHistoryRequest{
+    int64 founder = 1;                   // 发布者Uin
+    int32 pageSize = 2;                  // 每页的大小
+    int32 pageNum = 3;                   // 需要的页码数
+}
+
+message PageInfo{
+    int32 pageNum = 1;    // 当前页
+    int32 pageSize = 2;   // 每页的数量
+    int32 size = 3;       //当前页的数量
+    int64 total = 4;      // 总记录数
+    int32 pages = 5;      // 总页码数
+    bool isFirstPage = 6;     // 是否是第一页
+    bool isLastPage = 7;      // 是否是最后一页
+    bool hasPreviousPage = 8; // 是否有上一页
+    bool hasNextPage = 9;     // 是否有下一页
 }
 
 message Founder{
-    int64 founder = 1;                             // 发布者Uin
+    int64 founder = 1;                   // 发布者Uin
 }
 
+message DynamicIdResult{
+    int64 dynamicId = 1;                 // Dynamic Content ID
+}
 
+enum MOMENTS_DYNAMIC_PUBLISH_TYPE{
+    ORDINARY = 0;                       // 普通
+    ORIGINAL = 1;                       // 原创
+    REPRINT = 2;                        // 转载
+}
+
+message MomentDynamicPublish{
+    int64 dynamicId = 1;                          // Dynamic Content ID
+    int64 publishBy = 2;                          // 用户动态发布者ID
+    MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 3; // 动态的发布类型
+    double longitude = 4;                         // 用户发布消息的经度
+    double latitude = 5;                          // 用户发布消息的纬度
+}

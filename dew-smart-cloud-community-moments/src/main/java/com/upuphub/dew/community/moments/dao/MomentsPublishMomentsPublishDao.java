@@ -6,15 +6,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MomentsPublishMomentsPublishDao {
-    int deleteByPrimaryKey(@Param("id") Long id);
+    int deleteByPrimaryKey(Long id);
 
-    int insert(@Param("record") MomentsPublishPO record);
+    int insert( MomentsPublishPO record);
 
-    int insertSelective(@Param("record")MomentsPublishPO record);
+    int insertSelective(MomentsPublishPO record);
 
-    MomentsPublishPO selectByPrimaryKey(@Param("id") Long id);
+    MomentsPublishPO selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(@Param("record")MomentsPublishPO record);
+    int updateByPrimaryKeySelective(MomentsPublishPO record);
 
-    int updateByPrimaryKey(@Param("record")MomentsPublishPO record);
+    int updateByPrimaryKey(MomentsPublishPO record);
 }

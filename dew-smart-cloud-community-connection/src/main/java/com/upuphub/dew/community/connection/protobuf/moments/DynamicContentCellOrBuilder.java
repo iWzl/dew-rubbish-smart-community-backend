@@ -3,18 +3,18 @@
 
 package com.upuphub.dew.community.connection.protobuf.moments;
 
-public interface MomentDynamicContentOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:MomentDynamicContent)
+public interface DynamicContentCellOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:DynamicContentCell)
     com.google.protobuf.MessageOrBuilder {
 
   /**
    * <pre>
-   * 消息所属的UIN
+   * 用户动态消息的ID
    * </pre>
    *
-   * <code>int64 uin = 1;</code>
+   * <code>int64 dynamicContentId = 1;</code>
    */
-  long getUin();
+  long getDynamicContentId();
 
   /**
    * <pre>
@@ -119,16 +119,42 @@ public interface MomentDynamicContentOrBuilder extends
    * 用户消息动态的更新时间
    * </pre>
    *
-   * <code>int64 updateTime = 8;</code>
+   * <code>int64 publishTime = 8;</code>
    */
-  long getUpdateTime();
+  long getPublishTime();
 
   /**
    * <pre>
-   * 用户动态消息的ID
+   * 消息原始Uin
    * </pre>
    *
-   * <code>int64 dynamicContentId = 9;</code>
+   * <code>int64 originUin = 9;</code>
    */
-  long getDynamicContentId();
+  long getOriginUin();
+
+  /**
+   * <pre>
+   * 动态消息的点赞数量
+   * </pre>
+   *
+   * <code>int64 likeNumber = 10;</code>
+   */
+  long getLikeNumber();
+
+  /**
+   * <pre>
+   * 消息的发布类型
+   * </pre>
+   *
+   * <code>.MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 11;</code>
+   */
+  int getPublishTypeValue();
+  /**
+   * <pre>
+   * 消息的发布类型
+   * </pre>
+   *
+   * <code>.MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 11;</code>
+   */
+  com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE getPublishType();
 }

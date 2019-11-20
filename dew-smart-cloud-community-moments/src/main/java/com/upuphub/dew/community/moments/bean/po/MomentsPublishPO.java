@@ -16,7 +16,7 @@ public class MomentsPublishPO implements Serializable {
     /**
      * GeoHash
      */
-    private String geohash;
+    private String geoHash;
 
     /**
      * 点赞数量
@@ -74,12 +74,12 @@ public class MomentsPublishPO implements Serializable {
         this.id = id;
     }
 
-    public String getGeohash() {
-        return geohash;
+    public String getGeoHash() {
+        return geoHash;
     }
 
     public void setGeohash(String geohash) {
-        this.geohash = geohash;
+        this.geoHash = geohash;
     }
 
     public Integer getLikeNumber() {
@@ -135,11 +135,8 @@ public class MomentsPublishPO implements Serializable {
                 latitude;
     }
 
-    public void setlatitude(Double
-                     latitude) {
-        this.
-                latitude =
-                latitude;
+    public void setlatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     public Long getUpdateTime() {
@@ -171,7 +168,7 @@ public class MomentsPublishPO implements Serializable {
         }
         MomentsPublishPO other = (MomentsPublishPO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getGeohash() == null ? other.getGeohash() == null : this.getGeohash().equals(other.getGeohash()))
+                && (this.getGeoHash() == null ? other.getGeoHash() == null : this.getGeoHash().equals(other.getGeoHash()))
                 && (this.getLikeNumber() == null ? other.getLikeNumber() == null : this.getLikeNumber().equals(other.getLikeNumber()))
                 && (this.getDynamicId() == null ? other.getDynamicId() == null : this.getDynamicId().equals(other.getDynamicId()))
                 && (this.getPublishBy() == null ? other.getPublishBy() == null : this.getPublishBy().equals(other.getPublishBy()))
@@ -189,7 +186,7 @@ public class MomentsPublishPO implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getGeohash() == null) ? 0 : getGeohash().hashCode());
+        result = prime * result + ((getGeoHash() == null) ? 0 : getGeoHash().hashCode());
         result = prime * result + ((getLikeNumber() == null) ? 0 : getLikeNumber().hashCode());
         result = prime * result + ((getDynamicId() == null) ? 0 : getDynamicId().hashCode());
         result = prime * result + ((getPublishBy() == null) ? 0 : getPublishBy().hashCode());
@@ -209,7 +206,7 @@ public class MomentsPublishPO implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", geohash=").append(geohash);
+        sb.append(", geoHash=").append(geoHash);
         sb.append(", likeNumber=").append(likeNumber);
         sb.append(", dynamicId=").append(dynamicId);
         sb.append(", publishBy=").append(publishBy);

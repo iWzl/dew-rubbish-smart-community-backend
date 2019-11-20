@@ -4,28 +4,29 @@
 package com.upuphub.dew.community.connection.protobuf.moments;
 
 /**
- * Protobuf type {@code MomentDynamicContent}
+ * Protobuf type {@code DynamicContentCell}
  */
-public  final class MomentDynamicContent extends
+public  final class DynamicContentCell extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:MomentDynamicContent)
-    MomentDynamicContentOrBuilder {
+    // @@protoc_insertion_point(message_implements:DynamicContentCell)
+    DynamicContentCellOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use MomentDynamicContent.newBuilder() to construct.
-  private MomentDynamicContent(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use DynamicContentCell.newBuilder() to construct.
+  private DynamicContentCell(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private MomentDynamicContent() {
+  private DynamicContentCell() {
     dynamic_ = "";
     pictures_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     topic_ = "";
+    publishType_ = 0;
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(
       UnusedPrivateParameter unused) {
-    return new MomentDynamicContent();
+    return new DynamicContentCell();
   }
 
   @java.lang.Override
@@ -33,7 +34,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private MomentDynamicContent(
+  private DynamicContentCell(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -54,7 +55,7 @@ private static final long serialVersionUID = 0L;
             break;
           case 8: {
 
-            uin_ = input.readInt64();
+            dynamicContentId_ = input.readInt64();
             break;
           }
           case 17: {
@@ -95,12 +96,23 @@ private static final long serialVersionUID = 0L;
           }
           case 64: {
 
-            updateTime_ = input.readInt64();
+            publishTime_ = input.readInt64();
             break;
           }
           case 72: {
 
-            dynamicContentId_ = input.readInt64();
+            originUin_ = input.readInt64();
+            break;
+          }
+          case 80: {
+
+            likeNumber_ = input.readInt64();
+            break;
+          }
+          case 88: {
+            int rawValue = input.readEnum();
+
+            publishType_ = rawValue;
             break;
           }
           default: {
@@ -127,28 +139,28 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.upuphub.dew.community.connection.protobuf.moments.Moments.internal_static_MomentDynamicContent_descriptor;
+    return com.upuphub.dew.community.connection.protobuf.moments.Moments.internal_static_DynamicContentCell_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.upuphub.dew.community.connection.protobuf.moments.Moments.internal_static_MomentDynamicContent_fieldAccessorTable
+    return com.upuphub.dew.community.connection.protobuf.moments.Moments.internal_static_DynamicContentCell_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent.class, com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent.Builder.class);
+            com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.class, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder.class);
   }
 
-  public static final int UIN_FIELD_NUMBER = 1;
-  private long uin_;
+  public static final int DYNAMICCONTENTID_FIELD_NUMBER = 1;
+  private long dynamicContentId_;
   /**
    * <pre>
-   * 消息所属的UIN
+   * 用户动态消息的ID
    * </pre>
    *
-   * <code>int64 uin = 1;</code>
+   * <code>int64 dynamicContentId = 1;</code>
    */
-  public long getUin() {
-    return uin_;
+  public long getDynamicContentId() {
+    return dynamicContentId_;
   }
 
   public static final int LONGITUDE_FIELD_NUMBER = 2;
@@ -319,30 +331,68 @@ private static final long serialVersionUID = 0L;
     return classify_;
   }
 
-  public static final int UPDATETIME_FIELD_NUMBER = 8;
-  private long updateTime_;
+  public static final int PUBLISHTIME_FIELD_NUMBER = 8;
+  private long publishTime_;
   /**
    * <pre>
    * 用户消息动态的更新时间
    * </pre>
    *
-   * <code>int64 updateTime = 8;</code>
+   * <code>int64 publishTime = 8;</code>
    */
-  public long getUpdateTime() {
-    return updateTime_;
+  public long getPublishTime() {
+    return publishTime_;
   }
 
-  public static final int DYNAMICCONTENTID_FIELD_NUMBER = 9;
-  private long dynamicContentId_;
+  public static final int ORIGINUIN_FIELD_NUMBER = 9;
+  private long originUin_;
   /**
    * <pre>
-   * 用户动态消息的ID
+   * 消息原始Uin
    * </pre>
    *
-   * <code>int64 dynamicContentId = 9;</code>
+   * <code>int64 originUin = 9;</code>
    */
-  public long getDynamicContentId() {
-    return dynamicContentId_;
+  public long getOriginUin() {
+    return originUin_;
+  }
+
+  public static final int LIKENUMBER_FIELD_NUMBER = 10;
+  private long likeNumber_;
+  /**
+   * <pre>
+   * 动态消息的点赞数量
+   * </pre>
+   *
+   * <code>int64 likeNumber = 10;</code>
+   */
+  public long getLikeNumber() {
+    return likeNumber_;
+  }
+
+  public static final int PUBLISHTYPE_FIELD_NUMBER = 11;
+  private int publishType_;
+  /**
+   * <pre>
+   * 消息的发布类型
+   * </pre>
+   *
+   * <code>.MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 11;</code>
+   */
+  public int getPublishTypeValue() {
+    return publishType_;
+  }
+  /**
+   * <pre>
+   * 消息的发布类型
+   * </pre>
+   *
+   * <code>.MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 11;</code>
+   */
+  public com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE getPublishType() {
+    @SuppressWarnings("deprecation")
+    com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE result = com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE.valueOf(publishType_);
+    return result == null ? com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -359,8 +409,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (uin_ != 0L) {
-      output.writeInt64(1, uin_);
+    if (dynamicContentId_ != 0L) {
+      output.writeInt64(1, dynamicContentId_);
     }
     if (longitude_ != 0D) {
       output.writeDouble(2, longitude_);
@@ -380,11 +430,17 @@ private static final long serialVersionUID = 0L;
     if (classify_ != 0) {
       output.writeInt32(7, classify_);
     }
-    if (updateTime_ != 0L) {
-      output.writeInt64(8, updateTime_);
+    if (publishTime_ != 0L) {
+      output.writeInt64(8, publishTime_);
     }
-    if (dynamicContentId_ != 0L) {
-      output.writeInt64(9, dynamicContentId_);
+    if (originUin_ != 0L) {
+      output.writeInt64(9, originUin_);
+    }
+    if (likeNumber_ != 0L) {
+      output.writeInt64(10, likeNumber_);
+    }
+    if (publishType_ != com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE.ORDINARY.getNumber()) {
+      output.writeEnum(11, publishType_);
     }
     unknownFields.writeTo(output);
   }
@@ -395,9 +451,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (uin_ != 0L) {
+    if (dynamicContentId_ != 0L) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(1, uin_);
+        .computeInt64Size(1, dynamicContentId_);
     }
     if (longitude_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
@@ -425,13 +481,21 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(7, classify_);
     }
-    if (updateTime_ != 0L) {
+    if (publishTime_ != 0L) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(8, updateTime_);
+        .computeInt64Size(8, publishTime_);
     }
-    if (dynamicContentId_ != 0L) {
+    if (originUin_ != 0L) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt64Size(9, dynamicContentId_);
+        .computeInt64Size(9, originUin_);
+    }
+    if (likeNumber_ != 0L) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt64Size(10, likeNumber_);
+    }
+    if (publishType_ != com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE.ORDINARY.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(11, publishType_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -443,13 +507,13 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent)) {
+    if (!(obj instanceof com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell)) {
       return super.equals(obj);
     }
-    com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent other = (com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent) obj;
+    com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell other = (com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell) obj;
 
-    if (getUin()
-        != other.getUin()) return false;
+    if (getDynamicContentId()
+        != other.getDynamicContentId()) return false;
     if (java.lang.Double.doubleToLongBits(getLongitude())
         != java.lang.Double.doubleToLongBits(
             other.getLongitude())) return false;
@@ -464,10 +528,13 @@ private static final long serialVersionUID = 0L;
         .equals(other.getTopic())) return false;
     if (getClassify()
         != other.getClassify()) return false;
-    if (getUpdateTime()
-        != other.getUpdateTime()) return false;
-    if (getDynamicContentId()
-        != other.getDynamicContentId()) return false;
+    if (getPublishTime()
+        != other.getPublishTime()) return false;
+    if (getOriginUin()
+        != other.getOriginUin()) return false;
+    if (getLikeNumber()
+        != other.getLikeNumber()) return false;
+    if (publishType_ != other.publishType_) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -479,9 +546,9 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + UIN_FIELD_NUMBER;
+    hash = (37 * hash) + DYNAMICCONTENTID_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getUin());
+        getDynamicContentId());
     hash = (37 * hash) + LONGITUDE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         java.lang.Double.doubleToLongBits(getLongitude()));
@@ -498,80 +565,85 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getTopic().hashCode();
     hash = (37 * hash) + CLASSIFY_FIELD_NUMBER;
     hash = (53 * hash) + getClassify();
-    hash = (37 * hash) + UPDATETIME_FIELD_NUMBER;
+    hash = (37 * hash) + PUBLISHTIME_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getUpdateTime());
-    hash = (37 * hash) + DYNAMICCONTENTID_FIELD_NUMBER;
+        getPublishTime());
+    hash = (37 * hash) + ORIGINUIN_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        getDynamicContentId());
+        getOriginUin());
+    hash = (37 * hash) + LIKENUMBER_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        getLikeNumber());
+    hash = (37 * hash) + PUBLISHTYPE_FIELD_NUMBER;
+    hash = (53 * hash) + publishType_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseFrom(
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseFrom(
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseFrom(
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseFrom(
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseFrom(byte[] data)
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseFrom(
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseFrom(java.io.InputStream input)
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseFrom(
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseDelimitedFrom(java.io.InputStream input)
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseDelimitedFrom(
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseFrom(
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parseFrom(
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -584,7 +656,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent prototype) {
+  public static Builder newBuilder(com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -600,26 +672,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code MomentDynamicContent}
+   * Protobuf type {@code DynamicContentCell}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:MomentDynamicContent)
-      com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContentOrBuilder {
+      // @@protoc_insertion_point(builder_implements:DynamicContentCell)
+      com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCellOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.upuphub.dew.community.connection.protobuf.moments.Moments.internal_static_MomentDynamicContent_descriptor;
+      return com.upuphub.dew.community.connection.protobuf.moments.Moments.internal_static_DynamicContentCell_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.upuphub.dew.community.connection.protobuf.moments.Moments.internal_static_MomentDynamicContent_fieldAccessorTable
+      return com.upuphub.dew.community.connection.protobuf.moments.Moments.internal_static_DynamicContentCell_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent.class, com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent.Builder.class);
+              com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.class, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder.class);
     }
 
-    // Construct using com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent.newBuilder()
+    // Construct using com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -637,7 +709,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      uin_ = 0L;
+      dynamicContentId_ = 0L;
 
       longitude_ = 0D;
 
@@ -651,9 +723,13 @@ private static final long serialVersionUID = 0L;
 
       classify_ = 0;
 
-      updateTime_ = 0L;
+      publishTime_ = 0L;
 
-      dynamicContentId_ = 0L;
+      originUin_ = 0L;
+
+      likeNumber_ = 0L;
+
+      publishType_ = 0;
 
       return this;
     }
@@ -661,17 +737,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.upuphub.dew.community.connection.protobuf.moments.Moments.internal_static_MomentDynamicContent_descriptor;
+      return com.upuphub.dew.community.connection.protobuf.moments.Moments.internal_static_DynamicContentCell_descriptor;
     }
 
     @java.lang.Override
-    public com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent getDefaultInstanceForType() {
-      return com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent.getDefaultInstance();
+    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell getDefaultInstanceForType() {
+      return com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.getDefaultInstance();
     }
 
     @java.lang.Override
-    public com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent build() {
-      com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent result = buildPartial();
+    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell build() {
+      com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -679,10 +755,10 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent buildPartial() {
-      com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent result = new com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent(this);
+    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell buildPartial() {
+      com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell result = new com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell(this);
       int from_bitField0_ = bitField0_;
-      result.uin_ = uin_;
+      result.dynamicContentId_ = dynamicContentId_;
       result.longitude_ = longitude_;
       result.latitude_ = latitude_;
       result.dynamic_ = dynamic_;
@@ -693,8 +769,10 @@ private static final long serialVersionUID = 0L;
       result.pictures_ = pictures_;
       result.topic_ = topic_;
       result.classify_ = classify_;
-      result.updateTime_ = updateTime_;
-      result.dynamicContentId_ = dynamicContentId_;
+      result.publishTime_ = publishTime_;
+      result.originUin_ = originUin_;
+      result.likeNumber_ = likeNumber_;
+      result.publishType_ = publishType_;
       onBuilt();
       return result;
     }
@@ -733,18 +811,18 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent) {
-        return mergeFrom((com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent)other);
+      if (other instanceof com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell) {
+        return mergeFrom((com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent other) {
-      if (other == com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent.getDefaultInstance()) return this;
-      if (other.getUin() != 0L) {
-        setUin(other.getUin());
+    public Builder mergeFrom(com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell other) {
+      if (other == com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.getDefaultInstance()) return this;
+      if (other.getDynamicContentId() != 0L) {
+        setDynamicContentId(other.getDynamicContentId());
       }
       if (other.getLongitude() != 0D) {
         setLongitude(other.getLongitude());
@@ -773,11 +851,17 @@ private static final long serialVersionUID = 0L;
       if (other.getClassify() != 0) {
         setClassify(other.getClassify());
       }
-      if (other.getUpdateTime() != 0L) {
-        setUpdateTime(other.getUpdateTime());
+      if (other.getPublishTime() != 0L) {
+        setPublishTime(other.getPublishTime());
       }
-      if (other.getDynamicContentId() != 0L) {
-        setDynamicContentId(other.getDynamicContentId());
+      if (other.getOriginUin() != 0L) {
+        setOriginUin(other.getOriginUin());
+      }
+      if (other.getLikeNumber() != 0L) {
+        setLikeNumber(other.getLikeNumber());
+      }
+      if (other.publishType_ != 0) {
+        setPublishTypeValue(other.getPublishTypeValue());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -794,11 +878,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent parsedMessage = null;
+      com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent) e.getUnfinishedMessage();
+        parsedMessage = (com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -809,40 +893,40 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private long uin_ ;
+    private long dynamicContentId_ ;
     /**
      * <pre>
-     * 消息所属的UIN
+     * 用户动态消息的ID
      * </pre>
      *
-     * <code>int64 uin = 1;</code>
+     * <code>int64 dynamicContentId = 1;</code>
      */
-    public long getUin() {
-      return uin_;
+    public long getDynamicContentId() {
+      return dynamicContentId_;
     }
     /**
      * <pre>
-     * 消息所属的UIN
+     * 用户动态消息的ID
      * </pre>
      *
-     * <code>int64 uin = 1;</code>
+     * <code>int64 dynamicContentId = 1;</code>
      */
-    public Builder setUin(long value) {
+    public Builder setDynamicContentId(long value) {
       
-      uin_ = value;
+      dynamicContentId_ = value;
       onChanged();
       return this;
     }
     /**
      * <pre>
-     * 消息所属的UIN
+     * 用户动态消息的ID
      * </pre>
      *
-     * <code>int64 uin = 1;</code>
+     * <code>int64 dynamicContentId = 1;</code>
      */
-    public Builder clearUin() {
+    public Builder clearDynamicContentId() {
       
-      uin_ = 0L;
+      dynamicContentId_ = 0L;
       onChanged();
       return this;
     }
@@ -1269,27 +1353,27 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private long updateTime_ ;
+    private long publishTime_ ;
     /**
      * <pre>
      * 用户消息动态的更新时间
      * </pre>
      *
-     * <code>int64 updateTime = 8;</code>
+     * <code>int64 publishTime = 8;</code>
      */
-    public long getUpdateTime() {
-      return updateTime_;
+    public long getPublishTime() {
+      return publishTime_;
     }
     /**
      * <pre>
      * 用户消息动态的更新时间
      * </pre>
      *
-     * <code>int64 updateTime = 8;</code>
+     * <code>int64 publishTime = 8;</code>
      */
-    public Builder setUpdateTime(long value) {
+    public Builder setPublishTime(long value) {
       
-      updateTime_ = value;
+      publishTime_ = value;
       onChanged();
       return this;
     }
@@ -1298,49 +1382,152 @@ private static final long serialVersionUID = 0L;
      * 用户消息动态的更新时间
      * </pre>
      *
-     * <code>int64 updateTime = 8;</code>
+     * <code>int64 publishTime = 8;</code>
      */
-    public Builder clearUpdateTime() {
+    public Builder clearPublishTime() {
       
-      updateTime_ = 0L;
+      publishTime_ = 0L;
       onChanged();
       return this;
     }
 
-    private long dynamicContentId_ ;
+    private long originUin_ ;
     /**
      * <pre>
-     * 用户动态消息的ID
+     * 消息原始Uin
      * </pre>
      *
-     * <code>int64 dynamicContentId = 9;</code>
+     * <code>int64 originUin = 9;</code>
      */
-    public long getDynamicContentId() {
-      return dynamicContentId_;
+    public long getOriginUin() {
+      return originUin_;
     }
     /**
      * <pre>
-     * 用户动态消息的ID
+     * 消息原始Uin
      * </pre>
      *
-     * <code>int64 dynamicContentId = 9;</code>
+     * <code>int64 originUin = 9;</code>
      */
-    public Builder setDynamicContentId(long value) {
+    public Builder setOriginUin(long value) {
       
-      dynamicContentId_ = value;
+      originUin_ = value;
       onChanged();
       return this;
     }
     /**
      * <pre>
-     * 用户动态消息的ID
+     * 消息原始Uin
      * </pre>
      *
-     * <code>int64 dynamicContentId = 9;</code>
+     * <code>int64 originUin = 9;</code>
      */
-    public Builder clearDynamicContentId() {
+    public Builder clearOriginUin() {
       
-      dynamicContentId_ = 0L;
+      originUin_ = 0L;
+      onChanged();
+      return this;
+    }
+
+    private long likeNumber_ ;
+    /**
+     * <pre>
+     * 动态消息的点赞数量
+     * </pre>
+     *
+     * <code>int64 likeNumber = 10;</code>
+     */
+    public long getLikeNumber() {
+      return likeNumber_;
+    }
+    /**
+     * <pre>
+     * 动态消息的点赞数量
+     * </pre>
+     *
+     * <code>int64 likeNumber = 10;</code>
+     */
+    public Builder setLikeNumber(long value) {
+      
+      likeNumber_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * 动态消息的点赞数量
+     * </pre>
+     *
+     * <code>int64 likeNumber = 10;</code>
+     */
+    public Builder clearLikeNumber() {
+      
+      likeNumber_ = 0L;
+      onChanged();
+      return this;
+    }
+
+    private int publishType_ = 0;
+    /**
+     * <pre>
+     * 消息的发布类型
+     * </pre>
+     *
+     * <code>.MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 11;</code>
+     */
+    public int getPublishTypeValue() {
+      return publishType_;
+    }
+    /**
+     * <pre>
+     * 消息的发布类型
+     * </pre>
+     *
+     * <code>.MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 11;</code>
+     */
+    public Builder setPublishTypeValue(int value) {
+      publishType_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * 消息的发布类型
+     * </pre>
+     *
+     * <code>.MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 11;</code>
+     */
+    public com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE getPublishType() {
+      @SuppressWarnings("deprecation")
+      com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE result = com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE.valueOf(publishType_);
+      return result == null ? com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE.UNRECOGNIZED : result;
+    }
+    /**
+     * <pre>
+     * 消息的发布类型
+     * </pre>
+     *
+     * <code>.MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 11;</code>
+     */
+    public Builder setPublishType(com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      publishType_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * 消息的发布类型
+     * </pre>
+     *
+     * <code>.MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 11;</code>
+     */
+    public Builder clearPublishType() {
+      
+      publishType_ = 0;
       onChanged();
       return this;
     }
@@ -1357,41 +1544,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:MomentDynamicContent)
+    // @@protoc_insertion_point(builder_scope:DynamicContentCell)
   }
 
-  // @@protoc_insertion_point(class_scope:MomentDynamicContent)
-  private static final com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:DynamicContentCell)
+  private static final com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent();
+    DEFAULT_INSTANCE = new com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell();
   }
 
-  public static com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent getDefaultInstance() {
+  public static com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<MomentDynamicContent>
-      PARSER = new com.google.protobuf.AbstractParser<MomentDynamicContent>() {
+  private static final com.google.protobuf.Parser<DynamicContentCell>
+      PARSER = new com.google.protobuf.AbstractParser<DynamicContentCell>() {
     @java.lang.Override
-    public MomentDynamicContent parsePartialFrom(
+    public DynamicContentCell parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new MomentDynamicContent(input, extensionRegistry);
+      return new DynamicContentCell(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<MomentDynamicContent> parser() {
+  public static com.google.protobuf.Parser<DynamicContentCell> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<MomentDynamicContent> getParserForType() {
+  public com.google.protobuf.Parser<DynamicContentCell> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent getDefaultInstanceForType() {
+  public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

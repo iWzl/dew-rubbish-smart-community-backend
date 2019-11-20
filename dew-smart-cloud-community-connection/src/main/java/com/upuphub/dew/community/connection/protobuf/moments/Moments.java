@@ -20,10 +20,40 @@ public final class Moments {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_MomentDynamicContent_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_DynamicContentCell_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_DynamicContentCell_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_DynamicsContentResult_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_DynamicsContentResult_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_DynamicHistoryRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_DynamicHistoryRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_PageInfo_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_PageInfo_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Founder_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Founder_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_DynamicIdResult_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_DynamicIdResult_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_MomentDynamicPublish_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_MomentDynamicPublish_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -33,13 +63,36 @@ public final class Moments {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rmoments.proto\"\240\001\n\024MomentDynamicContent" +
+      "\n\rmoments.proto\"\272\001\n\024MomentDynamicContent" +
       "\022\013\n\003uin\030\001 \001(\003\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010lati" +
       "tude\030\003 \001(\001\022\017\n\007dynamic\030\004 \001(\t\022\020\n\010pictures\030" +
       "\005 \003(\t\022\r\n\005topic\030\006 \001(\t\022\020\n\010classify\030\007 \001(\005\022\022" +
-      "\n\nupdateTime\030\010 \001(\003\"\032\n\007Founder\022\017\n\007founder" +
-      "\030\001 \001(\003B9\n5com.upuphub.dew.community.conn" +
-      "ection.protobuf.momentsP\001b\006proto3"
+      "\n\nupdateTime\030\010 \001(\003\022\030\n\020dynamicContentId\030\t" +
+      " \001(\003\"\207\002\n\022DynamicContentCell\022\030\n\020dynamicCo" +
+      "ntentId\030\001 \001(\003\022\021\n\tlongitude\030\002 \001(\001\022\020\n\010lati" +
+      "tude\030\003 \001(\001\022\017\n\007dynamic\030\004 \001(\t\022\020\n\010pictures\030" +
+      "\005 \003(\t\022\r\n\005topic\030\006 \001(\t\022\020\n\010classify\030\007 \001(\005\022\023" +
+      "\n\013publishTime\030\010 \001(\003\022\021\n\toriginUin\030\t \001(\003\022\022" +
+      "\n\nlikeNumber\030\n \001(\003\0222\n\013publishType\030\013 \001(\0162" +
+      "\035.MOMENTS_DYNAMIC_PUBLISH_TYPE\"f\n\025Dynami" +
+      "csContentResult\0220\n\023DynamicContentCells\030\001" +
+      " \003(\0132\023.DynamicContentCell\022\033\n\010pageInfo\030\002 " +
+      "\001(\0132\t.PageInfo\"K\n\025DynamicHistoryRequest\022" +
+      "\017\n\007founder\030\001 \001(\003\022\020\n\010pageSize\030\002 \001(\005\022\017\n\007pa" +
+      "geNum\030\003 \001(\005\"\260\001\n\010PageInfo\022\017\n\007pageNum\030\001 \001(" +
+      "\005\022\020\n\010pageSize\030\002 \001(\005\022\014\n\004size\030\003 \001(\005\022\r\n\005tot" +
+      "al\030\004 \001(\003\022\r\n\005pages\030\005 \001(\005\022\023\n\013isFirstPage\030\006" +
+      " \001(\010\022\022\n\nisLastPage\030\007 \001(\010\022\027\n\017hasPreviousP" +
+      "age\030\010 \001(\010\022\023\n\013hasNextPage\030\t \001(\010\"\032\n\007Founde" +
+      "r\022\017\n\007founder\030\001 \001(\003\"$\n\017DynamicIdResult\022\021\n" +
+      "\tdynamicId\030\001 \001(\003\"\225\001\n\024MomentDynamicPublis" +
+      "h\022\021\n\tdynamicId\030\001 \001(\003\022\021\n\tpublishBy\030\002 \001(\003\022" +
+      "2\n\013publishType\030\003 \001(\0162\035.MOMENTS_DYNAMIC_P" +
+      "UBLISH_TYPE\022\021\n\tlongitude\030\004 \001(\001\022\020\n\010latitu" +
+      "de\030\005 \001(\001*G\n\034MOMENTS_DYNAMIC_PUBLISH_TYPE" +
+      "\022\014\n\010ORDINARY\020\000\022\014\n\010ORIGINAL\020\001\022\013\n\007REPRINT\020" +
+      "\002B9\n5com.upuphub.dew.community.connectio" +
+      "n.protobuf.momentsP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -50,13 +103,49 @@ public final class Moments {
     internal_static_MomentDynamicContent_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MomentDynamicContent_descriptor,
-        new java.lang.String[] { "Uin", "Longitude", "Latitude", "Dynamic", "Pictures", "Topic", "Classify", "UpdateTime", });
-    internal_static_Founder_descriptor =
+        new java.lang.String[] { "Uin", "Longitude", "Latitude", "Dynamic", "Pictures", "Topic", "Classify", "UpdateTime", "DynamicContentId", });
+    internal_static_DynamicContentCell_descriptor =
       getDescriptor().getMessageTypes().get(1);
+    internal_static_DynamicContentCell_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_DynamicContentCell_descriptor,
+        new java.lang.String[] { "DynamicContentId", "Longitude", "Latitude", "Dynamic", "Pictures", "Topic", "Classify", "PublishTime", "OriginUin", "LikeNumber", "PublishType", });
+    internal_static_DynamicsContentResult_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_DynamicsContentResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_DynamicsContentResult_descriptor,
+        new java.lang.String[] { "DynamicContentCells", "PageInfo", });
+    internal_static_DynamicHistoryRequest_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_DynamicHistoryRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_DynamicHistoryRequest_descriptor,
+        new java.lang.String[] { "Founder", "PageSize", "PageNum", });
+    internal_static_PageInfo_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_PageInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_PageInfo_descriptor,
+        new java.lang.String[] { "PageNum", "PageSize", "Size", "Total", "Pages", "IsFirstPage", "IsLastPage", "HasPreviousPage", "HasNextPage", });
+    internal_static_Founder_descriptor =
+      getDescriptor().getMessageTypes().get(5);
     internal_static_Founder_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Founder_descriptor,
         new java.lang.String[] { "Founder", });
+    internal_static_DynamicIdResult_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_DynamicIdResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_DynamicIdResult_descriptor,
+        new java.lang.String[] { "DynamicId", });
+    internal_static_MomentDynamicPublish_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_MomentDynamicPublish_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_MomentDynamicPublish_descriptor,
+        new java.lang.String[] { "DynamicId", "PublishBy", "PublishType", "Longitude", "Latitude", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
