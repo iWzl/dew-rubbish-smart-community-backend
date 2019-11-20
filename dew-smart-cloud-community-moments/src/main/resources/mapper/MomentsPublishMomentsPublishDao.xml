@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphub.dew.community.moments.dao.MomentsPublishMomentsPublishDao">
+    <resultMap id="BaseResultMap" type="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="geohash" jdbcType="VARCHAR" property="geohash"/>
+        <result column="like_number" jdbcType="INTEGER" property="likeNumber"/>
+        <result column="dynamic_id" jdbcType="BIGINT" property="dynamicId"/>
+        <result column="publish_by" jdbcType="BIGINT" property="publishBy"/>
+        <result column="publish_time" jdbcType="BIGINT" property="publishTime"/>
+        <result column="publish_type" jdbcType="CHAR" property="publishType"/>
+        <result column="longitude" jdbcType="DOUBLE" property="longitude"/>
+        <result column="latitude" jdbcType="DOUBLE" property="latitude"/>
+        <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
+        <result column="publish_status" jdbcType="INTEGER" property="publishStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, geohash, like_number, dynamic_id, publish_by, publish_time, publish_type, longitude,latitude, update_time, publish_status
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from moments_publish
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from moments_publish
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO" useGeneratedKeys="true">
+        insert into moments_publish (geohash, like_number, dynamic_id,
+                                     publish_by, publish_time, publish_type,
+                                     longitude,latitude,update_time,
+                                     publish_status)
+        values (#{geohash,jdbcType=VARCHAR}, #{likeNumber,jdbcType=INTEGER}, #{dynamicId,jdbcType=BIGINT},
+                #{publishBy,jdbcType=BIGINT}, #{publishTime,jdbcType=BIGINT}, #{publishType,jdbcType=CHAR},
+                #{longitude,jdbcType=DOUBLE}, #{
+latitude,jdbcType=DOUBLE}, #{updateTime,jdbcType=BIGINT},
+                #{publishStatus,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO"
+            useGeneratedKeys="true">
+        insert into moments_publish
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="geohash != null">
+                geohash,
+            </if>
+            <if test="likeNumber != null">
+                like_number,
+            </if>
+            <if test="dynamicId != null">
+                dynamic_id,
+            </if>
+            <if test="publishBy != null">
+                publish_by,
+            </if>
+            <if test="publishTime != null">
+                publish_time,
+            </if>
+            <if test="publishType != null">
+                publish_type,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                 latitude,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="publishStatus != null">
+                publish_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="geohash != null">
+                #{geohash,jdbcType=VARCHAR},
+            </if>
+            <if test="likeNumber != null">
+                #{likeNumber,jdbcType=INTEGER},
+            </if>
+            <if test="dynamicId != null">
+                #{dynamicId,jdbcType=BIGINT},
+            </if>
+            <if test="publishBy != null">
+                #{publishBy,jdbcType=BIGINT},
+            </if>
+            <if test="publishTime != null">
+                #{publishTime,jdbcType=BIGINT},
+            </if>
+            <if test="publishType != null">
+                #{publishType,jdbcType=CHAR},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=DOUBLE},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+            <if test="publishStatus != null">
+                #{publishStatus,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
+        update moments_publish
+        <set>
+            <if test="geohash != null">
+                geohash = #{geohash,jdbcType=VARCHAR},
+            </if>
+            <if test="likeNumber != null">
+                like_number = #{likeNumber,jdbcType=INTEGER},
+            </if>
+            <if test="dynamicId != null">
+                dynamic_id = #{dynamicId,jdbcType=BIGINT},
+            </if>
+            <if test="publishBy != null">
+                publish_by = #{publishBy,jdbcType=BIGINT},
+            </if>
+            <if test="publishTime != null">
+                publish_time = #{publishTime,jdbcType=BIGINT},
+            </if>
+            <if test="publishType != null">
+                publish_type = #{publishType,jdbcType=CHAR},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=DOUBLE},
+            </if>
+            <if test="latitude != null">
+
+                latitude = #{latitude,jdbcType=DOUBLE},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+            <if test="publishStatus != null">
+                publish_status = #{publishStatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
+        update moments_publish
+        set geohash        = #{geohash,jdbcType=VARCHAR},
+            like_number    = #{likeNumber,jdbcType=INTEGER},
+            dynamic_id     = #{dynamicId,jdbcType=BIGINT},
+            publish_by     = #{publishBy,jdbcType=BIGINT},
+            publish_time   = #{publishTime,jdbcType=BIGINT},
+            publish_type   = #{publishType,jdbcType=CHAR},
+            longitude      = #{longitude,jdbcType=DOUBLE},
+            latitude       = #{latitude,jdbcType=DOUBLE},
+            update_time    = #{updateTime,jdbcType=BIGINT},
+            publish_status = #{publishStatus,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>
