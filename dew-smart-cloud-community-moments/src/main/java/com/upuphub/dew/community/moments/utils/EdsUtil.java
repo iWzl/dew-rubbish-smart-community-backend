@@ -5,6 +5,9 @@ import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublis
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
 import com.upuphub.dew.community.moments.bean.po.MomentsPublishPO;
 
+/**
+ * @author Leo Wang
+ */
 public class EdsUtil {
     public static MomentDynamicContent toProtobufMessage(MomentDynamicPO momentDynamic) {
         return MomentDynamicContent.newBuilder()

@@ -23,9 +23,9 @@ public class MomentsServiceImpl implements MomentsService {
     @Override
     public ServiceResponseMessage postMomentDynamicContent(MomentDynamicContentReq momentDynamicContentReq) {
         MomentDynamicContent momentDynamicContent = EDSUtil.toProtobufMessage(momentDynamicContentReq);
-        int error = remoteMomentsService.commitMomentDynamicContent(momentDynamicContent).getCode();
-        if(error == MomentsConst.ERROR_CODE_SUCCESS){
-            return ServiceResponseMessage.createBySuccessCodeMessage(ResultMessageConst.UPDATE_MOMENTS_DYNAMIC_SUCCESS);
+        Long dynamicId = remoteMomentsService.commitMomentDynamicContent(momentDynamicContent).getDynamicId();
+        if(dynamicId != MomentsConst.ERROR_CODE_COMMON_FAIL){
+            return ServiceResponseMessage.createBySuccessCodeMessage(ResultMessageConst.UPDATE_MOMENTS_DYNAMIC_SUCCESS,dynamicId);
         }
         return ServiceResponseMessage.createByFailCodeMessage(ResultMessageConst.CALL_RPC_MOMENTS_SVR_ERROR);
     }

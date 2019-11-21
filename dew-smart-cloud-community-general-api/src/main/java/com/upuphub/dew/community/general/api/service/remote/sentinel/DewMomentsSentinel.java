@@ -2,12 +2,9 @@ package com.upuphub.dew.community.general.api.service.remote.sentinel;
 
 
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
-import com.upuphub.dew.community.connection.protobuf.moments.Founder;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
-import com.upuphub.dew.community.connection.protobuf.push.EmailAndCode;
+import com.upuphub.dew.community.connection.protobuf.moments.*;
 import com.upuphub.dew.community.general.api.exception.RpcServiceConnectionException;
 import com.upuphub.dew.community.general.api.service.remote.DewMomentsService;
-import com.upuphub.dew.community.general.api.service.remote.DewPushService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class DewMomentsSentinel implements DewMomentsService {
 
     @Override
-    public RpcResultCode commitMomentDynamicContent(MomentDynamicContent dynamicContent) {
+    public DynamicIdResult commitMomentDynamicContent(MomentDynamicContent dynamicContent) {
         throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
     }
 
@@ -30,6 +27,16 @@ public class DewMomentsSentinel implements DewMomentsService {
 
     @Override
     public RpcResultCode deleteDraftMomentDynamicContent(Founder founder) {
+        throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
+    }
+
+    @Override
+    public RpcResultCode publishMomentDynamicContent(MomentDynamicPublish dynamicContent) {
+        throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
+    }
+
+    @Override
+    public DynamicsContentResult pullMomentDynamicPublishContent(DynamicHistoryRequest dynamicHistoryRequest) {
         throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
     }
 }

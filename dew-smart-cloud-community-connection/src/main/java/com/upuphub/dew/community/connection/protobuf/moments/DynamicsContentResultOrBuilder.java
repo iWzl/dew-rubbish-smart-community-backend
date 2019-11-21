@@ -12,24 +12,24 @@ public interface DynamicsContentResultOrBuilder extends
    * 消息发布的时间
    * </pre>
    *
-   * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+   * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
    */
-  java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell> 
+  java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell> 
       getDynamicContentCellsList();
   /**
    * <pre>
    * 消息发布的时间
    * </pre>
    *
-   * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+   * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
    */
-  com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell getDynamicContentCells(int index);
+  com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell getDynamicContentCells(int index);
   /**
    * <pre>
    * 消息发布的时间
    * </pre>
    *
-   * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+   * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
    */
   int getDynamicContentCellsCount();
   /**
@@ -37,18 +37,18 @@ public interface DynamicsContentResultOrBuilder extends
    * 消息发布的时间
    * </pre>
    *
-   * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+   * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
    */
-  java.util.List<? extends com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCellOrBuilder> 
+  java.util.List<? extends com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCellOrBuilder> 
       getDynamicContentCellsOrBuilderList();
   /**
    * <pre>
    * 消息发布的时间
    * </pre>
    *
-   * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+   * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
    */
-  com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCellOrBuilder getDynamicContentCellsOrBuilder(
+  com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCellOrBuilder getDynamicContentCellsOrBuilder(
       int index);
 
   /**

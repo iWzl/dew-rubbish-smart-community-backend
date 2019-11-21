@@ -5,6 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+/**
+ * @author Leo Wang
+ */
 @MapperScan({"com.upuphub.dew.community.moments.dao"})
 @SpringBootApplication
 @EnableDiscoveryClient

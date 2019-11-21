@@ -11,6 +11,10 @@ import java.util.List;
 @Data
 @ApiModel(description = "用户瞬间的动态创建正文")
 public class MomentDynamicContentResp {
+
+    @ApiModelProperty(value = "瞬间动态ID",example = "251123521224")
+    private long dynamicId;
+
     @ApiModelProperty(value = "用户文章编辑的经度",example = "200.111")
     private double longitude;
     @ApiModelProperty(value = "用户文章编辑的纬度",example = "200.112")

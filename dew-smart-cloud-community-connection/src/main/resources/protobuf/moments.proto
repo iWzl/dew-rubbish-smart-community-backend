@@ -14,7 +14,7 @@ message MomentDynamicContent {
     int64 dynamicContentId = 9;         // 用户动态消息的ID
 }
 
-message DynamicContentCell{
+message DynamicContentResultCell{
     int64 dynamicContentId = 1;         // 用户动态消息的ID
     double longitude = 2;               // 用户发布消息的经度
     double latitude = 3;                // 用户发布消息的维度
@@ -29,7 +29,7 @@ message DynamicContentCell{
 }
 
 message DynamicsContentResult{
-    repeated DynamicContentCell DynamicContentCells = 1;    // 消息发布的时间
+    repeated DynamicContentResultCell DynamicContentCells = 1;    // 消息发布的时间
     PageInfo pageInfo = 2;                                  // 分页信息
 }
 

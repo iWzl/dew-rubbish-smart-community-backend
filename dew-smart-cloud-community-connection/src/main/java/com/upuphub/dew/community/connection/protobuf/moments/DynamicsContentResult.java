@@ -52,11 +52,11 @@ private static final long serialVersionUID = 0L;
             break;
           case 10: {
             if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-              dynamicContentCells_ = new java.util.ArrayList<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell>();
+              dynamicContentCells_ = new java.util.ArrayList<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell>();
               mutable_bitField0_ |= 0x00000001;
             }
             dynamicContentCells_.add(
-                input.readMessage(com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.parser(), extensionRegistry));
+                input.readMessage(com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.parser(), extensionRegistry));
             break;
           }
           case 18: {
@@ -108,15 +108,15 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int DYNAMICCONTENTCELLS_FIELD_NUMBER = 1;
-  private java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell> dynamicContentCells_;
+  private java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell> dynamicContentCells_;
   /**
    * <pre>
    * 消息发布的时间
    * </pre>
    *
-   * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+   * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
    */
-  public java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell> getDynamicContentCellsList() {
+  public java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell> getDynamicContentCellsList() {
     return dynamicContentCells_;
   }
   /**
@@ -124,9 +124,9 @@ private static final long serialVersionUID = 0L;
    * 消息发布的时间
    * </pre>
    *
-   * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+   * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
    */
-  public java.util.List<? extends com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCellOrBuilder> 
+  public java.util.List<? extends com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCellOrBuilder> 
       getDynamicContentCellsOrBuilderList() {
     return dynamicContentCells_;
   }
@@ -135,7 +135,7 @@ private static final long serialVersionUID = 0L;
    * 消息发布的时间
    * </pre>
    *
-   * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+   * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
    */
   public int getDynamicContentCellsCount() {
     return dynamicContentCells_.size();
@@ -145,9 +145,9 @@ private static final long serialVersionUID = 0L;
    * 消息发布的时间
    * </pre>
    *
-   * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+   * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
    */
-  public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell getDynamicContentCells(int index) {
+  public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell getDynamicContentCells(int index) {
     return dynamicContentCells_.get(index);
   }
   /**
@@ -155,9 +155,9 @@ private static final long serialVersionUID = 0L;
    * 消息发布的时间
    * </pre>
    *
-   * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+   * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
    */
-  public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCellOrBuilder getDynamicContentCellsOrBuilder(
+  public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCellOrBuilder getDynamicContentCellsOrBuilder(
       int index) {
     return dynamicContentCells_.get(index);
   }
@@ -567,26 +567,26 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell> dynamicContentCells_ =
+    private java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell> dynamicContentCells_ =
       java.util.Collections.emptyList();
     private void ensureDynamicContentCellsIsMutable() {
       if (!((bitField0_ & 0x00000001) != 0)) {
-        dynamicContentCells_ = new java.util.ArrayList<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell>(dynamicContentCells_);
+        dynamicContentCells_ = new java.util.ArrayList<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell>(dynamicContentCells_);
         bitField0_ |= 0x00000001;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCellOrBuilder> dynamicContentCellsBuilder_;
+        com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.Builder, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCellOrBuilder> dynamicContentCellsBuilder_;
 
     /**
      * <pre>
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
-    public java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell> getDynamicContentCellsList() {
+    public java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell> getDynamicContentCellsList() {
       if (dynamicContentCellsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(dynamicContentCells_);
       } else {
@@ -598,7 +598,7 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
     public int getDynamicContentCellsCount() {
       if (dynamicContentCellsBuilder_ == null) {
@@ -612,9 +612,9 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
-    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell getDynamicContentCells(int index) {
+    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell getDynamicContentCells(int index) {
       if (dynamicContentCellsBuilder_ == null) {
         return dynamicContentCells_.get(index);
       } else {
@@ -626,10 +626,10 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
     public Builder setDynamicContentCells(
-        int index, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell value) {
+        int index, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell value) {
       if (dynamicContentCellsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -647,10 +647,10 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
     public Builder setDynamicContentCells(
-        int index, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder builderForValue) {
+        int index, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.Builder builderForValue) {
       if (dynamicContentCellsBuilder_ == null) {
         ensureDynamicContentCellsIsMutable();
         dynamicContentCells_.set(index, builderForValue.build());
@@ -665,9 +665,9 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
-    public Builder addDynamicContentCells(com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell value) {
+    public Builder addDynamicContentCells(com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell value) {
       if (dynamicContentCellsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -685,10 +685,10 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
     public Builder addDynamicContentCells(
-        int index, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell value) {
+        int index, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell value) {
       if (dynamicContentCellsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -706,10 +706,10 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
     public Builder addDynamicContentCells(
-        com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder builderForValue) {
+        com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.Builder builderForValue) {
       if (dynamicContentCellsBuilder_ == null) {
         ensureDynamicContentCellsIsMutable();
         dynamicContentCells_.add(builderForValue.build());
@@ -724,10 +724,10 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
     public Builder addDynamicContentCells(
-        int index, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder builderForValue) {
+        int index, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.Builder builderForValue) {
       if (dynamicContentCellsBuilder_ == null) {
         ensureDynamicContentCellsIsMutable();
         dynamicContentCells_.add(index, builderForValue.build());
@@ -742,10 +742,10 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
     public Builder addAllDynamicContentCells(
-        java.lang.Iterable<? extends com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell> values) {
+        java.lang.Iterable<? extends com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell> values) {
       if (dynamicContentCellsBuilder_ == null) {
         ensureDynamicContentCellsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -761,7 +761,7 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
     public Builder clearDynamicContentCells() {
       if (dynamicContentCellsBuilder_ == null) {
@@ -778,7 +778,7 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
     public Builder removeDynamicContentCells(int index) {
       if (dynamicContentCellsBuilder_ == null) {
@@ -795,9 +795,9 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
-    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder getDynamicContentCellsBuilder(
+    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.Builder getDynamicContentCellsBuilder(
         int index) {
       return getDynamicContentCellsFieldBuilder().getBuilder(index);
     }
@@ -806,9 +806,9 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
-    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCellOrBuilder getDynamicContentCellsOrBuilder(
+    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCellOrBuilder getDynamicContentCellsOrBuilder(
         int index) {
       if (dynamicContentCellsBuilder_ == null) {
         return dynamicContentCells_.get(index);  } else {
@@ -820,9 +820,9 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
-    public java.util.List<? extends com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCellOrBuilder> 
+    public java.util.List<? extends com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCellOrBuilder> 
          getDynamicContentCellsOrBuilderList() {
       if (dynamicContentCellsBuilder_ != null) {
         return dynamicContentCellsBuilder_.getMessageOrBuilderList();
@@ -835,41 +835,41 @@ private static final long serialVersionUID = 0L;
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
-    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder addDynamicContentCellsBuilder() {
+    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.Builder addDynamicContentCellsBuilder() {
       return getDynamicContentCellsFieldBuilder().addBuilder(
-          com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.getDefaultInstance());
+          com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.getDefaultInstance());
     }
     /**
      * <pre>
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
-    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder addDynamicContentCellsBuilder(
+    public com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.Builder addDynamicContentCellsBuilder(
         int index) {
       return getDynamicContentCellsFieldBuilder().addBuilder(
-          index, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.getDefaultInstance());
+          index, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.getDefaultInstance());
     }
     /**
      * <pre>
      * 消息发布的时间
      * </pre>
      *
-     * <code>repeated .DynamicContentCell DynamicContentCells = 1;</code>
+     * <code>repeated .DynamicContentResultCell DynamicContentCells = 1;</code>
      */
-    public java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder> 
+    public java.util.List<com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.Builder> 
          getDynamicContentCellsBuilderList() {
       return getDynamicContentCellsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCellOrBuilder> 
+        com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.Builder, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCellOrBuilder> 
         getDynamicContentCellsFieldBuilder() {
       if (dynamicContentCellsBuilder_ == null) {
         dynamicContentCellsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCell.Builder, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentCellOrBuilder>(
+            com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCell.Builder, com.upuphub.dew.community.connection.protobuf.moments.DynamicContentResultCellOrBuilder>(
                 dynamicContentCells_,
                 ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),

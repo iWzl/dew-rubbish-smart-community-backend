@@ -98,6 +98,7 @@ public class EDSUtil {
 
     public static MomentDynamicContentResp toHttpVoBean(MomentDynamicContent momentDynamicContent) {
         MomentDynamicContentResp momentDynamicContentResp = new MomentDynamicContentResp();
+        momentDynamicContentResp.setDynamicId(momentDynamicContent.getDynamicContentId());
         momentDynamicContentResp.setTopic(momentDynamicContent.getTopic());
         momentDynamicContentResp.setClassify(momentDynamicContent.getClassify());
         momentDynamicContentResp.setDynamic(momentDynamicContent.getDynamic());

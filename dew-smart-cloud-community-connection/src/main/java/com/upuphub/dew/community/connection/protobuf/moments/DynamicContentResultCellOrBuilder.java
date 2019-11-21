@@ -3,8 +3,8 @@
 
 package com.upuphub.dew.community.connection.protobuf.moments;
 
-public interface DynamicContentCellOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:DynamicContentCell)
+public interface DynamicContentResultCellOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:DynamicContentResultCell)
     com.google.protobuf.MessageOrBuilder {
 
   /**
