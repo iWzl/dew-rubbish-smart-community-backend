@@ -31,8 +31,4 @@ public class UsrProfileResp {
     private String degree;
     private String language;
     private String backgroundImage;
-
-    public String getBirthday(){
-        return DateUtil.date2String(this.birthday);
-    }
 }
