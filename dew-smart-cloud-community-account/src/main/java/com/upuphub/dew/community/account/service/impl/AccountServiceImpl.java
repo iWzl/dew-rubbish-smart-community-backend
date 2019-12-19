@@ -13,6 +13,7 @@ import com.upuphub.dew.community.account.service.AccountService;
 import com.upuphub.dew.community.account.service.MqttSenderService;
 import com.upuphub.dew.community.account.service.ProfileService;
 import com.upuphub.dew.community.account.utils.CommonUtil;
+import com.upuphub.dew.community.connection.common.JsonHelper;
 import com.upuphub.dew.community.connection.common.MD5Utils;
 import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.common.RegexUtils;
@@ -106,7 +107,7 @@ public class AccountServiceImpl implements AccountService {
         if(error == 1){
             // 成功以后发出同步Profile信息的通知
             PushMessage pushMessage = new PushMessage(PUSH_MESSAGE_TYPE.SYNC_PROFILE.value(), System.currentTimeMillis());
-            mqttSenderService.sendToMqtt(String.format(topicTemplate,baseProfile.getUin()),2,pushMessage.buildMqttMessage());
+            mqttSenderService.sendToMqtt(String.format(topicTemplate,baseProfile.getUin()),2, JsonHelper.allToJson(pushMessage));
             return AccountConst.ERROR_CODE_SUCCESS;
         }else {
             return AccountConst.ERROR_CODE_COMMON_FAIL;

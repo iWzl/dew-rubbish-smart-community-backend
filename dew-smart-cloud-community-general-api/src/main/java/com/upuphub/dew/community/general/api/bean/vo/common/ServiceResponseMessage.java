@@ -18,7 +18,7 @@ import java.io.Serializable;
 @ApiModel(value = "JsonMessage",description = "响应数据的统一返回")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ServiceResponseMessage<T> implements Serializable {
+public class ServiceResponseMessage implements Serializable {
     @JsonProperty
     @JsonInclude(JsonInclude.Include.ALWAYS)
     @ApiModelProperty(value = "返回信息的元数据")
@@ -27,7 +27,7 @@ public class ServiceResponseMessage<T> implements Serializable {
     @JsonProperty
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "返回信息携带的数据")
-    private T data;
+    private Object data;
 
     /**
      * 隐藏构造器,规范化项目操作，通过内部的静态方法统一创建管理
