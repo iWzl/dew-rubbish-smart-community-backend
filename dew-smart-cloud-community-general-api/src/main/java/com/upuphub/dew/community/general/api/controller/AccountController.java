@@ -72,15 +72,11 @@ public class AccountController {
         return ServiceResponseMessage.createBySuccessCodeMessage(simpleProfileResp);
     }
 
-
-
     @ApiOperation(value = "刷新用户Profile信息")
     @GetMapping(value = "/profile/refresh")
     public ServiceResponseMessage refreshUserProfile(){
         return accountService.refreshUserProfile();
     }
-
-
 
     @ApiOperation(value = "修改用户信息")
     @ApiParam(name = "ProfileModifyReq",required = true,value = "用户待修改的信息组")
