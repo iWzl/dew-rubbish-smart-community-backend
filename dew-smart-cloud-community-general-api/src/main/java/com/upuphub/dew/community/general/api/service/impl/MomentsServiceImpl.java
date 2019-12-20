@@ -32,7 +32,8 @@ public class MomentsServiceImpl implements MomentsService {
 
     @Override
     public MomentDynamicContentResp pullDraftMomentDynamicContent() {
-        MomentDynamicContent momentDynamicContent = remoteMomentsService.pullDraftMomentDynamicContent(Founder.newBuilder().setFounder(HttpUtil.getUserUin()).build());
+        MomentDynamicContent momentDynamicContent = remoteMomentsService.pullDraftMomentDynamicContent(
+                Founder.newBuilder().setFounder(HttpUtil.getUserUin()).build());
         return EDSUtil.toHttpVoBean(momentDynamicContent);
     }
 
