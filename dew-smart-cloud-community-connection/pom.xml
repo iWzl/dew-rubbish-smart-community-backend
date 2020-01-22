@@ -7,7 +7,7 @@
     <groupId>com.upuphub.dew</groupId>
     <artifactId>smart-cloud-community-connection</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <description>smart-cloud-community Connection Protocol</description>
+    <description>Smart Cloud Community Connection Protocol</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
