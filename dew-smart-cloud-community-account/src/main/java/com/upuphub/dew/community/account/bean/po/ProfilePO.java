@@ -11,6 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.io.Serializable;
 import java.util.Map;
 
+/**
+ * 用户Profile信息的映射实体
+ *
+ * @author LeoWang
+ */
 @Data
 @Document(collection = "profile")
 @CompoundIndexes({
@@ -21,15 +26,15 @@ public class ProfilePO implements Serializable {
     @Field("uin")
     private String uin;
 
-    /* 公有Profile */
+    /** 公有Profile */
     @Field("profile")
     private Map<String,Object> profile;
 
-    //创建时间
+    /** 创建时间*/
     @Field("create_time")
     private Long createTime;
 
-    //更新时间
+    /** 更新时间 */
     @Field("update_time")
     private Long updateTime;
 }

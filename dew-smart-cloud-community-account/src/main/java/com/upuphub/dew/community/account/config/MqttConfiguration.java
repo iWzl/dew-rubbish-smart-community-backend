@@ -22,6 +22,8 @@ import org.springframework.messaging.MessageHandler;
 import java.util.Base64;
 
 /**
+ * MQTT相关服务的监听的实体及相关配置
+ *
  * @author Leo Wang
  * @version 1.0
  * @date 2019/10/13 18:08

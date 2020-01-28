@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * 用户QuickProfile的信息
+ *
  * @author Leo Wang
  * @version 1.0
  * @date 2019/10/15 20:56
