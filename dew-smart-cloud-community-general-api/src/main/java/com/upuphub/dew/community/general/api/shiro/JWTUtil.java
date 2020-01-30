@@ -89,6 +89,7 @@ public class JWTUtil {
      */
     public static String getUin(String token) {
         try {
+            if(null == token || "".equals(token)) return "";
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim("uin").asString();
         } catch (JWTDecodeException e) {

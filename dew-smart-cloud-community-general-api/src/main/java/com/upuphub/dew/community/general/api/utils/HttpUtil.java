@@ -45,7 +45,7 @@ public class HttpUtil {
      */
     public static Long getUserUin(){
         String uinString =  JWTUtil.getUin(getUserToken());
-        return Long.valueOf((uinString == null || "".equals(uinString)) ?"":uinString);
+        return Long.valueOf((uinString == null || "".equals(uinString)) ? "0":uinString);
     }
 
     /**

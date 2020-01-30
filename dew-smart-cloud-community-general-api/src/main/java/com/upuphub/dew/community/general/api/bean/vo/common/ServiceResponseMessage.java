@@ -110,6 +110,9 @@ public class ServiceResponseMessage implements Serializable {
         @ApiModelProperty(value = "返回信息的说明",example = "SUCCESS")
         private String msg;
 
+        @JsonInclude(value = JsonInclude.Include.NON_NULL)
+        private String debugMsg;
+
         private Meta(int resultCode, String message) {
             this.code = resultCode;
             this.msg = message;
