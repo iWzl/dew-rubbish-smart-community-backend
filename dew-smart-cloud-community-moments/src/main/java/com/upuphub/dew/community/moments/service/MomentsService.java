@@ -4,6 +4,7 @@ import com.upuphub.dew.community.connection.protobuf.moments.DynamicHistoryReque
 import com.upuphub.dew.community.connection.protobuf.moments.DynamicsContentResult;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublish;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface MomentsService {
     /**

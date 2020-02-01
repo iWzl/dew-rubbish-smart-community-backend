@@ -1,5 +1,6 @@
 package com.upuphub.dew.community.moments.service.impl;
 
+import com.mongodb.client.result.UpdateResult;
 import com.upuphub.dew.community.connection.annotation.ProtobufField;
 import com.upuphub.dew.community.moments.bean.po.MomentActivityPO;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
@@ -18,6 +19,11 @@ import javax.annotation.Resource;
 import java.lang.reflect.Field;
 import java.util.*;
 
+/**
+ * Moment正文文本绑定的服务
+ *
+ * @author LeoWang
+ */
 @Slf4j
 @Service
 public class MomentContentServiceImpl implements MomentContentService {
@@ -93,8 +99,20 @@ public class MomentContentServiceImpl implements MomentContentService {
     }
 
     @Override
+    public long updateMomentDraftStatus(long dynamicId, boolean isDraft) {
+        Map<String,Object> updateParams = new HashMap<>(2);
+        updateParams.put(MongoKeysConst.MOMENTS_DYNAMIC_DRAFT,isDraft);
+        updateParams.put(MongoKeysConst.MOMENTS_DYNAMIC_UPDATE_TIME,System.currentTimeMillis());
+        UpdateResult updateResult = mongoTemplate.updateFirst(createEasyQuery(null,Collections.singletonMap(
+                MongoKeysConst.MOMENTS_DYNAMIC_ID, dynamicId
+                ),1),
+                createEasyUpdate(updateParams),MomentDynamicPO.class);
+        return updateResult.getModifiedCount();
+    }
+
+    @Override
     public int deleteDraftMomentDynamicContent(long founder) {
-        Map<String,Object> where = new HashMap<>();
+        Map<String,Object> where = new HashMap<>(2);
         where.put(MongoKeysConst.MOMENTS_DYNAMIC_FOUNDER,founder);
         where.put(MongoKeysConst.MOMENTS_DYNAMIC_DRAFT,true);
         mongoTemplate.remove(createEasyQuery(null,where,null),MomentDynamicPO.class);
@@ -109,7 +127,7 @@ public class MomentContentServiceImpl implements MomentContentService {
         return ignoreSet;
     }
 
-    private List<String> mongoSelectKeysList(Class clazz,Set<String> ignoreSet){
+    private List<String> mongoSelectKeysList(Class<?> clazz,Set<String> ignoreSet){
        List<String> mongoKeysList = new ArrayList<>();
         for (Field field : clazz.getFields()) {
             ProtobufField protobufField = field.getAnnotation(ProtobufField.class);
@@ -142,7 +160,8 @@ public class MomentContentServiceImpl implements MomentContentService {
             keys.forEach(key -> query.fields().include(key));
         }
         if (!ObjectUtil.isEmpty(where)) {
-            where.forEach((key, value) -> query.addCriteria(Criteria.where(key).is(value)));
+            where.forEach((key, value) -> query.addCriteria(Criteria
+                    .where(key.equalsIgnoreCase(MongoKeysConst.MOMENTS_DYNAMIC_ID)?"_id":key).is(value)));
         }
         if (!ObjectUtil.isEmpty(limit)) {
             query.limit(limit);

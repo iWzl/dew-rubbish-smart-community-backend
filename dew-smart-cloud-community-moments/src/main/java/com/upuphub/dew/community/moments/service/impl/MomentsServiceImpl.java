@@ -19,6 +19,7 @@ import com.upuphub.dew.community.moments.utils.ObjectUtil;
 
 import com.upuphub.dew.community.moments.utils.ReplaceUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -125,6 +126,7 @@ public class MomentsServiceImpl implements MomentsService {
             }
             }
         MomentsPublishPO momentsPublish = EdsUtil.toCommonBean(dynamicId,dynamicPublish);
+        momentContentService.updateMomentDraftStatus(dynamicId,false);
         int error = momentsPublishMomentsPublishDao.insertMomentsPublishRecord(momentsPublish);
         if(error == EdsUtil.AFFECTED_ROWS_NUMBER_ONE){
             return MomentsConst.ERROR_CODE_SUCCESS;

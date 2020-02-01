@@ -47,6 +47,15 @@ public interface MomentContentService {
     int saveMomentActivity(MomentActivityPO momentActivity);
 
     /**
+     * 更新标记用户moment草稿标识
+     *
+     * @param dynamicId Moment需要标记非草稿的MomentID
+     * @param isDraft Moments是否是草稿的标识
+     * @return 处理得结果状态
+     */
+    long updateMomentDraftStatus(long dynamicId, boolean isDraft);
+
+    /**
      * 更新MomentDynamicContent正文信息
      *
      * @param momentDynamicContent 用户动态正文得详细信息
@@ -61,4 +70,6 @@ public interface MomentContentService {
      * @return 删除用户动态草稿
      */
     int deleteDraftMomentDynamicContent(long founder);
+
+
 }
