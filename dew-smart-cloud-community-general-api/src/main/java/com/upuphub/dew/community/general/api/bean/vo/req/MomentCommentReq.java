@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.general.api.bean.vo.req;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -12,8 +13,11 @@ import lombok.Data;
 @Data
 @ApiModel("Moment评论")
 public class MomentCommentReq {
+    @ApiModelProperty("MomentId")
     private Long momentId;
+    @ApiModelProperty("评论的正文")
     private String content;
+    @ApiModelProperty("评论的类型:普通评论/点赞评论")
     private COMMENT_TYPE commentType;
 
     public void setCommentType(int commentType) {

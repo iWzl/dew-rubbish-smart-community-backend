@@ -67,6 +67,12 @@ public class MomentsController {
         return ServiceResponseMessage.createBySuccessCodeMessage();
     }
 
+    @ApiOperation(value = "回复Moment评论")
+    @PostMapping(value = "/comment/reply", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage postMomentCommentReply(@RequestBody @Validated MomentReplyReq momentReplyReq){
+        return ServiceResponseMessage.createBySuccessCodeMessage();
+    }
+
     @ApiOperation(value = "按地理位置分页拉取所有的Moment")
     @PostMapping(value = "/location/fetch",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ServiceResponseMessage fetchMomentAndReplyDetailByLocationCond(@RequestBody @Validated MomentLocationFilterReq momentLocationFilterReq){
