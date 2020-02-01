@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 
 @Data
-@Document(collection = "comment")
+@Document(collection = "moment_comment")
 public class MomentCommentPO implements Serializable {
     /**
      * 动态消息的评论ID
@@ -29,7 +29,7 @@ public class MomentCommentPO implements Serializable {
     /**
      * 绑定动态消息的ID
      */
-    @Field("dynamic_id")
+    @Field("moment_id")
     @Indexed
     private String dynamicId;
 

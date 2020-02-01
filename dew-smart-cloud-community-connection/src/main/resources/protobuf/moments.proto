@@ -6,7 +6,7 @@ message MomentDynamicContent {
     int64 uin = 1;                      // 消息所属的UIN
     double longitude = 2;               // 用户发布消息的经度
     double latitude = 3;                // 用户发布消息的维度
-    string dynamic = 4;                 // 用户发布消息的消息正文
+    string content = 4;                 // 用户发布消息的消息正文
     repeated string pictures = 5;       // 用户发布消息携带的配图
     string topic = 6;                   // 用户动态信息参与的话题
     int32 classify = 7;                 // 用户消息动态的种类

@@ -9,24 +9,27 @@ import com.upuphub.dew.community.moments.bean.po.MomentsPublishPO;
  * @author Leo Wang
  */
 public class EdsUtil {
+
+    public static final Integer AFFECTED_ROWS_NUMBER_ONE = 1;
+
     public static MomentDynamicContent toProtobufMessage(MomentDynamicPO momentDynamic) {
         return MomentDynamicContent.newBuilder()
-                .setUin(momentDynamic.getFounderUin())
+                .setUin(momentDynamic.getFounder())
                 .setClassify(momentDynamic.getClassify())
-                .setDynamic(momentDynamic.getContent())
-                .setTopic(momentDynamic.getTopic())
+                .setContent(null == momentDynamic.getContent() ? "" : momentDynamic.getContent())
+                .setTopic(null == momentDynamic.getTopic() ? "" : momentDynamic.getTopic())
                 .setLongitude(momentDynamic.getLongitude())
                 .setLatitude(momentDynamic.getLatitude())
                 .addAllPictures(momentDynamic.getPictures())
                 .setUpdateTime(momentDynamic.getUpdateTime())
-                .setDynamicContentId(momentDynamic.getDynamicId())
+                .setDynamicContentId(momentDynamic.getMomentId())
                 .build();
     }
 
     public static MomentsPublishPO toCommonBean(long dynamicId, MomentDynamicPublish dynamicPublish) {
         MomentsPublishPO momentsPublish = new MomentsPublishPO();
         momentsPublish.setDynamicId(dynamicId);
-        momentsPublish.setGeohash(GeoHashUtil.buildGeoHash(dynamicPublish.getLatitude(),dynamicPublish.getLongitude()));
+        momentsPublish.setGeohash(GeoHashUtil.buildGeoHash(dynamicPublish.getLatitude(), dynamicPublish.getLongitude()));
         momentsPublish.setlatitude(dynamicPublish.getLatitude());
         momentsPublish.setLongitude(dynamicPublish.getLongitude());
         momentsPublish.setLikeNumber(0);

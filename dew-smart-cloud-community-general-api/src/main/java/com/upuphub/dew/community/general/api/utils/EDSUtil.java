@@ -5,11 +5,10 @@ import com.upuphub.dew.community.connection.protobuf.account.BaseProfile;
 import com.upuphub.dew.community.connection.protobuf.account.Location;
 import com.upuphub.dew.community.connection.protobuf.account.Profile;
 import com.upuphub.dew.community.connection.protobuf.account.UsernameAndPassword;
+import com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
-import com.upuphub.dew.community.general.api.bean.vo.req.LocationReq;
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentDynamicContentReq;
-import com.upuphub.dew.community.general.api.bean.vo.req.NewProfileReq;
-import com.upuphub.dew.community.general.api.bean.vo.req.UsernameAndPasswordReq;
+import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublish;
+import com.upuphub.dew.community.general.api.bean.vo.req.*;
 import com.upuphub.dew.community.general.api.bean.vo.resp.*;
 
 import java.util.ArrayList;
@@ -89,7 +88,7 @@ public class EDSUtil {
                 .setUin(HttpUtil.getUserUin())
                 .setLatitude(momentDynamicContentReq.getLatitude())
                 .setLongitude(momentDynamicContentReq.getLongitude())
-                .setDynamic(momentDynamicContentReq.getDynamic())
+                .setContent(momentDynamicContentReq.getContent())
                 .addAllPictures(momentDynamicContentReq.getPictures())
                 .setTopic(momentDynamicContentReq.getTopic())
                 .setClassify(momentDynamicContentReq.getClassify())
@@ -101,7 +100,7 @@ public class EDSUtil {
         momentDynamicContentResp.setDynamicId(momentDynamicContent.getDynamicContentId());
         momentDynamicContentResp.setTopic(momentDynamicContent.getTopic());
         momentDynamicContentResp.setClassify(momentDynamicContent.getClassify());
-        momentDynamicContentResp.setDynamic(momentDynamicContent.getDynamic());
+        momentDynamicContentResp.setContent(momentDynamicContent.getContent());
         momentDynamicContentResp.setLatitude(momentDynamicContent.getLatitude());
         momentDynamicContentResp.setLongitude(momentDynamicContent.getLongitude());
         momentDynamicContentResp.setPictures(getPicsList(momentDynamicContent));
@@ -116,5 +115,31 @@ public class EDSUtil {
             picList.add(dynamicContent.getPictures(i));
         }
         return picList;
+    }
+
+    public static MomentDynamicPublish toProtobufMessage(MomentsPublishReq momentsPublishReq) {
+        if(null == momentsPublishReq){
+            return null;
+        }
+        return MomentDynamicPublish.newBuilder()
+                .setDynamicId(momentsPublishReq.getMomentId())
+                .setLatitude(momentsPublishReq.getLatitude())
+                .setLongitude(momentsPublishReq.getLongitude())
+                .setPublishType(toProtobufMomentsPublishType(momentsPublishReq.getPublishType()))
+                .setPublishBy(HttpUtil.getUserUin())
+                .build();
+    }
+
+    private static MOMENTS_DYNAMIC_PUBLISH_TYPE toProtobufMomentsPublishType(MomentsPublishReq.PUBLISH_TYPE publishType){
+        switch (publishType){
+            case ORDINARY:
+                return MOMENTS_DYNAMIC_PUBLISH_TYPE.ORDINARY;
+            case ORIGINAL:
+                return MOMENTS_DYNAMIC_PUBLISH_TYPE.ORIGINAL;
+            case REPRINT:
+                return MOMENTS_DYNAMIC_PUBLISH_TYPE.REPRINT;
+            default:
+                throw new RuntimeException("Error Moments Publish Type");
+        }
     }
 }

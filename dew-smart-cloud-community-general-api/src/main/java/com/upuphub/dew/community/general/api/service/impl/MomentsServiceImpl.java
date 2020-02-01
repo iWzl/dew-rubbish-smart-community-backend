@@ -3,6 +3,7 @@ package com.upuphub.dew.community.general.api.service.impl;
 import com.upuphub.dew.community.connection.constant.MomentsConst;
 import com.upuphub.dew.community.connection.protobuf.moments.Founder;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
+import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublish;
 import com.upuphub.dew.community.general.api.bean.dto.MomentIdDTO;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
 import com.upuphub.dew.community.general.api.bean.vo.req.MomentDynamicContentReq;
@@ -40,10 +41,13 @@ public class MomentsServiceImpl implements MomentsService {
     public MomentDynamicContentResp pullDraftMomentDynamicContent() {
         long founderUin = HttpUtil.getUserUin();
         if(founderUin == 0){
-            return new MomentDynamicContentResp();
+            return null;
         }
         MomentDynamicContent momentDynamicContent = remoteMomentsService.pullDraftMomentDynamicContent(
                 Founder.newBuilder().setFounder(founderUin).build());
+        if(null == momentDynamicContent){
+            return null;
+        }
         return EDSUtil.toHttpVoBean(momentDynamicContent);
     }
 
@@ -58,7 +62,13 @@ public class MomentsServiceImpl implements MomentsService {
 
     @Override
     public MomentIdDTO publishMomentContent(MomentsPublishReq momentsPublishReq) {
-        System.out.println(momentsPublishReq);
-        return null;
+        MomentDynamicPublish momentDynamicPublish = EDSUtil.toProtobufMessage(momentsPublishReq);
+        if(null != momentDynamicPublish){
+            int error = remoteMomentsService.publishMomentDynamicContent(momentDynamicPublish).getCode();
+            if(error == MomentsConst.ERROR_CODE_SUCCESS){
+                return MomentIdDTO.builder().momentId(momentDynamicPublish.getDynamicId()).build();
+            }
+        }
+        return MomentIdDTO.builder().momentId(0L).build();
     }
 }
