@@ -1,8 +1,7 @@
 package com.upuphub.dew.community.general.api.controller;
 
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentDynamicContentReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.*;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentsPublishReq;
 import com.upuphub.dew.community.general.api.bean.vo.resp.MomentIdResp;
 import com.upuphub.dew.community.general.api.service.MomentsService;
 import io.swagger.annotations.Api;
@@ -61,4 +60,37 @@ public class MomentsController {
                 momentsService.publishMomentContent(momentsPublishReq)
         );
     }
+
+    @ApiOperation(value = "评论Moment")
+    @PostMapping(value = "/comment", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage postMomentComment(@RequestBody @Validated MomentCommentReq momentCommentReq){
+        return ServiceResponseMessage.createBySuccessCodeMessage();
+    }
+
+    @ApiOperation(value = "按地理位置分页拉取所有的Moment")
+    @PostMapping(value = "/location/fetch",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage fetchMomentAndReplyDetailByLocationCond(@RequestBody @Validated MomentLocationFilterReq momentLocationFilterReq){
+        return ServiceResponseMessage.createBySuccessCodeMessage();
+    }
+
+    @ApiOperation(value = "按classify/topic分页拉取所有的Moment")
+    @PostMapping(value = "/tips/fetch",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage fetchMomentAndReplyDetailByTipsCond(@RequestBody @Validated MomentTipsFilterReq momentTipsFilterReq){
+        return ServiceResponseMessage.createBySuccessCodeMessage();
+    }
+
+    @ApiOperation(value = "按uin分页拉取所有的Moment")
+    @PostMapping(value = "/uin/fetch",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage fetchMomentAndReplyDetailByUinCond(@RequestBody @Validated MomentUinFilterReq momentUinFilterReq){
+        return ServiceResponseMessage.createBySuccessCodeMessage();
+    }
+
+
+    @ApiOperation(value = "按SyncKey拉取用户相关联的Activity信息")
+    @PostMapping(value = "/activity/fetch",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage fetchMomentActivityDetailBySyncKey(@RequestBody @Validated MomentActivitySyncReq momentLocationFilterReq){
+        return ServiceResponseMessage.createBySuccessCodeMessage();
+    }
+
+
 }
