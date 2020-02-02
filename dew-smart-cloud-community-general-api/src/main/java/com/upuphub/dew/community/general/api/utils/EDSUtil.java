@@ -5,9 +5,7 @@ import com.upuphub.dew.community.connection.protobuf.account.BaseProfile;
 import com.upuphub.dew.community.connection.protobuf.account.Location;
 import com.upuphub.dew.community.connection.protobuf.account.Profile;
 import com.upuphub.dew.community.connection.protobuf.account.UsernameAndPassword;
-import com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_DYNAMIC_PUBLISH_TYPE;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublish;
+import com.upuphub.dew.community.connection.protobuf.moments.*;
 import com.upuphub.dew.community.general.api.bean.vo.req.*;
 import com.upuphub.dew.community.general.api.bean.vo.resp.*;
 
@@ -95,6 +93,16 @@ public class EDSUtil {
                 .build();
     }
 
+
+    public static MomentCommentRequest toProtobufMessage(MomentCommentReq momentCommentReq) {
+        return MomentCommentRequest.newBuilder()
+                .setCommentBy(HttpUtil.getUserUin())
+                .setMomentId(momentCommentReq.getMomentId())
+                .setContent(momentCommentReq.getContent())
+                .setCommentType(toProtobufMomentCommentType(momentCommentReq.getCommentType()))
+                .build();
+    }
+
     public static MomentDynamicContentResp toHttpVoBean(MomentDynamicContent momentDynamicContent) {
         MomentDynamicContentResp momentDynamicContentResp = new MomentDynamicContentResp();
         momentDynamicContentResp.setDynamicId(momentDynamicContent.getDynamicContentId());
@@ -140,6 +148,17 @@ public class EDSUtil {
                 return MOMENTS_DYNAMIC_PUBLISH_TYPE.REPRINT;
             default:
                 throw new RuntimeException("Error Moments Publish Type");
+        }
+    }
+
+    private static MOMENTS_COMMENT_TYPE toProtobufMomentCommentType(MomentCommentReq.COMMENT_TYPE commentType){
+        switch (commentType){
+            case FAVORITE:
+                return MOMENTS_COMMENT_TYPE.FAVORITE;
+            case REPLY:
+                return MOMENTS_COMMENT_TYPE.REPLY;
+            default:
+                return MOMENTS_COMMENT_TYPE.ERROR_TYPE;
         }
     }
 }

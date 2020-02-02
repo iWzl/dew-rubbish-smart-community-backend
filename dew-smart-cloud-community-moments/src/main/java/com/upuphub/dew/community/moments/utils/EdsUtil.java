@@ -1,5 +1,6 @@
 package com.upuphub.dew.community.moments.utils;
 
+import com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_COMMENT_TYPE;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublish;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
@@ -39,5 +40,16 @@ public class EdsUtil {
         momentsPublish.setUpdateTime(System.currentTimeMillis());
         momentsPublish.setPublishStatus(0);
         return momentsPublish;
+    }
+
+    public static Integer toCommentType(MOMENTS_COMMENT_TYPE commentTypeValue) {
+        switch (commentTypeValue){
+            case FAVORITE:
+                return com.upuphub.dew.community.moments.bean.dto.MOMENTS_COMMENT_TYPE.FAVORITE.value();
+            case REPLY:
+                return com.upuphub.dew.community.moments.bean.dto.MOMENTS_COMMENT_TYPE.COMMENT.value();
+            default:
+                return com.upuphub.dew.community.moments.bean.dto.MOMENTS_COMMENT_TYPE.ERROR_TYPE.value();
+        }
     }
 }

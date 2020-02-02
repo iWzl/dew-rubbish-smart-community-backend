@@ -1,8 +1,10 @@
 package com.upuphub.dew.community.general.api.service;
 
 
+import com.upuphub.dew.community.general.api.bean.dto.MomentCommentDTO;
 import com.upuphub.dew.community.general.api.bean.dto.MomentIdDTO;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
+import com.upuphub.dew.community.general.api.bean.vo.req.MomentCommentReq;
 import com.upuphub.dew.community.general.api.bean.vo.req.MomentDynamicContentReq;
 import com.upuphub.dew.community.general.api.bean.vo.req.MomentsPublishReq;
 import com.upuphub.dew.community.general.api.bean.vo.resp.MomentDynamicContentResp;
@@ -42,4 +44,12 @@ public interface MomentsService {
      * @return 用户Moments的Id
      */
     MomentIdDTO publishMomentContent(MomentsPublishReq momentsPublishReq);
+
+    /**
+     * Moment Comment评论动态
+     *
+     * @param momentCommentReq moment评论的请求
+     * @return Moment评论的ID
+     */
+    MomentCommentDTO postMomentComment(MomentCommentReq momentCommentReq);
 }

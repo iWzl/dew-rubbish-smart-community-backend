@@ -4,7 +4,7 @@ public enum MOMENTS_ACTIVITY_TYPE {
     AT(1),
     REPLY(2),
     COMMENT(3),
-    LIKED(4),
+    FAVORITE(4),
     FORWARD(5);
 
 

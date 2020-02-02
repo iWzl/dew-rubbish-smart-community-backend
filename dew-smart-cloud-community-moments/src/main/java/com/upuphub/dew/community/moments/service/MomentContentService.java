@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.moments.service;
 
 import com.upuphub.dew.community.moments.bean.po.MomentActivityPO;
+import com.upuphub.dew.community.moments.bean.po.MomentCommentPO;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
 
 public interface MomentContentService {
@@ -44,7 +45,15 @@ public interface MomentContentService {
      * @param momentActivity 保存用户Activity信息
      * @return 处理得结果状态
      */
-    int saveMomentActivity(MomentActivityPO momentActivity);
+    long saveMomentActivity(MomentActivityPO momentActivity);
+
+    /**
+     * 保存用户的Moment评论
+     *
+     * @param momentComment Moment评论
+     * @return moment评论结果
+     */
+    long saveMomentComment(MomentCommentPO momentComment);
 
     /**
      * 更新标记用户moment草稿标识
@@ -70,6 +79,5 @@ public interface MomentContentService {
      * @return 删除用户动态草稿
      */
     int deleteDraftMomentDynamicContent(long founder);
-
 
 }

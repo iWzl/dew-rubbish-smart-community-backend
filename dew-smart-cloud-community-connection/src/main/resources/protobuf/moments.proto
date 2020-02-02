@@ -65,10 +65,27 @@ enum MOMENTS_DYNAMIC_PUBLISH_TYPE{
     REPRINT = 2;                        // 转载
 }
 
+enum MOMENTS_COMMENT_TYPE{
+    ERROR_TYPE = 0;                       // 错误类型
+    FAVORITE = 1;                         // 点赞
+    REPLY = 2;                            // 普通评论
+}
+
 message MomentDynamicPublish{
     int64 dynamicId = 1;                          // Dynamic Content ID
     int64 publishBy = 2;                          // 用户动态发布者ID
     MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 3; // 动态的发布类型
     double longitude = 4;                         // 用户发布消息的经度
     double latitude = 5;                          // 用户发布消息的纬度
+}
+
+message MomentCommentRequest{
+    int64 momentId = 1;                    // 评论的Moment ID
+    string content = 2;                    // 评论的正文
+    int64 commentBy = 3;                   // 评论人
+    MOMENTS_COMMENT_TYPE commentType = 4;  // 评论的类型(点赞/评论)
+}
+
+message MomentCommentResult{
+    int64 commentId = 1;                    // 评论ID
 }

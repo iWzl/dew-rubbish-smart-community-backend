@@ -64,7 +64,9 @@ public class MomentsController {
     @ApiOperation(value = "评论Moment")
     @PostMapping(value = "/comment", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ServiceResponseMessage postMomentComment(@RequestBody @Validated MomentCommentReq momentCommentReq){
-        return ServiceResponseMessage.createBySuccessCodeMessage();
+        return ServiceResponseMessage.createBySuccessCodeMessage(
+                momentsService.postMomentComment(momentCommentReq)
+        );
     }
 
     @ApiOperation(value = "回复Moment评论")

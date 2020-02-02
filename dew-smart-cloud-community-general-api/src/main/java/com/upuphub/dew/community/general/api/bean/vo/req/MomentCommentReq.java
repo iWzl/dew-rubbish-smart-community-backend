@@ -4,6 +4,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Leo Wang
  * @version 1.0
@@ -13,10 +17,13 @@ import lombok.Data;
 @Data
 @ApiModel("Moment评论")
 public class MomentCommentReq {
+    @Min(1000)
     @ApiModelProperty("MomentId")
     private Long momentId;
     @ApiModelProperty("评论的正文")
+    @NotBlank
     private String content;
+    @NotNull
     @ApiModelProperty("评论的类型:普通评论/点赞评论")
     private COMMENT_TYPE commentType;
 

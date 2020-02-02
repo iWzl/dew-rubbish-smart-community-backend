@@ -61,4 +61,14 @@ public interface DewMomentsService {
      */
     @GetMapping(value = "/dynamic/publish",consumes = "application/x-protobuf", produces = "application/x-protobuf")
     DynamicsContentResult pullMomentDynamicPublishContent(@RequestBody DynamicHistoryRequest dynamicHistoryRequest);
+
+
+    /**
+     * 用户Moment的评论信息
+     *
+     * @param momentCommentRequest Moment动态信息的评论信息
+     * @return 评论用户动态信息的评论结果
+     */
+    @PostMapping(value = "/dynamic/comment",consumes = "application/x-protobuf", produces = "application/x-protobuf")
+    MomentCommentResult pushMomentDynamicComment(@RequestBody MomentCommentRequest momentCommentRequest);
 }

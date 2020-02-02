@@ -1,10 +1,6 @@
 package com.upuphub.dew.community.moments.service;
 
-import com.upuphub.dew.community.connection.protobuf.moments.DynamicHistoryRequest;
-import com.upuphub.dew.community.connection.protobuf.moments.DynamicsContentResult;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublish;
-import org.springframework.transaction.annotation.Transactional;
+import com.upuphub.dew.community.connection.protobuf.moments.*;
 
 public interface MomentsService {
     /**
@@ -46,4 +42,12 @@ public interface MomentsService {
      * @return 用户发送消息历史的返回结果
      */
     DynamicsContentResult pullMomentDynamicPublishContent(DynamicHistoryRequest dynamicHistoryRequest);
+
+    /**
+     * 评论用户Moment
+     *
+     * @param momentCommentRequest 评论用户Moment的请求体
+     * @return 评论用户的贫困请求处理状态
+     */
+    long pushMomentDynamicComment(MomentCommentRequest momentCommentRequest);
 }

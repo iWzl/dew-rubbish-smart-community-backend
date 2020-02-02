@@ -3,6 +3,7 @@ package com.upuphub.dew.community.moments.service.impl;
 import com.mongodb.client.result.UpdateResult;
 import com.upuphub.dew.community.connection.annotation.ProtobufField;
 import com.upuphub.dew.community.moments.bean.po.MomentActivityPO;
+import com.upuphub.dew.community.moments.bean.po.MomentCommentPO;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
 import com.upuphub.dew.community.moments.service.MomentContentService;
 import com.upuphub.dew.community.moments.utils.MongoKeysConst;
@@ -80,11 +81,19 @@ public class MomentContentServiceImpl implements MomentContentService {
     }
 
     @Override
-    public int saveMomentActivity(MomentActivityPO momentActivity) {
-        mongoTemplate.save(momentActivity);
+    public long saveMomentActivity(MomentActivityPO momentActivity) {
+        momentActivity = mongoTemplate.save(momentActivity);
         // todo 通知用户拉取MomentActivity信息
         log.info("Notify Account Sync Activity");
-        return 0;
+        return momentActivity.getActivityId();
+    }
+
+    @Override
+    public long saveMomentComment(MomentCommentPO momentComment) {
+        momentComment = mongoTemplate.save(momentComment);
+        // todo 通知用户拉取
+        log.info("Notify Account Sync Activity");
+        return momentComment.getId();
     }
 
     @Override
