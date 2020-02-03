@@ -86,6 +86,17 @@ message MomentCommentRequest{
     MOMENTS_COMMENT_TYPE commentType = 4;  // 评论的类型(点赞/评论)
 }
 
+
+message MomentReplyRequest{
+    int64 commentId = 1;                    // 评论的Moment ID
+    int64 content = 2;                    // 评论的正文
+    int64 replyBy = 3;                   // 评论人
+}
+
 message MomentCommentResult{
     int64 commentId = 1;                    // 评论ID
+}
+
+message MomentReplyResult{
+    int64 replyId = 1;                    // 评论回复ID
 }

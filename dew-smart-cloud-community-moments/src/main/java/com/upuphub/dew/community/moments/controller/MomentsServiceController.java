@@ -88,4 +88,17 @@ public class MomentsServiceController {
                 .setCommentId(momentsService.pushMomentDynamicComment(momentCommentRequest))
                 .build();
     }
+
+    /**
+     * 用户Moment的评论回复信息
+     *
+     * @param momentReplyRequest Moment动态信息的评论回复信息
+     * @return 评论用户动态信息的评论回复结果ID
+     */
+    @PostMapping(value = "/dynamic/reply")
+    public MomentReplyResult pushMomentDynamicCommentReply(@RequestBody MomentReplyRequest momentReplyRequest) {
+        return MomentReplyResult.newBuilder()
+                .setReplyId(momentsService.pushMomentDynamicCommentReply(momentReplyRequest))
+                .build();
+    }
 }

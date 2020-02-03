@@ -50,4 +50,12 @@ public interface MomentsService {
      * @return 评论用户的贫困请求处理状态
      */
     long pushMomentDynamicComment(MomentCommentRequest momentCommentRequest);
+
+    /**
+     * 回复用户Moment评论
+     *
+     * @param momentReplyRequest 回复用户Moment的请求返回体
+     * @return 回复评论的回复ID
+     */
+    long pushMomentDynamicCommentReply(MomentReplyRequest momentReplyRequest);
 }

@@ -125,6 +125,12 @@ public class MomentsServiceImpl implements MomentsService {
     }
 
     @Override
+    public long pushMomentDynamicCommentReply(MomentReplyRequest momentReplyRequest) {
+        System.out.println(momentReplyRequest);
+        return 0;
+    }
+
+    @Override
     public int publishMomentDynamicContent(MomentDynamicPublish dynamicPublish) {
         long dynamicId = dynamicPublish.getDynamicId();
         if (dynamicId == 0 && dynamicPublish.getPublishType() == MOMENTS_DYNAMIC_PUBLISH_TYPE.REPRINT) {

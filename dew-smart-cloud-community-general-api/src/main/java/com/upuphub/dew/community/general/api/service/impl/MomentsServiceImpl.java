@@ -8,9 +8,11 @@ import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicConten
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublish;
 import com.upuphub.dew.community.general.api.bean.dto.MomentCommentDTO;
 import com.upuphub.dew.community.general.api.bean.dto.MomentIdDTO;
+import com.upuphub.dew.community.general.api.bean.dto.MomentReplyDTO;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
 import com.upuphub.dew.community.general.api.bean.vo.req.MomentCommentReq;
 import com.upuphub.dew.community.general.api.bean.vo.req.MomentDynamicContentReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.MomentReplyReq;
 import com.upuphub.dew.community.general.api.bean.vo.req.MomentsPublishReq;
 import com.upuphub.dew.community.general.api.bean.vo.resp.MomentDynamicContentResp;
 import com.upuphub.dew.community.general.api.service.MomentsService;
@@ -80,5 +82,10 @@ public class MomentsServiceImpl implements MomentsService {
     public MomentCommentDTO postMomentComment(MomentCommentReq momentCommentReq) {
         MomentCommentResult momentCommentResult = remoteMomentsService.pushMomentDynamicComment(EDSUtil.toProtobufMessage(momentCommentReq));
         return MomentCommentDTO.builder().commentId(momentCommentResult.getCommentId()).build();
+    }
+
+    @Override
+    public MomentReplyDTO postMomentCommentReply(MomentReplyReq momentReplyReq) {
+        return null;
     }
 }
