@@ -4,7 +4,7 @@
 
     <select id="selectGarbageClassByLikeSearchKey" resultType="com.upuphub.dew.community.general.api.bean.po.GarbageClassSearchPO">
         select name, sortId
-        from rbc_garbage_search
+        from dew_garbage_search
         where name like concat('%', #{searchKey}, '%');
     </select>
     <select id="selectGarbageCategoriesByNum" resultType="com.upuphub.dew.community.general.api.bean.po.GarbageCategoriesPO">
@@ -16,7 +16,7 @@
                content,
                description,
                action
-        from rbc_garbage_categories
+        from dew_garbage_categories
         where id = #{classNum}
         limit 1
     </select>
