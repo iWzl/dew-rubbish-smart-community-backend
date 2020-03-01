@@ -9,6 +9,7 @@ public class MongoKeysConst {
     public static final String MOMENTS_DYNAMIC_FOUNDER = "founder";
     public static final String MOMENTS_DYNAMIC_DRAFT = "draft";
     public static final String MOMENTS_DYNAMIC_TOPIC = "topic";
+    public static final String MOMENTS_DYNAMIC_TITLE = "title";
     public static final String MOMENTS_DYNAMIC_CLASSIFY = "classify";
     public static final String MOMENTS_DYNAMIC_CONTENT = "content";
     public static final String MOMENTS_DYNAMIC_PICTURES = "pictures";

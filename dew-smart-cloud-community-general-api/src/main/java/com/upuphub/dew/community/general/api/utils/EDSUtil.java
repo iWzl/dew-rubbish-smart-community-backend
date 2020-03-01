@@ -88,6 +88,7 @@ public class EDSUtil {
                 .setLongitude(momentDynamicContentReq.getLongitude())
                 .setContent(momentDynamicContentReq.getContent())
                 .addAllPictures(momentDynamicContentReq.getPictures())
+                .setTitle(momentDynamicContentReq.getTitle())
                 .setTopic(momentDynamicContentReq.getTopic())
                 .setClassify(momentDynamicContentReq.getClassify())
                 .build();
@@ -108,6 +109,7 @@ public class EDSUtil {
         momentDynamicContentResp.setDynamicId(momentDynamicContent.getDynamicContentId());
         momentDynamicContentResp.setTopic(momentDynamicContent.getTopic());
         momentDynamicContentResp.setClassify(momentDynamicContent.getClassify());
+        momentDynamicContentResp.setTopic(momentDynamicContent.getTitle());
         momentDynamicContentResp.setContent(momentDynamicContent.getContent());
         momentDynamicContentResp.setLatitude(momentDynamicContent.getLatitude());
         momentDynamicContentResp.setLongitude(momentDynamicContent.getLongitude());

@@ -17,6 +17,7 @@ public class EdsUtil {
         return MomentDynamicContent.newBuilder()
                 .setUin(momentDynamic.getFounder())
                 .setClassify(momentDynamic.getClassify())
+                .setTitle(momentDynamic.getTitle())
                 .setContent(null == momentDynamic.getContent() ? "" : momentDynamic.getContent())
                 .setTopic(null == momentDynamic.getTopic() ? "" : momentDynamic.getTopic())
                 .setLongitude(momentDynamic.getLongitude())

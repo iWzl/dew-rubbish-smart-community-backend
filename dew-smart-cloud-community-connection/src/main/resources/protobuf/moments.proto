@@ -12,6 +12,7 @@ message MomentDynamicContent {
     int32 classify = 7;                 // 用户消息动态的种类
     int64 updateTime = 8;               // 用户消息动态的更新时间
     int64 dynamicContentId = 9;         // 用户动态消息的ID
+    string title = 10;                  // 用户动态消息的Title
 }
 
 message DynamicContentResultCell{

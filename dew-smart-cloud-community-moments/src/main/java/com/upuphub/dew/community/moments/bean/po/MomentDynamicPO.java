@@ -62,6 +62,15 @@ public class MomentDynamicPO implements Serializable {
     @ProtobufField("topic")
     private String topic;
 
+
+    /**
+     * 消息动态的Topic
+     */
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_TITLE)
+    @Indexed
+    @ProtobufField("title")
+    private String title;
+
     /**
      * 动态消息的分类信息
      */
