@@ -38,7 +38,6 @@ public class ProfileService extends BaseProfileService {
                 .build();
         mqttSenderService.sendToMqtt(1, MessageUtil.buildBase64MqttMessage(
                 MqttConst.TAG_ACCOUNT_PROFILE,
-                MqttConst.TYPE_ACCOUNT_PROFILE_MAP,
                 profileMapMessage)
         );
     }

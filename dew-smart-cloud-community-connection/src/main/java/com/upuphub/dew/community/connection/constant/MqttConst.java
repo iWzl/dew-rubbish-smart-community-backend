@@ -13,9 +13,4 @@ public interface MqttConst {
 
     public static final int TAG_RBC_API_EMAIL_CODE = 10000;
     public static final int TAG_ACCOUNT_PROFILE = 10001;
-
-
-    public static final int TYPE_RBC_API_EMAIL_CODE = 10000;
-    public static final int TYPE_ACCOUNT_PROFILE_MAP = 10001;
-
 }

@@ -28,7 +28,6 @@ import java.util.Map;
 @Configuration
 public class ShiroConfiguration {
 
-    //权限拦截过滤器链
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") SecurityManager securityManager) {
         // 初始化的权限拦截工厂
@@ -68,7 +67,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/api/common/tools/*/search","anon");
         filterChainDefinitionMap.put("api/account/password/reset","anon");
 
-        filterChainDefinitionMap.put("/api/moments/**","anon");
+        // filterChainDefinitionMap.put("/api/moments/**","anon");
         filterChainDefinitionMap.put("/api/test/**","anon");
         //logout是shiro提供的过滤器,这是走自定义的 shiroLogoutFilter 上面有配置
         //filterChainDefinitionMap.put("/logout", "logout");

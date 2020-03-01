@@ -1,6 +1,8 @@
 package com.upuphub.dew.community.push.service;
 
 import com.google.protobuf.ByteString;
+import com.upuphub.dew.community.connection.constant.MqttConst;
+import com.upuphub.dew.community.push.annotation.MqttTopic;
 import org.springframework.scheduling.annotation.Async;
 
 /**
@@ -14,6 +16,7 @@ public interface MqttHandlerService {
      * 发送邮箱验证码
      * @param payload 邮箱验证码(邮箱验证码protobuf)
      */
+    @MqttTopic(topic = MqttConst.TOPIC_RBC_API_SVT,tag = MqttConst.TAG_RBC_API_EMAIL_CODE)
     @Async("mqttHandlerExecutor")
-    public void sendEmailCode(ByteString payload);
+    void sendEmailCode(ByteString payload);
 }

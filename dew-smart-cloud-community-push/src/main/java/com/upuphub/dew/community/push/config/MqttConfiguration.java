@@ -3,6 +3,7 @@ package com.upuphub.dew.community.push.config;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.upuphub.dew.community.connection.constant.MqttConst;
 import com.upuphub.dew.community.connection.protobuf.mqtt.MqttMessage;
+import com.upuphub.dew.community.push.annotation.MqttTopic;
 import com.upuphub.dew.community.push.service.MqttHandlerService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -22,7 +23,11 @@ import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -73,6 +78,21 @@ public class MqttConfiguration {
     @Autowired
     MqttHandlerService mqttHandlerService;
 
+    private Map<String,Map<Integer, Method>> mqttHandlerMapper;
+
+    public MqttConfiguration() {
+        mqttHandlerMapper = new HashMap<>();
+        Class<?> mqttHandlerServiceClass = MqttHandlerService.class;
+        //获取接口中的所有方法
+        for (Method method : mqttHandlerServiceClass.getMethods()) {
+            MqttTopic mqttTopic = method.getAnnotation(MqttTopic.class);
+            if(null != mqttTopic){
+                Map<Integer, Method> handlerMethod = new HashMap<>();
+                handlerMethod.put(mqttTopic.tag(),method);
+                mqttHandlerMapper.putIfAbsent(mqttTopic.topic(),handlerMethod);
+            }
+        }
+    }
 
     /**
      * MQTT连接器选项
@@ -179,13 +199,17 @@ public class MqttConfiguration {
         return message -> {
             try {
                 MqttMessage mqttMessage = MqttMessage.parseFrom(Base64.getDecoder().decode((String)message.getPayload()));
-                if (MqttConst
-                        .TOPIC_RBC_API_SVT.equals(Objects.requireNonNull(message.getHeaders().get("mqtt_receivedTopic")))) {
-                    mqttHandlerService.sendEmailCode(mqttMessage.getPayload());
+                String topic = (String) message.getHeaders().get("mqtt_receivedTopic");
+                boolean checkTopic = (null != topic && !"".equals(topic)) && mqttHandlerMapper.containsKey(topic);
+                if(!checkTopic){
+                    return;
                 }
-                log.debug("Send Email {}", message.getPayload());
-            } catch (InvalidProtocolBufferException e) {
-                e.printStackTrace();
+                Method method = mqttHandlerMapper.get(topic).getOrDefault(mqttMessage.getTag(),null);
+                if(null != method){
+                    method.invoke(mqttHandlerService,mqttMessage.getPayload());
+                }
+            } catch (InvalidProtocolBufferException | IllegalAccessException | InvocationTargetException e) {
+               log.error("MessageHandler Error",e);
             }
         };
     }

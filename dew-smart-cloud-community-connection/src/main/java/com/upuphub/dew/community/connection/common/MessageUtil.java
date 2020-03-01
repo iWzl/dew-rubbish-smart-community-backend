@@ -219,14 +219,13 @@ public class MessageUtil {
         }
     }
 
-    public static String buildBase64MqttMessage(Integer tag,Integer type, Message message) {
+    public static String buildBase64MqttMessage(Integer tag, Message message) {
         return Base64
                 .getEncoder()
                 .encodeToString(
                         MqttMessage
                                 .newBuilder()
                                 .setPayload(message.toByteString())
-                                .setType(type)
                                 .setTag(tag)
                                 .build()
                                 .toByteArray());
