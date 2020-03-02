@@ -24,9 +24,9 @@ import java.util.List;
 
 
 @Data
-@Document(collection = "dynamic")
+@Document(collection = "moment_content")
 @CompoundIndexes({
-        @CompoundIndex(name = "dynamic_classify", def = "{'dynamicId': 1, 'classify': 1}"),
+        @CompoundIndex(name = "moment_classify", def = "{'moment_id': 1, 'classify': 1}"),
         @CompoundIndex(name = "founder_classify", def = "{'founder': 1, 'classify': 1}")
 })
 public class MomentDynamicPO implements Serializable {
@@ -36,7 +36,7 @@ public class MomentDynamicPO implements Serializable {
     @Id
     @Field(MongoKeysConst.MOMENTS_DYNAMIC_ID)
     @ProtobufField(ignore = true)
-    private Long dynamicId;
+    private Long momentId;
 
     /**
      * 消息动态的生产者
@@ -44,7 +44,7 @@ public class MomentDynamicPO implements Serializable {
     @Field(MongoKeysConst.MOMENTS_DYNAMIC_FOUNDER)
     @Indexed
     @ProtobufField("uin")
-    private Long founderUin;
+    private Long founder;
 
     /**
      * 标记是否未完成
@@ -62,6 +62,15 @@ public class MomentDynamicPO implements Serializable {
     @ProtobufField("topic")
     private String topic;
 
+
+    /**
+     * 消息动态的Topic
+     */
+    @Field(MongoKeysConst.MOMENTS_DYNAMIC_TITLE)
+    @Indexed
+    @ProtobufField("title")
+    private String title;
+
     /**
      * 动态消息的分类信息
      */
@@ -73,7 +82,7 @@ public class MomentDynamicPO implements Serializable {
      * 动态消息的正文
      */
     @Field(MongoKeysConst.MOMENTS_DYNAMIC_CONTENT)
-    @ProtobufField("dynamic")
+    @ProtobufField("content")
     private String content;
 
     /**

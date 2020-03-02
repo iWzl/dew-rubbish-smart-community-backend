@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 
 @Data
-@Document(collection = "reply")
+@Document(collection = "moment_reply")
 public class MomentReplyPO implements Serializable {
     /**
      * 回复消息的消息ID
@@ -37,7 +37,7 @@ public class MomentReplyPO implements Serializable {
     /**
      * 回复目标ID
      */
-    @Field("replyId")
+    @Field("reply_id")
     @Indexed
     private String replyId;
 

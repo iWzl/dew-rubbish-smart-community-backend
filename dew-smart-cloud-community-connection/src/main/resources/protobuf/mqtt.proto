@@ -6,12 +6,32 @@ option java_multiple_files = true;
 
 message MqttMessage{
     int32 tag = 1;
-    int32 type = 2;
-    bytes payload = 3;
-    string messageId = 4;
+    bytes payload = 2;
+    string messageId = 3;
 }
 
 message ProfileMapMessage{
     int64 uin = 1;
     map<string,string> profile = 2;
+}
+
+
+enum NotifyType{
+    ERROR_DEFAULT_TYPE = 0;
+    SYNC_MOMENTS_COMMENT = 1;
+    SYNC_MOMENTS_REPLY = 2;
+    SYNC_MOMENTS_FAVORITE = 3;
+}
+
+message NotifyMessage{
+    repeated Header header = 1;
+    repeated string body = 2;
+}
+
+message Header{
+    repeated NotifyType notifyType = 1;
+    int64 notifyDate = 2;
+    string notifyUUID = 3;
+    int64 toUin = 4;
+    int32 version = 5;
 }

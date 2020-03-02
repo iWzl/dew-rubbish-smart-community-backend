@@ -10,6 +10,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
+ * MQTT监听异步处理的线程此配置
+ *
  * @author Leo Wang
  * @version 1.0
  * @date 2019/10/13 18:08

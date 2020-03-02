@@ -36,7 +36,7 @@ push:
     username: DewDevTest
     password: DewDevTest
     # 推送信息的连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613,tcp://192.168.1.61:616
-    url: tcp://119.3.147.11:19099
+    url: tcp://192.168.0.127:1883 #tcp://119.3.147.11:19099
     producer:
       # 连接服务器默认客户端ID
       clientId: PushDevProducer

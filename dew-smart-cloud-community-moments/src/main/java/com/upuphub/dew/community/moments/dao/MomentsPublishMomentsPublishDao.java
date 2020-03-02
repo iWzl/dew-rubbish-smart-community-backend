@@ -6,9 +6,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MomentsPublishMomentsPublishDao {
-    int deleteByPrimaryKey(Long id);
+    /**
+     * 添加发布Moment记录
+     *
+     * @param momentsPublishRecord 用户发布的Moments的发布审核记录信息
+     * @return 受影响的行数,返回如果受影响的行数为1,插入正常
+     */
+    int insertMomentsPublishRecord(@Param("momentPublishPO")MomentsPublishPO momentsPublishRecord);
 
-    int insert( MomentsPublishPO record);
+    int deleteByPrimaryKey(Long id);
 
     int insertSelective(MomentsPublishPO record);
 

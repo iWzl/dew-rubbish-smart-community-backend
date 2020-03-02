@@ -22,7 +22,11 @@ public class MomentDynamicContentResp {
 
     @NotBlank(message = "用户需要发动的动态消息正文不允许为空")
     @ApiModelProperty(value = "用户发送的动态消息正文",required = true,example = "青青子衿,悠悠我心")
-    private String dynamic;
+    private String content;
+
+    @NotBlank(message = "用户发布的Title")
+    @ApiModelProperty(value = "用户Moments的Title",required = true,example = "青青子衿,悠悠我心")
+    private String title;
 
     @ApiModelProperty(value = "用户上传的图片的")
     private List<String> pictures;

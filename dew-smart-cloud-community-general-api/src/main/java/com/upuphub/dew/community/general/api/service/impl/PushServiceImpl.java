@@ -49,9 +49,9 @@ public class PushServiceImpl implements PushService {
         }else {
             emailAndCode = EmailAndCode.newBuilder().setCode(code).setEmail(email).build();
         }
-        String payload = MessageUtil.buildBase64MqttMessage(MqttConst.TYPE_RBC_API_EMAIL_CODE,MqttConst.TYPE_RBC_API_EMAIL_CODE,emailAndCode);
+        String payload = MessageUtil.buildBase64MqttMessage(MqttConst.TAG_RBC_API_EMAIL_CODE,emailAndCode);
         mqttSenderService.sendToMqtt(MqttConst.TOPIC_RBC_API_SVT,2,payload);
         redisCacheService.putEmailVerifyCode(email,code);
-        return ServiceResponseMessage.createBySuccessCodeMessage(ResultMessageConst.EMAIL_CODE_SEND_SUCCESS);
+        return ServiceResponseMessage.createBySuccessCodeMessage(ResultMessageConst.EMAIL_CODE_SEND_SUCCESS,code);
     }
 }
