@@ -1,5 +1,6 @@
 package com.upuphub.dew.community.moments.bean.po;
 
+import com.upuphub.dew.community.connection.annotation.ProtobufField;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -24,56 +25,35 @@ public class MomentReplyPO implements Serializable {
      */
     @Id
     @Field("id")
-    private String id;
+    @ProtobufField(ignore = true)
+    private Long id;
 
     /**
-     * 冗余存储,用户拉取回复时优化查询
      * 回复消息回复的评论消息ID
      */
     @Field("comment_id")
     @Indexed
-    private String commentId;
-
-    /**
-     * 回复目标ID
-     */
-    @Field("reply_id")
-    @Indexed
-    private String replyId;
-
-    /**
-     * 回复类型 对回复回复/对评论回复
-     */
-    @Field("reply_type")
-    private Integer replyType;
-
-    /**
-     * 回复消息的回复文字类型 例如 普通文本消息 链接消息 图片消息
-     */
-    @Field("content_type")
-    private Integer contentType;
+    @ProtobufField("commentId")
+    private Long commentId;
 
     /**
      * 回复消息的信息正文
      */
     @Field("content")
+    @ProtobufField("content")
     private String content;
 
     /**
      * 回复消息的来源创建人
      */
     @Field("from_uin")
-    private String fromUin;
-
-    /**
-     * 回复消息@的人
-     */
-    @Field("to_uin")
-    private Long toUin;
+    @ProtobufField("replyBy")
+    private Long fromUin;
 
     /**
      * 回复消息的回复时间
      */
     @Field("create_time")
+    @ProtobufField(ignore = true)
     private Long createTime;
 }

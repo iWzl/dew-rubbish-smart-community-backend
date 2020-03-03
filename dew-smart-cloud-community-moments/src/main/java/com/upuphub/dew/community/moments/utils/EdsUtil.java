@@ -3,7 +3,9 @@ package com.upuphub.dew.community.moments.utils;
 import com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_COMMENT_TYPE;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
 import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublish;
+import com.upuphub.dew.community.connection.protobuf.moments.MomentReplyRequest;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
+import com.upuphub.dew.community.moments.bean.po.MomentReplyPO;
 import com.upuphub.dew.community.moments.bean.po.MomentsPublishPO;
 
 /**

@@ -46,7 +46,7 @@ public class ReplaceUtil {
     }
 
     public static void main(String[] args) {
-        String momentsBody = "Hello This is Moment Content @{uin:123456|name:DewTestName}@{uin:123456|name:DewTestName}@{uin:123457|name:DewTestName}";
+        String momentsBody = "Hello This is Moment Content @{uin:123456}@{uin:123457}@{uin:123458}";
         System.out.println(getAtUinList(momentsBody));
     }
 }

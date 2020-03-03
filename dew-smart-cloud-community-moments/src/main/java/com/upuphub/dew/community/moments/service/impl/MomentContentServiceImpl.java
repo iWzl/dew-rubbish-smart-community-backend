@@ -2,10 +2,15 @@ package com.upuphub.dew.community.moments.service.impl;
 
 import com.mongodb.client.result.UpdateResult;
 import com.upuphub.dew.community.connection.annotation.ProtobufField;
+import com.upuphub.dew.community.connection.common.JsonHelper;
+import com.upuphub.dew.community.connection.common.MessageUtil;
+import com.upuphub.dew.community.connection.constant.MqttConst;
+import com.upuphub.dew.community.connection.protobuf.push.MomentSyncActivityNotify;
 import com.upuphub.dew.community.moments.bean.po.MomentActivityPO;
 import com.upuphub.dew.community.moments.bean.po.MomentCommentPO;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
 import com.upuphub.dew.community.moments.service.MomentContentService;
+import com.upuphub.dew.community.moments.service.MqttSenderService;
 import com.upuphub.dew.community.moments.utils.MongoKeysConst;
 import com.upuphub.dew.community.moments.utils.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +35,9 @@ import java.util.*;
 public class MomentContentServiceImpl implements MomentContentService {
     @Resource
     private MongoTemplate mongoTemplate;
+
+    @Resource
+    private MqttSenderService mqttSenderService;
 
     @Override
     public Long searchMomentDynamicDraftIdByUin(long uin) {
@@ -92,20 +100,29 @@ public class MomentContentServiceImpl implements MomentContentService {
     }
 
     @Override
+    public <T> T saveCommonMomentDetails(T commonMomentDetail) {
+        commonMomentDetail = mongoTemplate.save(commonMomentDetail);
+        log.debug("Save Common Moment Detail [{}]", JsonHelper.allToJson(commonMomentDetail));
+        return commonMomentDetail;
+    }
+
+    @Override
     public long saveMomentActivity(MomentActivityPO momentActivity) {
         momentActivity = mongoTemplate.save(momentActivity);
-        // todo 通知用户拉取MomentActivity信息
+        MomentSyncActivityNotify
+                momentSyncActivityNotify = MomentSyncActivityNotify.newBuilder()
+                .setActivityId(momentActivity.getActivityId())
+                .setActivityType(momentActivity.getActivityTypeNumber())
+                .setForUin(momentActivity.getForUin())
+                .setFromUin(momentActivity.getByUin())
+                .setMomentId(momentActivity.getMomentId())
+                .build();
+        String payload = MessageUtil.buildBase64MqttMessage(MqttConst.TAG_MOMENT_SYNC_ACTIVITY,momentSyncActivityNotify);
+        mqttSenderService.sendToMqtt(MqttConst.TOPIC_MOMENTS,payload);
         log.info("Notify Account Sync Activity");
         return momentActivity.getActivityId();
     }
 
-    @Override
-    public long saveMomentComment(MomentCommentPO momentComment) {
-        momentComment = mongoTemplate.save(momentComment);
-        // todo 通知用户拉取
-        log.info("Notify Account Sync Activity");
-        return momentComment.getId();
-    }
 
     @Override
     public int updateDraftMomentDynamicContent(MomentDynamicPO momentDynamicContent) {

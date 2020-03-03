@@ -118,11 +118,15 @@ public class MomentsServiceImpl implements MomentsService {
         momentComment.setId(snowflakeId.nextId());
         momentComment.setContentType(EdsUtil.toCommentType(momentCommentRequest.getCommentType()));
         momentComment.setCreateTime(System.currentTimeMillis());
-        return momentContentService.saveMomentComment(momentComment);
+        return momentContentService.saveCommonMomentDetails(momentComment).getId();
     }
 
     @Override
     public long pushMomentDynamicCommentReply(MomentReplyRequest momentReplyRequest) {
+        MomentReplyPO momentReplyInfo = MessageUtil.messageToCommonPojo(momentReplyRequest, MomentReplyPO.class);
+        if(null == momentReplyInfo || ObjectUtil.isEmpty(momentReplyRequest.getContent())){
+            return MomentsConst.ERROR_CODE_COMMON_FAIL;
+        }
         MomentCommentPO momentCommentInfo = momentContentService.searchMomentCommentByCommentId(momentReplyRequest.getCommentId());
         if (null == momentCommentInfo || ObjectUtil.isEmpty(momentReplyRequest.getReplyBy())) {
             return MomentsConst.ERROR_CODE_NOT_EXISTS;
@@ -132,16 +136,24 @@ public class MomentsServiceImpl implements MomentsService {
             return MomentsConst.ERROR_CODE_NOT_EXISTS;
         }
         if (momentCommentInfo.getFromUin() != momentReplyRequest.getReplyBy()) {
-          /*  notifyMomentActivityUin(momentCommentInfo.getMomentId(), momentCommentRequest.getCommentBy(),
-                    Collections.singletonList(momentCommentInfo.getFromUin()), momentCommentRequest.getCommentType());*/
+            notifyMomentActivityUin(momentCommentInfo.getMomentId(),momentReplyRequest.getReplyBy(),
+                    Collections.singletonList(momentCommentInfo.getFromUin()),MOMENTS_ACTIVITY_TYPE.REPLY);
         }
         if (momentDynamic.getFounder() != momentReplyRequest.getReplyBy()) {
-            /*notifyMomentActivityUin(momentComment.getMomentId(), momentCommentRequest.getCommentBy(),
-                    Collections.singletonList(momentComment.getFromUin()), momentCommentRequest.getCommentType());*/
+            notifyMomentActivityUin(momentCommentInfo.getMomentId(),momentReplyRequest.getReplyBy(),
+                    Collections.singletonList(momentDynamic.getFounder()),MOMENTS_ACTIVITY_TYPE.REPLY);
         }
-        //MomentReplyPO momentReplyPO
-        System.out.println(momentReplyRequest);
-        return 0;
+        if (!ObjectUtil.isEmpty(momentReplyRequest.getContent())) {
+            List<Long> notifyUinList = ReplaceUtil.getAtUinList(momentReplyRequest.getContent());
+            notifyUinList.removeIf((notifyUin) -> notifyUin.equals(momentReplyRequest.getReplyBy()));
+            if (!ObjectUtil.isEmpty(notifyUinList)) {
+                notifyMomentActivityUin(momentCommentInfo.getMomentId(), momentReplyRequest.getReplyBy(),
+                        notifyUinList, MOMENTS_ACTIVITY_TYPE.AT);
+            }
+        }
+        momentReplyInfo.setCreateTime(System.currentTimeMillis());
+        momentReplyInfo.setId(snowflakeId.nextId());
+        return momentContentService.saveCommonMomentDetails(momentReplyInfo).getId();
     }
 
     @Override

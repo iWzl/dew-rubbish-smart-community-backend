@@ -19,4 +19,8 @@ public interface MqttHandlerService {
     @MqttTopic(topic = MqttConst.TOPIC_RBC_API_SVT,tag = MqttConst.TAG_RBC_API_EMAIL_CODE)
     @Async("mqttHandlerExecutor")
     void sendEmailCode(ByteString payload);
+
+    @MqttTopic(topic = MqttConst.TOPIC_MOMENTS,tag = MqttConst.TAG_MOMENT_SYNC_ACTIVITY)
+    @Async("mqttHandlerExecutor")
+    void pushSyncMomentActivity(ByteString payload);
 }

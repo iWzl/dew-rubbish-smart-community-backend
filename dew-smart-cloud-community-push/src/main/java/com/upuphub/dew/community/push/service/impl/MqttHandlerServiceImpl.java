@@ -5,6 +5,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.upuphub.dew.community.connection.common.RegexUtils;
 import com.upuphub.dew.community.connection.constant.PushConst;
 import com.upuphub.dew.community.connection.protobuf.push.EmailAndCode;
+import com.upuphub.dew.community.connection.protobuf.push.MomentSyncActivityNotify;
 import com.upuphub.dew.community.push.service.MailService;
 import com.upuphub.dew.community.push.service.MqttHandlerService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,15 @@ public class MqttHandlerServiceImpl implements MqttHandlerService {
             if (error != PushConst.ERROR_CODE_SUCCESS) {
                 log.error("Send Email Error {}", error);
             }
+        } catch (InvalidProtocolBufferException ignore) { }
+    }
+
+    @Override
+    public void pushSyncMomentActivity(ByteString payload) {
+        try {
+            MomentSyncActivityNotify momentSyncActivityNotify = MomentSyncActivityNotify.parseFrom(payload);
+            // todo 通知用户拉取moment信息
+            System.out.println();
         } catch (InvalidProtocolBufferException ignore) { }
     }
 }

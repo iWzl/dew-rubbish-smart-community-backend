@@ -3,6 +3,7 @@ package com.upuphub.dew.community.moments.service;
 import com.upuphub.dew.community.moments.bean.po.MomentActivityPO;
 import com.upuphub.dew.community.moments.bean.po.MomentCommentPO;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
+import com.upuphub.dew.community.moments.bean.po.MomentReplyPO;
 
 public interface MomentContentService {
     /**
@@ -55,13 +56,15 @@ public interface MomentContentService {
      */
     long saveMomentActivity(MomentActivityPO momentActivity);
 
+
     /**
-     * 保存用户的Moment评论
+     * 保存通用的Moments信息
      *
-     * @param momentComment Moment评论
-     * @return moment评论结果
+     * @param commonMomentDetail 通用的Moments信息
+     * @param <T> 保存对象
+     * @return  <T> 保存对象
      */
-    long saveMomentComment(MomentCommentPO momentComment);
+    <T> T saveCommonMomentDetails(T commonMomentDetail);
 
     /**
      * 更新标记用户moment草稿标识

@@ -8,9 +8,13 @@ package com.upuphub.dew.community.connection.constant;
 
 public interface MqttConst {
     public static final String TOPIC_ACCOUNT = "DEW_ACCOUNT";
+    public static final int TAG_ACCOUNT_PROFILE = 10001;
+
     public static final String TOPIC_RBC_API_SVT = "RBC_API_SVR";
+    public static final int TAG_RBC_API_EMAIL_CODE = 10000;
+
     public static final String TOPIC_PUSH = "DEW_PUSH";
 
-    public static final int TAG_RBC_API_EMAIL_CODE = 10000;
-    public static final int TAG_ACCOUNT_PROFILE = 10001;
+    public static final String TOPIC_MOMENTS = "DEW_MOMENTS";
+    public static final int TAG_MOMENT_SYNC_ACTIVITY = 10001;
 }
