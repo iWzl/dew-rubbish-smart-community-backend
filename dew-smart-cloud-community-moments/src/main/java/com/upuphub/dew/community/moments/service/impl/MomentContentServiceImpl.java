@@ -72,6 +72,17 @@ public class MomentContentServiceImpl implements MomentContentService {
     }
 
     @Override
+    public MomentCommentPO searchMomentCommentByCommentId(long commentId) {
+        Map<String, Object> where = Collections.singletonMap(MongoKeysConst.MOMENTS_COMMENT_ID, commentId);
+        MomentCommentPO momentCommentInfo = mongoTemplate.findOne(createEasyQuery(mongoSelectKeysList(MomentCommentPO.class, Collections.emptySet()), where, 1)
+                .with(new Sort(Sort.Direction.DESC, MongoKeysConst.MOMENTS_COMMENT_ID)), MomentCommentPO.class);
+        if (!ObjectUtil.isEmpty(momentCommentInfo)) {
+            return momentCommentInfo;
+        }
+        return null;
+    }
+
+    @Override
     public int createDraftMomentDynamicContent(MomentDynamicPO momentDynamicContent) {
         momentDynamicContent.setCreateTime(System.currentTimeMillis());
         momentDynamicContent.setUpdateTime(System.currentTimeMillis());

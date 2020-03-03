@@ -25,7 +25,7 @@ public class MomentCommentPO implements Serializable {
      * 动态消息的评论ID
      */
     @Id
-    @Field("id")
+    @Field(MongoKeysConst.MOMENTS_COMMENT_ID)
     @ProtobufField(ignore = true)
     private Long id;
 

@@ -45,7 +45,7 @@ public interface MomentsService {
      * @param momentsPublishReq 用户Moments的发布信息
      * @return 用户Moments的Id
      */
-    MomentIdDTO publishMomentContent(MomentsPublishReq momentsPublishReq);
+    ServiceResponseMessage publishMomentContent(MomentsPublishReq momentsPublishReq);
 
     /**
      * Moment Comment评论动态

@@ -51,9 +51,6 @@ public class MomentCommentReq {
         }
 
         public static COMMENT_TYPE buildCommentTypeByTypeNumber(int typeNumber){
-            if(typeNumber > FAVORITE.getType() || typeNumber < REPLY.getType()) {
-                return REPLY;
-            }
             for (COMMENT_TYPE type :values()){
                 if(typeNumber == type.getType()){
                     return type;

@@ -31,6 +31,14 @@ public interface MomentContentService {
     MomentDynamicPO searchMomentDynamicContentByMomentId(long momentId);
 
     /**
+     * 根据评论ID查询评论信息
+     *
+     * @param commentId 评论ID
+     * @return 评论的详细信息
+     */
+    MomentCommentPO searchMomentCommentByCommentId(long commentId);
+
+    /**
      * 创建MomentDynamicContent正文信息
      *
      * @param momentDynamicContent 用户动态正文得详细信息

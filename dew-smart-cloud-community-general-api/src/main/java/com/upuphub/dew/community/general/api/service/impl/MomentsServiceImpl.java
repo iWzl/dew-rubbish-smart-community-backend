@@ -1,10 +1,7 @@
 package com.upuphub.dew.community.general.api.service.impl;
 
 import com.upuphub.dew.community.connection.constant.MomentsConst;
-import com.upuphub.dew.community.connection.protobuf.moments.Founder;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentCommentResult;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublish;
+import com.upuphub.dew.community.connection.protobuf.moments.*;
 import com.upuphub.dew.community.general.api.bean.dto.MomentCommentDTO;
 import com.upuphub.dew.community.general.api.bean.dto.MomentIdDTO;
 import com.upuphub.dew.community.general.api.bean.dto.MomentReplyDTO;
@@ -66,25 +63,32 @@ public class MomentsServiceImpl implements MomentsService {
     }
 
     @Override
-    public MomentIdDTO publishMomentContent(MomentsPublishReq momentsPublishReq) {
+    public ServiceResponseMessage publishMomentContent(MomentsPublishReq momentsPublishReq) {
         MomentDynamicPublish momentDynamicPublish = EDSUtil.toProtobufMessage(momentsPublishReq);
         if(null != momentDynamicPublish){
             int error = remoteMomentsService.publishMomentDynamicContent(momentDynamicPublish).getCode();
             if(error == MomentsConst.ERROR_CODE_SUCCESS){
-                return MomentIdDTO.builder().momentId(momentDynamicPublish.getDynamicId()).build();
+                return ServiceResponseMessage.createBySuccessCodeMessage("发布成功");
+            }else if(error == MomentsConst.ERROR_CODE_NOT_EXISTS){
+                ServiceResponseMessage.createByFailCodeMessage("Moment不存在");
+            }else if(error == MomentsConst.ERROR_CODE_PUBLISH_TYPE){
+                ServiceResponseMessage.createByFailCodeMessage("不允许的发布类型");
             }
         }
-        return MomentIdDTO.builder().momentId(0L).build();
+        return ServiceResponseMessage.createByFailCodeMessage("参数错误");
     }
 
     @Override
     public MomentCommentDTO postMomentComment(MomentCommentReq momentCommentReq) {
-        MomentCommentResult momentCommentResult = remoteMomentsService.pushMomentDynamicComment(EDSUtil.toProtobufMessage(momentCommentReq));
+        MomentCommentResult momentCommentResult =
+                remoteMomentsService.pushMomentDynamicComment(EDSUtil.toProtobufMessage(momentCommentReq));
         return MomentCommentDTO.builder().commentId(momentCommentResult.getCommentId()).build();
     }
 
     @Override
     public MomentReplyDTO postMomentCommentReply(MomentReplyReq momentReplyReq) {
-        return null;
+        MomentReplyResult momentReplyResult =
+                remoteMomentsService.pushMomentDynamicCommentReply(EDSUtil.toProtobufMessage(momentReplyReq));
+        return MomentReplyDTO.builder().momentReplyId(momentReplyResult.getReplyId()).build();
     }
 }

@@ -18,6 +18,8 @@ public class MongoKeysConst {
     public static final String MOMENTS_DYNAMIC_LONGITUDE = "longitude";
     public static final String MOMENTS_DYNAMIC_UPDATE_TIME = "update_time";
 
+    public static final String MOMENTS_COMMENT_ID = "id";
+
     public static final String MOMENTS_ACTIVITY_ID = "activity_id";
     public static final String MOMENTS_ACTIVITY_SYNC = "activity_sync";
     public static final String MOMENTS_ACTIVITY_TYPE = "activity_type";

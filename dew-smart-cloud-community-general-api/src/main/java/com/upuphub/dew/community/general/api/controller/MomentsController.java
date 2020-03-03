@@ -48,17 +48,14 @@ public class MomentsController {
     @ApiOperation(value = "删除用户动态草稿")
     @DeleteMapping(value = "/draft", consumes = MediaType.ALL_VALUE)
     public ServiceResponseMessage deleteDraftMomentDynamicContent() {
-        return ServiceResponseMessage.createBySuccessCodeMessage(
-                momentsService.deleteDraftMomentDynamicContent()
-        );
+        return momentsService.deleteDraftMomentDynamicContent();
     }
 
     @ApiOperation(value = "发布Moment")
     @PostMapping(value = "/publish", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ServiceResponseMessage publishMomentContent(@RequestBody @Validated MomentsPublishReq momentsPublishReq) {
-        return ServiceResponseMessage.createBySuccessCodeMessage(
-                momentsService.publishMomentContent(momentsPublishReq)
-        );
+        return momentsService.publishMomentContent(momentsPublishReq);
+
     }
 
     @ApiOperation(value = "评论Moment")

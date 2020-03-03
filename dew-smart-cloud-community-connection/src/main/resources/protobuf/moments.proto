@@ -90,7 +90,7 @@ message MomentCommentRequest{
 
 message MomentReplyRequest{
     int64 commentId = 1;                    // 评论的Moment ID
-    int64 content = 2;                    // 评论的正文
+    string content = 2;                    // 评论的正文
     int64 replyBy = 3;                   // 评论人
 }
 

@@ -109,7 +109,7 @@ public class EDSUtil {
         momentDynamicContentResp.setDynamicId(momentDynamicContent.getDynamicContentId());
         momentDynamicContentResp.setTopic(momentDynamicContent.getTopic());
         momentDynamicContentResp.setClassify(momentDynamicContent.getClassify());
-        momentDynamicContentResp.setTopic(momentDynamicContent.getTitle());
+        momentDynamicContentResp.setTitle(momentDynamicContent.getTitle());
         momentDynamicContentResp.setContent(momentDynamicContent.getContent());
         momentDynamicContentResp.setLatitude(momentDynamicContent.getLatitude());
         momentDynamicContentResp.setLongitude(momentDynamicContent.getLongitude());
@@ -137,6 +137,18 @@ public class EDSUtil {
                 .setLongitude(momentsPublishReq.getLongitude())
                 .setPublishType(toProtobufMomentsPublishType(momentsPublishReq.getPublishType()))
                 .setPublishBy(HttpUtil.getUserUin())
+                .build();
+    }
+
+
+    public static MomentReplyRequest toProtobufMessage(MomentReplyReq momentReplyReq) {
+        if(null == momentReplyReq){
+            return null;
+        }
+        return MomentReplyRequest.newBuilder()
+                .setCommentId(momentReplyReq.getCommentId())
+                .setReplyBy(HttpUtil.getUserUin())
+                .setContent(momentReplyReq.getContent())
                 .build();
     }
 
