@@ -53,14 +53,17 @@ public interface DewMomentsService {
     @PostMapping(value = "/dynamic/publish",consumes = "application/x-protobuf", produces = "application/x-protobuf")
     RpcResultCode publishMomentDynamicContent(@RequestBody MomentDynamicPublish dynamicContent);
 
+
     /**
      * 动态消息的发布者Uin
      *
      * @param dynamicHistoryRequest 消息发布者Uin和分页信息
      * @return 用户动态消息正文的发布结果
      */
+
     @GetMapping(value = "/dynamic/publish",consumes = "application/x-protobuf", produces = "application/x-protobuf")
     DynamicsContentResult pullMomentDynamicPublishContent(@RequestBody DynamicHistoryRequest dynamicHistoryRequest);
+
 
 
     /**
@@ -78,6 +81,15 @@ public interface DewMomentsService {
      * @param momentReplyRequest Moment动态信息的评论回复信息
      * @return 评论用户动态信息的评论回复结果ID
      */
-    @PostMapping(value = "/dynamic/reply")
+    @PostMapping(value = "/dynamic/reply",consumes = "application/x-protobuf", produces = "application/x-protobuf")
     MomentReplyResult pushMomentDynamicCommentReply(@RequestBody MomentReplyRequest momentReplyRequest);
+
+    /**
+     * 查询用户Moments信息通过用户地理位置信息
+     *
+     * @param momentDetailsLocationRequest  拉取用户的地理位置信息需要的请求参数
+     * @return  Moment的详细相关信息
+     */
+    @PostMapping(value = "/dynamic/search/location",consumes = "application/x-protobuf", produces = "application/x-protobuf")
+    MomentsDetailsResult fetchMomentsDetailByLocation(@RequestBody MomentDetailsLocationRequest momentDetailsLocationRequest);
 }

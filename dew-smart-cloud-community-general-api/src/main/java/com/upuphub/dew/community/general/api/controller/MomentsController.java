@@ -60,7 +60,7 @@ public class MomentsController {
 
     @ApiOperation(value = "评论Moment")
     @PostMapping(value = "/comment", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ServiceResponseMessage postMomentComment(@RequestBody @Validated MomentCommentReq momentCommentReq){
+    public ServiceResponseMessage postMomentComment(@RequestBody @Validated MomentCommentReq momentCommentReq) {
         return ServiceResponseMessage.createBySuccessCodeMessage(
                 momentsService.postMomentComment(momentCommentReq)
         );
@@ -68,33 +68,33 @@ public class MomentsController {
 
     @ApiOperation(value = "回复Moment评论")
     @PostMapping(value = "/comment/reply", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ServiceResponseMessage postMomentCommentReply(@RequestBody @Validated MomentReplyReq momentReplyReq){
+    public ServiceResponseMessage postMomentCommentReply(@RequestBody @Validated MomentReplyReq momentReplyReq) {
         momentsService.postMomentCommentReply(momentReplyReq);
         return ServiceResponseMessage.createBySuccessCodeMessage();
     }
 
     @ApiOperation(value = "按地理位置分页拉取所有的Moment")
-    @PostMapping(value = "/location/fetch",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ServiceResponseMessage fetchMomentAndReplyDetailByLocationCond(@RequestBody @Validated MomentLocationFilterReq momentLocationFilterReq){
-        return ServiceResponseMessage.createBySuccessCodeMessage();
+    @PostMapping(value = "/location/fetch", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage fetchMomentAndReplyDetailByLocationCond(@RequestBody @Validated MomentLocationFilterReq momentLocationFilterReq) {
+        return momentsService.fetchMomentAndReplyDetailByLocationCond(momentLocationFilterReq);
     }
 
     @ApiOperation(value = "按classify/topic分页拉取所有的Moment")
-    @PostMapping(value = "/tips/fetch",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ServiceResponseMessage fetchMomentAndReplyDetailByTipsCond(@RequestBody @Validated MomentTipsFilterReq momentTipsFilterReq){
+    @PostMapping(value = "/tips/fetch", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage fetchMomentAndReplyDetailByTipsCond(@RequestBody @Validated MomentTipsFilterReq momentTipsFilterReq) {
         return ServiceResponseMessage.createBySuccessCodeMessage();
     }
 
     @ApiOperation(value = "按uin分页拉取所有的Moment")
-    @PostMapping(value = "/uin/fetch",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ServiceResponseMessage fetchMomentAndReplyDetailByUinCond(@RequestBody @Validated MomentUinFilterReq momentUinFilterReq){
+    @PostMapping(value = "/uin/fetch", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage fetchMomentAndReplyDetailByUinCond(@RequestBody @Validated MomentUinFilterReq momentUinFilterReq) {
         return ServiceResponseMessage.createBySuccessCodeMessage();
     }
 
 
     @ApiOperation(value = "按SyncKey拉取用户相关联的Activity信息")
-    @PostMapping(value = "/activity/fetch",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ServiceResponseMessage fetchMomentActivityDetailBySyncKey(@RequestBody @Validated MomentActivitySyncReq momentLocationFilterReq){
+    @PostMapping(value = "/activity/fetch", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage fetchMomentActivityDetailBySyncKey(@RequestBody @Validated MomentActivitySyncReq momentLocationFilterReq) {
         return ServiceResponseMessage.createBySuccessCodeMessage();
     }
 

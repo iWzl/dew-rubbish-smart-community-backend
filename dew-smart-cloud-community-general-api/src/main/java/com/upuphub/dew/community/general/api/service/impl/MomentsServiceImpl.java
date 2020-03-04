@@ -6,10 +6,7 @@ import com.upuphub.dew.community.general.api.bean.dto.MomentCommentDTO;
 import com.upuphub.dew.community.general.api.bean.dto.MomentIdDTO;
 import com.upuphub.dew.community.general.api.bean.dto.MomentReplyDTO;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentCommentReq;
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentDynamicContentReq;
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentReplyReq;
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentsPublishReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.*;
 import com.upuphub.dew.community.general.api.bean.vo.resp.MomentDynamicContentResp;
 import com.upuphub.dew.community.general.api.service.MomentsService;
 import com.upuphub.dew.community.general.api.service.remote.DewMomentsService;
@@ -33,7 +30,7 @@ public class MomentsServiceImpl implements MomentsService {
     public MomentIdDTO postMomentDynamicContent(MomentDynamicContentReq momentDynamicContentReq) {
         MomentDynamicContent momentDynamicContent = EDSUtil.toProtobufMessage(momentDynamicContentReq);
         long dynamicId = remoteMomentsService.commitMomentDynamicContent(momentDynamicContent).getDynamicId();
-        if(dynamicId != MomentsConst.ERROR_CODE_COMMON_FAIL){
+        if (dynamicId != MomentsConst.ERROR_CODE_COMMON_FAIL) {
             return MomentIdDTO.builder().momentId(dynamicId).build();
         }
         return MomentIdDTO.builder().momentId(0L).build();
@@ -42,12 +39,12 @@ public class MomentsServiceImpl implements MomentsService {
     @Override
     public MomentDynamicContentResp pullDraftMomentDynamicContent() {
         long founderUin = HttpUtil.getUserUin();
-        if(founderUin == 0){
+        if (founderUin == 0) {
             return null;
         }
         MomentDynamicContent momentDynamicContent = remoteMomentsService.pullDraftMomentDynamicContent(
                 Founder.newBuilder().setFounder(founderUin).build());
-        if(null == momentDynamicContent){
+        if (null == momentDynamicContent) {
             return null;
         }
         return EDSUtil.toHttpVoBean(momentDynamicContent);
@@ -56,7 +53,7 @@ public class MomentsServiceImpl implements MomentsService {
     @Override
     public ServiceResponseMessage deleteDraftMomentDynamicContent() {
         int error = remoteMomentsService.deleteDraftMomentDynamicContent(Founder.newBuilder().setFounder(HttpUtil.getUserUin()).build()).getCode();
-        if(error == MomentsConst.ERROR_CODE_SUCCESS){
+        if (error == MomentsConst.ERROR_CODE_SUCCESS) {
             return ServiceResponseMessage.createBySuccessCodeMessage(ResultMessageConst.DELETE_MOMENTS_DRAFT_SUCCESS);
         }
         return ServiceResponseMessage.createByFailCodeMessage(ResultMessageConst.DELETE_MOMENTS_DRAFT_FAIL);
@@ -65,13 +62,13 @@ public class MomentsServiceImpl implements MomentsService {
     @Override
     public ServiceResponseMessage publishMomentContent(MomentsPublishReq momentsPublishReq) {
         MomentDynamicPublish momentDynamicPublish = EDSUtil.toProtobufMessage(momentsPublishReq);
-        if(null != momentDynamicPublish){
+        if (null != momentDynamicPublish) {
             int error = remoteMomentsService.publishMomentDynamicContent(momentDynamicPublish).getCode();
-            if(error == MomentsConst.ERROR_CODE_SUCCESS){
+            if (error == MomentsConst.ERROR_CODE_SUCCESS) {
                 return ServiceResponseMessage.createBySuccessCodeMessage("发布成功");
-            }else if(error == MomentsConst.ERROR_CODE_NOT_EXISTS){
+            } else if (error == MomentsConst.ERROR_CODE_NOT_EXISTS) {
                 ServiceResponseMessage.createByFailCodeMessage("Moment不存在");
-            }else if(error == MomentsConst.ERROR_CODE_PUBLISH_TYPE){
+            } else if (error == MomentsConst.ERROR_CODE_PUBLISH_TYPE) {
                 ServiceResponseMessage.createByFailCodeMessage("不允许的发布类型");
             }
         }
@@ -90,5 +87,15 @@ public class MomentsServiceImpl implements MomentsService {
         MomentReplyResult momentReplyResult =
                 remoteMomentsService.pushMomentDynamicCommentReply(EDSUtil.toProtobufMessage(momentReplyReq));
         return MomentReplyDTO.builder().momentReplyId(momentReplyResult.getReplyId()).build();
+    }
+
+    @Override
+    public ServiceResponseMessage fetchMomentAndReplyDetailByLocationCond(MomentLocationFilterReq momentLocationFilterReq) {
+        if (null == momentLocationFilterReq || null == momentLocationFilterReq.getLocationReq() || null == momentLocationFilterReq.getPageParam()) {
+            return ServiceResponseMessage.createByFailCodeMessage("请求的参数不能为空");
+        }
+        MomentDetailsLocationRequest momentDetailsLocationRequest = EDSUtil.toProtobufMessage(momentLocationFilterReq);
+        MomentsDetailsResult momentsDetailsResult = remoteMomentsService.fetchMomentsDetailByLocation(momentDetailsLocationRequest);
+        return null;
     }
 }

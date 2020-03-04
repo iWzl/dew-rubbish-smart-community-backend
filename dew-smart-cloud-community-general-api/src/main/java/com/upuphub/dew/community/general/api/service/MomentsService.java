@@ -5,10 +5,7 @@ import com.upuphub.dew.community.general.api.bean.dto.MomentCommentDTO;
 import com.upuphub.dew.community.general.api.bean.dto.MomentIdDTO;
 import com.upuphub.dew.community.general.api.bean.dto.MomentReplyDTO;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentCommentReq;
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentDynamicContentReq;
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentReplyReq;
-import com.upuphub.dew.community.general.api.bean.vo.req.MomentsPublishReq;
+import com.upuphub.dew.community.general.api.bean.vo.req.*;
 import com.upuphub.dew.community.general.api.bean.vo.resp.MomentDynamicContentResp;
 
 /**
@@ -62,4 +59,12 @@ public interface MomentsService {
      * @return Moment回复评论的回复ID
      */
     MomentReplyDTO postMomentCommentReply(MomentReplyReq momentReplyReq);
+
+    /**
+     * 拉取Moment和回复回复信息同通过地理位置信息
+     *
+     * @param momentLocationFilterReq 用户携带的地理位置信息和查询的分页参数信息
+     * @return 查询处理的处理结果
+     */
+    ServiceResponseMessage fetchMomentAndReplyDetailByLocationCond(MomentLocationFilterReq momentLocationFilterReq);
 }

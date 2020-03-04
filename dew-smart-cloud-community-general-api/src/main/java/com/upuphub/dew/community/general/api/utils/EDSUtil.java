@@ -175,4 +175,13 @@ public class EDSUtil {
                 return MOMENTS_COMMENT_TYPE.ERROR_TYPE;
         }
     }
+
+    public static MomentDetailsLocationRequest toProtobufMessage(MomentLocationFilterReq momentLocationFilterReq) {
+        return MomentDetailsLocationRequest.newBuilder()
+                .setLatitude(momentLocationFilterReq.getLocationReq().getLatitude())
+                .setLongitude(momentLocationFilterReq.getLocationReq().getLongitude())
+                .setPageNum(momentLocationFilterReq.getPageParam().getPageNum())
+                .setPageSize(momentLocationFilterReq.getPageParam().getPageSize())
+                .build();
+    }
 }

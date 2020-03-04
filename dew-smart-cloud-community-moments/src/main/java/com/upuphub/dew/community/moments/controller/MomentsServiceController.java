@@ -101,4 +101,17 @@ public class MomentsServiceController {
                 .setReplyId(momentsService.pushMomentDynamicCommentReply(momentReplyRequest))
                 .build();
     }
+
+
+    /**
+     * 查询用户Moments信息通过用户地理位置信息
+     *
+     * @param momentDetailsLocationRequest  拉取用户的地理位置信息需要的请求参数
+     * @return  Moment的详细相关信息
+     */
+    @PostMapping(value = "/dynamic/search/location")
+    MomentsDetailsResult fetchMomentsDetailByLocation(@RequestBody MomentDetailsLocationRequest momentDetailsLocationRequest){
+        System.out.println();
+        return MomentsDetailsResult.newBuilder().build();
+    }
 }

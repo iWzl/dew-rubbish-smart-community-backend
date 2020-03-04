@@ -18,7 +18,7 @@ public class PageParamRequest {
     @Min(1)
     @ApiModelProperty(value = "每页的数量",required = true)
     private int pageSize;
-    @Min(2)
+    @Min(1)
     @ApiModelProperty(value = "当前的页码数",required = true)
     private int pageNum;
     @ApiModelProperty(value = "分页的限制可能会使用的限制Key",required = false)

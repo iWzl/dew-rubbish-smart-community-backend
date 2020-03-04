@@ -49,4 +49,9 @@ public class DewMomentsSentinel implements DewMomentsService {
     public MomentReplyResult pushMomentDynamicCommentReply(MomentReplyRequest momentReplyRequest) {
         throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
     }
+
+    @Override
+    public MomentsDetailsResult fetchMomentsDetailByLocation(MomentDetailsLocationRequest momentDetailsLocationRequest) {
+        throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
+    }
 }
