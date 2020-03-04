@@ -1,9 +1,7 @@
 package com.upuphub.dew.community.moments.utils;
 
-import com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_COMMENT_TYPE;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicContent;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentDynamicPublish;
-import com.upuphub.dew.community.connection.protobuf.moments.MomentReplyRequest;
+import com.upuphub.dew.community.connection.common.MessageUtil;
+import com.upuphub.dew.community.connection.protobuf.moments.*;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
 import com.upuphub.dew.community.moments.bean.po.MomentReplyPO;
 import com.upuphub.dew.community.moments.bean.po.MomentsPublishPO;
@@ -54,5 +52,10 @@ public class EdsUtil {
             default:
                 return com.upuphub.dew.community.moments.bean.dto.MOMENTS_COMMENT_TYPE.ERROR_TYPE.value();
         }
+    }
+
+    public static PageInfo toProtobufPageInfo(com.github.pagehelper.PageInfo pageInfo) {
+        return (PageInfo) MessageUtil.buildMessageByBean(PageInfo.getDescriptor(),
+                                PageInfo.newBuilder(),pageInfo);
     }
 }

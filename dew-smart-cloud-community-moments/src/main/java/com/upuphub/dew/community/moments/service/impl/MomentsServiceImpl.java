@@ -215,19 +215,20 @@ public class MomentsServiceImpl implements MomentsService {
         List<MomentsPublishPO> momentsPublishList = momentsPublishMomentsPublishDao.selectMomentPublishRecordByLocation(rangeGeoHash);
         PageInfo<MomentsPublishPO> pageOfMomentsPublishList = new PageInfo<>(momentsPublishList);
         if(!pageOfMomentsPublishList.getList().isEmpty()){
-            com.upuphub.dew.community.connection.protobuf.moments.PageInfo pageInfo =
-                    (com.upuphub.dew.community.connection.protobuf.moments.PageInfo)
-                            MessageUtil.buildMessageByBean(com.upuphub.dew.community.connection.protobuf.moments.PageInfo.getDescriptor(),
-                    com.upuphub.dew.community.connection.protobuf.moments.PageInfo.newBuilder(),pageOfMomentsPublishList);
             return  MomentsDetailsDTO.builder()
-                    .momentCommentDetailResults(Collections.emptyList())
-                    .pageInfo(pageInfo)
+                    .momentCommentDetailResults(fetchMomentContentDetailByPublishList(pageOfMomentsPublishList.getList()))
+                    .pageInfo(EdsUtil.toProtobufPageInfo(pageOfMomentsPublishList))
                     .build();
         }
         return MomentsDetailsDTO.builder()
                 .momentCommentDetailResults(Collections.emptyList())
                 .pageInfo(com.upuphub.dew.community.connection.protobuf.moments.PageInfo.newBuilder().build())
                 .build();
+    }
+
+    private List<MomentContentDetailResult> fetchMomentContentDetailByPublishList(List<MomentsPublishPO> momentsPublishList){
+        List<MomentContentDetailResult> momentContentDetailResults = new ArrayList<>(momentsPublishList.size());
+       return Collections.emptyList();
     }
 
     private void notifyMomentActivityUin(Long momentId, Long byUin, List<Long> notifyUinList, MOMENTS_COMMENT_TYPE momentsCommentType) {
