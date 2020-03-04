@@ -47,6 +47,6 @@ public class GeoHashUtil {
         // GeoHash编码字符的长度（最大为12）
         int precision = 4;
         GeoHash geoHash = GeoHash.withCharacterPrecision(lat, lon, precision);
-        return geoHash.toBase32();
+        return geoHash.toBase32() + "%";
     }
 }

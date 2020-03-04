@@ -3,6 +3,7 @@ package com.upuphub.dew.community.moments.controller;
 
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
+import com.upuphub.dew.community.moments.bean.dto.MomentsDetailsDTO;
 import com.upuphub.dew.community.moments.service.MomentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -111,7 +112,10 @@ public class MomentsServiceController {
      */
     @PostMapping(value = "/dynamic/search/location")
     MomentsDetailsResult fetchMomentsDetailByLocation(@RequestBody MomentDetailsLocationRequest momentDetailsLocationRequest){
-        System.out.println();
-        return MomentsDetailsResult.newBuilder().build();
+        MomentsDetailsDTO momentsDetailsDTO = momentsService.fetchMomentsDetailByLocation(momentDetailsLocationRequest);
+        return MomentsDetailsResult.newBuilder()
+                .addAllMomentContentDetailResults(momentsDetailsDTO.getMomentCommentDetailResults())
+                .setPageInfo(momentsDetailsDTO.getPageInfo())
+                .build();
     }
 }

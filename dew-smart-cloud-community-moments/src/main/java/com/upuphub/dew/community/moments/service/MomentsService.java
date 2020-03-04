@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.moments.service;
 
 import com.upuphub.dew.community.connection.protobuf.moments.*;
+import com.upuphub.dew.community.moments.bean.dto.MomentsDetailsDTO;
 
 public interface MomentsService {
     /**
@@ -58,4 +59,6 @@ public interface MomentsService {
      * @return 回复评论的回复ID
      */
     long pushMomentDynamicCommentReply(MomentReplyRequest momentReplyRequest);
+
+    MomentsDetailsDTO fetchMomentsDetailByLocation(MomentDetailsLocationRequest momentDetailsLocationRequest);
 }

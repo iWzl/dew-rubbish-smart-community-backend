@@ -1,10 +1,13 @@
 package com.upuphub.dew.community.moments.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.constant.MomentsConst;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
 import com.upuphub.dew.community.moments.bean.dto.MOMENTS_ACTIVITY_TYPE;
 import com.upuphub.dew.community.moments.bean.dto.MOMENTS_ERROR_CODE;
+import com.upuphub.dew.community.moments.bean.dto.MomentsDetailsDTO;
 import com.upuphub.dew.community.moments.bean.po.*;
 import com.upuphub.dew.community.moments.component.SnowflakeId;
 import com.upuphub.dew.community.moments.dao.MomentsPublishMomentsPublishDao;
@@ -13,6 +16,7 @@ import com.upuphub.dew.community.moments.exception.MomentParamException;
 import com.upuphub.dew.community.moments.service.MomentContentService;
 import com.upuphub.dew.community.moments.service.MomentsService;
 import com.upuphub.dew.community.moments.utils.EdsUtil;
+import com.upuphub.dew.community.moments.utils.GeoHashUtil;
 import com.upuphub.dew.community.moments.utils.ObjectUtil;
 
 import com.upuphub.dew.community.moments.utils.ReplaceUtil;
@@ -124,7 +128,7 @@ public class MomentsServiceImpl implements MomentsService {
     @Override
     public long pushMomentDynamicCommentReply(MomentReplyRequest momentReplyRequest) {
         MomentReplyPO momentReplyInfo = MessageUtil.messageToCommonPojo(momentReplyRequest, MomentReplyPO.class);
-        if(null == momentReplyInfo || ObjectUtil.isEmpty(momentReplyRequest.getContent())){
+        if (null == momentReplyInfo || ObjectUtil.isEmpty(momentReplyRequest.getContent())) {
             return MomentsConst.ERROR_CODE_COMMON_FAIL;
         }
         MomentCommentPO momentCommentInfo = momentContentService.searchMomentCommentByCommentId(momentReplyRequest.getCommentId());
@@ -136,12 +140,12 @@ public class MomentsServiceImpl implements MomentsService {
             return MomentsConst.ERROR_CODE_NOT_EXISTS;
         }
         if (momentCommentInfo.getFromUin() != momentReplyRequest.getReplyBy()) {
-            notifyMomentActivityUin(momentCommentInfo.getMomentId(),momentReplyRequest.getReplyBy(),
-                    Collections.singletonList(momentCommentInfo.getFromUin()),MOMENTS_ACTIVITY_TYPE.REPLY);
+            notifyMomentActivityUin(momentCommentInfo.getMomentId(), momentReplyRequest.getReplyBy(),
+                    Collections.singletonList(momentCommentInfo.getFromUin()), MOMENTS_ACTIVITY_TYPE.REPLY);
         }
         if (momentDynamic.getFounder() != momentReplyRequest.getReplyBy()) {
-            notifyMomentActivityUin(momentCommentInfo.getMomentId(),momentReplyRequest.getReplyBy(),
-                    Collections.singletonList(momentDynamic.getFounder()),MOMENTS_ACTIVITY_TYPE.REPLY);
+            notifyMomentActivityUin(momentCommentInfo.getMomentId(), momentReplyRequest.getReplyBy(),
+                    Collections.singletonList(momentDynamic.getFounder()), MOMENTS_ACTIVITY_TYPE.REPLY);
         }
         if (!ObjectUtil.isEmpty(momentReplyRequest.getContent())) {
             List<Long> notifyUinList = ReplaceUtil.getAtUinList(momentReplyRequest.getContent());
@@ -198,6 +202,32 @@ public class MomentsServiceImpl implements MomentsService {
             return MomentsConst.ERROR_CODE_SUCCESS;
         }
         return MomentsConst.ERROR_CODE_COMMON_FAIL;
+    }
+
+    @Override
+    public MomentsDetailsDTO fetchMomentsDetailByLocation(MomentDetailsLocationRequest momentDetailsLocationRequest) {
+        String rangeGeoHash = null;
+        if (0 != momentDetailsLocationRequest.getLatitude() && 0 != momentDetailsLocationRequest.getLongitude()) {
+            rangeGeoHash = GeoHashUtil.buildGeoHashCityRange(
+                    momentDetailsLocationRequest.getLatitude(),momentDetailsLocationRequest.getLongitude());
+        }
+        PageHelper.startPage(momentDetailsLocationRequest.getPageNum(),momentDetailsLocationRequest.getPageSize());
+        List<MomentsPublishPO> momentsPublishList = momentsPublishMomentsPublishDao.selectMomentPublishRecordByLocation(rangeGeoHash);
+        PageInfo<MomentsPublishPO> pageOfMomentsPublishList = new PageInfo<>(momentsPublishList);
+        if(!pageOfMomentsPublishList.getList().isEmpty()){
+            com.upuphub.dew.community.connection.protobuf.moments.PageInfo pageInfo =
+                    (com.upuphub.dew.community.connection.protobuf.moments.PageInfo)
+                            MessageUtil.buildMessageByBean(com.upuphub.dew.community.connection.protobuf.moments.PageInfo.getDescriptor(),
+                    com.upuphub.dew.community.connection.protobuf.moments.PageInfo.newBuilder(),pageOfMomentsPublishList);
+            return  MomentsDetailsDTO.builder()
+                    .momentCommentDetailResults(Collections.emptyList())
+                    .pageInfo(pageInfo)
+                    .build();
+        }
+        return MomentsDetailsDTO.builder()
+                .momentCommentDetailResults(Collections.emptyList())
+                .pageInfo(com.upuphub.dew.community.connection.protobuf.moments.PageInfo.newBuilder().build())
+                .build();
     }
 
     private void notifyMomentActivityUin(Long momentId, Long byUin, List<Long> notifyUinList, MOMENTS_COMMENT_TYPE momentsCommentType) {

@@ -25,6 +25,19 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
+    <select id="selectMomentPublishRecordByLocation"
+            resultType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
+        select
+        <include refid="Base_Column_List"/>
+        from moments_publish
+        <where>
+            <if test="rangeGeoHash != null and rangeGeoHash != ''">
+                geo_hash like #{rangeGeoHash}
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
         from moments_publish
@@ -42,7 +55,8 @@
                 #{momentPublishPO.publishStatus,jdbcType=INTEGER})
     </insert>
 
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO"
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO"
             useGeneratedKeys="true">
         insert into moments_publish
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -68,7 +82,7 @@
                 longitude,
             </if>
             <if test="latitude != null">
-                 latitude,
+                latitude,
             </if>
             <if test="updateTime != null">
                 update_time,
