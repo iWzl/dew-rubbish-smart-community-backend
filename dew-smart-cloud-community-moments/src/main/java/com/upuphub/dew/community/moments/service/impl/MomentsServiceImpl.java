@@ -228,8 +228,67 @@ public class MomentsServiceImpl implements MomentsService {
 
     private List<MomentContentDetailResult> fetchMomentContentDetailByPublishList(List<MomentsPublishPO> momentsPublishList){
         List<MomentContentDetailResult> momentContentDetailResults = new ArrayList<>(momentsPublishList.size());
+        for (MomentsPublishPO momentsPublish : momentsPublishList) {
+            MomentDynamicPO momentDynamic = momentContentService.searchMomentDynamicContentByMomentId(momentsPublish.getDynamicId());
+            MomentContentDetailResult momentContentDetailResult = MomentContentDetailResult.newBuilder()
+                    .setMomentId(momentsPublish.getDynamicId())
+                    .setPublisher(momentsPublish.getPublishBy())
+                    .setLatitude(momentsPublish.getlatitude())
+                    .setLongitude(momentsPublish.getLongitude())
+                    .setPublishType(MOMENTS_DYNAMIC_PUBLISH_TYPE.valueOf(momentsPublish.getPublishType()))
+                    .setPublishedDate(momentsPublish.getPublishTime())
+                    .setOriginPublisher(momentDynamic.getFounder())
+                    .setClassify(momentDynamic.getClassify())
+                    .setContent(momentDynamic.getContent())
+                    .setTopic(momentDynamic.getTopic())
+                    .setTitle(momentDynamic.getTitle())
+                    .addAllPictures(momentDynamic.getPictures())
+                    .addAllMomentCommentDetailResults(fetchMomentCommentDetailByMomentId(momentsPublish.getDynamicId()))
+                    .build();
+        }
        return Collections.emptyList();
     }
+
+    private List<MomentCommentDetailResult> fetchMomentCommentDetailByMomentId(Long momentId){
+        List<MomentCommentPO> momentCommentList = momentContentService.searchMomentsCommentByMomentId(momentId);
+        if(ObjectUtil.isEmpty(momentCommentList)){
+            return Collections.emptyList();
+        }else{
+            List<MomentCommentDetailResult> momentCommentDetailResults = new ArrayList<>(momentCommentList.size());
+            for (MomentCommentPO momentComment: momentCommentList) {
+                MomentCommentDetailResult momentCommentDetailResult = MomentCommentDetailResult.newBuilder()
+                        .setCommentId(momentComment.getMomentId())
+                        .setCommentType(momentComment.getContentType())
+                        .setContent(momentComment.getContent())
+                        .setCommentator(momentComment.getFromUin())
+                        .setCommentDate(momentComment.getCreateTime())
+                        .addAllCommentReplyDetailResults(fetchMomentCommentReplyDetailByMomentId(momentComment.getMomentId()))
+                        .build();
+                momentCommentDetailResults.add(momentCommentDetailResult);
+            }
+            return momentCommentDetailResults;
+        }
+    }
+
+    private List<CommentReplyDetailResult> fetchMomentCommentReplyDetailByMomentId(Long commentId){
+        List<MomentReplyPO> momentReplyList = momentContentService.searchMomentsCommentReplyByCommentId(commentId);
+        if(ObjectUtil.isEmpty(momentReplyList)){
+            return Collections.emptyList();
+        }else{
+            List<CommentReplyDetailResult> commentReplyDetailResults = new ArrayList<>(momentReplyList.size());
+            for (MomentReplyPO momentReply : momentReplyList) {
+                CommentReplyDetailResult commentReplyDetailResult = CommentReplyDetailResult.newBuilder()
+                        .setReplyId(momentReply.getId())
+                        .setContent(momentReply.getContent())
+                        .setReplyBy(momentReply.getFromUin())
+                        .setReplyDate(momentReply.getCreateTime())
+                        .build();
+                commentReplyDetailResults.add(commentReplyDetailResult);
+            }
+            return commentReplyDetailResults;
+        }
+    }
+
 
     private void notifyMomentActivityUin(Long momentId, Long byUin, List<Long> notifyUinList, MOMENTS_COMMENT_TYPE momentsCommentType) {
         switch (momentsCommentType) {

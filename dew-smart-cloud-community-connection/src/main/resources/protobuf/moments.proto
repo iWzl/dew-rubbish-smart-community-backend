@@ -49,15 +49,14 @@ message MomentContentDetailResult {
     double latitude = 10;
     double longitude = 11;
     MOMENTS_DYNAMIC_PUBLISH_TYPE publishType = 12;
-    int32 likeNumber = 13;
-    repeated MomentCommentDetailResult momentCommentDetailResults = 14;
+    repeated MomentCommentDetailResult momentCommentDetailResults = 13;
 }
 
 message MomentCommentDetailResult {
     int64 commentId = 1;
     int32 commentType = 2;
     string content = 3;
-    int32 commentator = 4;
+    int64 commentator = 4;
     int64 commentDate = 5;
     repeated CommentReplyDetailResult commentReplyDetailResults = 6;
 }

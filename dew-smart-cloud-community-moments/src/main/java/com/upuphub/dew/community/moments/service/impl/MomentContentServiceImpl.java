@@ -9,6 +9,7 @@ import com.upuphub.dew.community.connection.protobuf.push.MomentSyncActivityNoti
 import com.upuphub.dew.community.moments.bean.po.MomentActivityPO;
 import com.upuphub.dew.community.moments.bean.po.MomentCommentPO;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
+import com.upuphub.dew.community.moments.bean.po.MomentReplyPO;
 import com.upuphub.dew.community.moments.service.MomentContentService;
 import com.upuphub.dew.community.moments.service.MqttSenderService;
 import com.upuphub.dew.community.moments.utils.MongoKeysConst;
@@ -86,6 +87,28 @@ public class MomentContentServiceImpl implements MomentContentService {
                 .with(new Sort(Sort.Direction.DESC, MongoKeysConst.MOMENTS_COMMENT_ID)), MomentCommentPO.class);
         if (!ObjectUtil.isEmpty(momentCommentInfo)) {
             return momentCommentInfo;
+        }
+        return null;
+    }
+
+    @Override
+    public List<MomentCommentPO> searchMomentsCommentByMomentId(Long momentId) {
+        Map<String, Object> where = Collections.singletonMap(MongoKeysConst.MOMENTS_DYNAMIC_ID, momentId);
+        List<MomentCommentPO> momentCommentInfos = mongoTemplate.find(createEasyQuery(mongoSelectKeysList(MomentCommentPO.class, Collections.emptySet()), where,null)
+                .with(new Sort(Sort.Direction.DESC, MongoKeysConst.MOMENTS_COMMENT_ID)), MomentCommentPO.class);
+        if (!ObjectUtil.isEmpty(momentCommentInfos)) {
+            return momentCommentInfos;
+        }
+        return null;
+    }
+
+    @Override
+    public List<MomentReplyPO> searchMomentsCommentReplyByCommentId(Long commentId) {
+        Map<String, Object> where = Collections.singletonMap("comment_id", commentId);
+        List<MomentReplyPO> momentReplyList = mongoTemplate.find(createEasyQuery(mongoSelectKeysList(MomentCommentPO.class, Collections.emptySet()), where, null)
+                .with(new Sort(Sort.Direction.DESC, "create_time")), MomentReplyPO.class);
+        if (!ObjectUtil.isEmpty(momentReplyList)) {
+            return momentReplyList;
         }
         return null;
     }

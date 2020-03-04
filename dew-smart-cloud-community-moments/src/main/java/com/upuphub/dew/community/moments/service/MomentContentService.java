@@ -5,6 +5,8 @@ import com.upuphub.dew.community.moments.bean.po.MomentCommentPO;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
 import com.upuphub.dew.community.moments.bean.po.MomentReplyPO;
 
+import java.util.List;
+
 public interface MomentContentService {
     /**
      * 校验用户是否有未提交的MomentContent信息
@@ -31,6 +33,15 @@ public interface MomentContentService {
      */
     MomentDynamicPO searchMomentDynamicContentByMomentId(long momentId);
 
+
+    /**
+     * moment评论回复
+     *
+     * @param commentId 评论ID
+     * @return moment回复信息
+     */
+    List<MomentReplyPO> searchMomentsCommentReplyByCommentId(Long commentId);
+
     /**
      * 根据评论ID查询评论信息
      *
@@ -38,6 +49,14 @@ public interface MomentContentService {
      * @return 评论的详细信息
      */
     MomentCommentPO searchMomentCommentByCommentId(long commentId);
+
+    /**
+     * 查询MomentId下的所有评论
+     *
+     * @param momentId momentId
+     * @return moment评论的详细数据
+     */
+    List<MomentCommentPO> searchMomentsCommentByMomentId(Long momentId);
 
     /**
      * 创建MomentDynamicContent正文信息
