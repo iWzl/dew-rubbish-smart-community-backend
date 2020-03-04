@@ -184,4 +184,12 @@ public class EDSUtil {
                 .setPageSize(momentLocationFilterReq.getPageParam().getPageSize())
                 .build();
     }
+
+    public static MomentDetailsUinRequest toProtobufMessage(MomentUinFilterReq momentUinFilterReq) {
+        return MomentDetailsUinRequest.newBuilder()
+                .setUin(momentUinFilterReq.getUin())
+                .setPageNum(momentUinFilterReq.getPageParamRequest().getPageNum())
+                .setPageSize(momentUinFilterReq.getPageParamRequest().getPageSize())
+                .build();
+    }
 }

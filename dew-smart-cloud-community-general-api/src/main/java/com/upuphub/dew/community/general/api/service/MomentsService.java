@@ -67,4 +67,12 @@ public interface MomentsService {
      * @return 查询处理的处理结果
      */
     ServiceResponseMessage fetchMomentAndReplyDetailByLocationCond(MomentLocationFilterReq momentLocationFilterReq);
+
+    /**
+     * 拉取Moment和回复回复信息同通过地理位置信息
+     *
+     * @param momentUinFilterReq 用户UIN和查询的分页参数信息
+     * @return 查询处理的处理结果
+     */
+    ServiceResponseMessage fetchMomentAndReplyDetailByUin(MomentUinFilterReq momentUinFilterReq);
 }

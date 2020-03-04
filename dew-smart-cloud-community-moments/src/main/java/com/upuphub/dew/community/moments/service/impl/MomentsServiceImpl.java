@@ -213,6 +213,18 @@ public class MomentsServiceImpl implements MomentsService {
         }
         PageHelper.startPage(momentDetailsLocationRequest.getPageNum(),momentDetailsLocationRequest.getPageSize());
         List<MomentsPublishPO> momentsPublishList = momentsPublishMomentsPublishDao.selectMomentPublishRecordByLocation(rangeGeoHash);
+        return buildMomentsDetailsResult(momentsPublishList);
+    }
+
+    @Override
+    public MomentsDetailsDTO fetchMomentsDetailByUin(MomentDetailsUinRequest momentDetailsUinRequest) {
+        PageHelper.startPage(momentDetailsUinRequest.getPageNum(),momentDetailsUinRequest.getPageSize());
+        List<MomentsPublishPO> momentsPublishList = momentsPublishMomentsPublishDao
+                .selectMomentPublishRecordByUin(momentDetailsUinRequest.getUin());
+        return buildMomentsDetailsResult(momentsPublishList);
+    }
+
+    private MomentsDetailsDTO buildMomentsDetailsResult(List<MomentsPublishPO> momentsPublishList) {
         PageInfo<MomentsPublishPO> pageOfMomentsPublishList = new PageInfo<>(momentsPublishList);
         if(!pageOfMomentsPublishList.getList().isEmpty()){
             return  MomentsDetailsDTO.builder()

@@ -60,5 +60,19 @@ public interface MomentsService {
      */
     long pushMomentDynamicCommentReply(MomentReplyRequest momentReplyRequest);
 
+    /**
+     * 通过地理位置信息筛选Moment详细信息
+     *
+     * @param momentDetailsLocationRequest 用户地理位置信息的详细请求
+     * @return 查询到的Moment返回结果
+     */
     MomentsDetailsDTO fetchMomentsDetailByLocation(MomentDetailsLocationRequest momentDetailsLocationRequest);
+
+    /**
+     * 查询Moment详细信息通过UIN
+     *
+     * @param momentDetailsUinRequest moment详细信息请求
+     * @return 查询到的Moment返回结果
+     */
+    MomentsDetailsDTO fetchMomentsDetailByUin(MomentDetailsUinRequest momentDetailsUinRequest);
 }

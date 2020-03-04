@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.ObjectUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,9 +35,9 @@ import java.util.List;
 
 @Service
 public class MomentsServiceImpl implements MomentsService {
-    @Autowired
+    @Resource
     DewMomentsService remoteMomentsService;
-    @Autowired
+    @Resource
     AccountService accountService;
 
     @Override
@@ -103,18 +104,24 @@ public class MomentsServiceImpl implements MomentsService {
     }
 
     @Override
-    public ServiceResponseMessage fetchMomentAndReplyDetailByLocationCond(MomentLocationFilterReq momentLocationFilterReq) {
-        if (null == momentLocationFilterReq || null == momentLocationFilterReq.getLocationReq() || null == momentLocationFilterReq.getPageParam()) {
+    public ServiceResponseMessage fetchMomentAndReplyDetailByUin(MomentUinFilterReq momentUinFilterReq) {
+        if (null == momentUinFilterReq || null == momentUinFilterReq.getPageParamRequest()) {
             return ServiceResponseMessage.createByFailCodeMessage("请求的参数不能为空");
         }
-        MomentDetailsLocationRequest momentDetailsLocationRequest = EDSUtil.toProtobufMessage(momentLocationFilterReq);
-        MomentsDetailsResult momentsDetailsResult = remoteMomentsService.fetchMomentsDetailByLocation(momentDetailsLocationRequest);
+        MomentDetailsUinRequest momentDetailsUinRequest = EDSUtil.toProtobufMessage(momentUinFilterReq);
+        MomentsDetailsResult momentsDetailsResult = remoteMomentsService.fetchMomentsDetailByUin(momentDetailsUinRequest);
+        return ServiceResponseMessage.createBySuccessCodeMessage(
+                buildMomentsResponseDetails(momentsDetailsResult)
+        );
+    }
+
+    private MomentsDetailsResp buildMomentsResponseDetails(MomentsDetailsResult momentsDetailsResult) {
         MomentsDetailsResp momentsDetailsResp = new MomentsDetailsResp();
-        if(null != momentsDetailsResult){
-            PageInfoResp pageInfoResp = MessageUtil.messageToCommonPojo(momentsDetailsResult.getPageInfo(),PageInfoResp.class);
+        if (null != momentsDetailsResult) {
+            PageInfoResp pageInfoResp = MessageUtil.messageToCommonPojo(momentsDetailsResult.getPageInfo(), PageInfoResp.class);
             List<MomentsDetailsResp.MomentContent> momentContentList = new ArrayList<>(momentsDetailsResult.getMomentContentDetailResultsCount());
             for (MomentContentDetailResult momentContentDetailResult : momentsDetailsResult.getMomentContentDetailResultsList()) {
-                MomentsDetailsResp.MomentContent momentContent =   MomentsDetailsResp.MomentContent.builder()
+                MomentsDetailsResp.MomentContent momentContent = MomentsDetailsResp.MomentContent.builder()
                         .momentId(momentContentDetailResult.getMomentId())
                         .publisher(accountService.pullSimpleProfileByUin(momentContentDetailResult.getPublisher()))
                         .originPublisher(accountService.pullSimpleProfileByUin(momentContentDetailResult.getOriginPublisher()))
@@ -127,14 +134,27 @@ public class MomentsServiceImpl implements MomentsService {
                         .latitude(momentContentDetailResult.getLatitude())
                         .longitude(momentContentDetailResult.getLongitude())
                         .publishType(momentContentDetailResult.getPublishType().name())
-                        .momentCommentList(buildMomentCommentByDetailResult(momentContentDetailResult.getMomentCommentDetailResultsList()))
+                        .momentCommentList(buildMomentCommentByDetailResult(
+                                momentContentDetailResult.getMomentCommentDetailResultsList()))
                         .build();
                 momentContentList.add(momentContent);
             }
             momentsDetailsResp.setMomentContentList(momentContentList);
             momentsDetailsResp.setPageInfoResp(pageInfoResp);
         }
-        return ServiceResponseMessage.createBySuccessCodeMessage(momentsDetailsResp);
+       return momentsDetailsResp;
+    }
+
+    @Override
+    public ServiceResponseMessage fetchMomentAndReplyDetailByLocationCond(MomentLocationFilterReq momentLocationFilterReq) {
+        if (null == momentLocationFilterReq || null == momentLocationFilterReq.getLocationReq() || null == momentLocationFilterReq.getPageParam()) {
+            return ServiceResponseMessage.createByFailCodeMessage("请求的参数不能为空");
+        }
+        MomentDetailsLocationRequest momentDetailsLocationRequest = EDSUtil.toProtobufMessage(momentLocationFilterReq);
+        MomentsDetailsResult momentsDetailsResult = remoteMomentsService.fetchMomentsDetailByLocation(momentDetailsLocationRequest);
+        return ServiceResponseMessage.createBySuccessCodeMessage(
+                buildMomentsResponseDetails(momentsDetailsResult)
+        );
     }
 
     private List<MomentsDetailsResp.MomentComment> buildMomentCommentByDetailResult(List<MomentCommentDetailResult> momentCommentDetailResultsList){

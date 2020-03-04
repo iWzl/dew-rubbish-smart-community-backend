@@ -54,4 +54,9 @@ public class DewMomentsSentinel implements DewMomentsService {
     public MomentsDetailsResult fetchMomentsDetailByLocation(MomentDetailsLocationRequest momentDetailsLocationRequest) {
         throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
     }
+
+    @Override
+    public MomentsDetailsResult fetchMomentsDetailByUin(MomentDetailsUinRequest momentDetailsUinRequest) {
+        throw new RpcServiceConnectionException("Call Rpc Moments Model Error");
+    }
 }

@@ -30,8 +30,14 @@ message DynamicContentResultCell {
 }
 
 message MomentDetailsLocationRequest{
-    double longitude = 1; // 用户发布消息的经度
-    double latitude = 2; // 用户发布消息的纬度
+     double longitude = 1; // 用户发布消息的经度
+     double latitude = 2; // 用户发布消息的纬度
+     int32 pageSize = 3; // 每页的大小
+     int32 pageNum = 4; // 需要的页码数
+}
+
+message MomentDetailsUinRequest{
+    int64 uin = 1; // 用户发布消息的经度
     int32 pageSize = 3; // 每页的大小
     int32 pageNum = 4; // 需要的页码数
 }

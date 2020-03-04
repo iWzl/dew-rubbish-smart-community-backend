@@ -92,4 +92,14 @@ public interface DewMomentsService {
      */
     @PostMapping(value = "/dynamic/search/location",consumes = "application/x-protobuf", produces = "application/x-protobuf")
     MomentsDetailsResult fetchMomentsDetailByLocation(@RequestBody MomentDetailsLocationRequest momentDetailsLocationRequest);
+
+    /**
+     * 查询用户Moments信息通过用户地理位置信息
+     *
+     * @param momentDetailsUinRequest  拉取需要的请求参数
+     * @return  Moment的详细相关信息
+     */
+    @PostMapping(value = "/dynamic/search/uin",consumes = "application/x-protobuf", produces = "application/x-protobuf")
+    MomentsDetailsResult fetchMomentsDetailByUin(@RequestBody MomentDetailsUinRequest momentDetailsUinRequest);
+
 }

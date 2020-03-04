@@ -20,9 +20,18 @@ public interface MomentsPublishMomentsPublishDao {
      * 根据GeoHash查询附近范围的值
      *
      * @param rangeGeoHash 范围的GeoHash
-     * @return
+     * @return Moments发布详情
      */
     List<MomentsPublishPO> selectMomentPublishRecordByLocation(@Param("rangeGeoHash") String rangeGeoHash);
+
+
+    /**
+     * 查询Moment信息通过用户UIN
+     *
+     * @param uin 用户UIN
+     * @return Moments发布详情
+     */
+    List<MomentsPublishPO> selectMomentPublishRecordByUin(@Param("uin") long uin);
 
     int deleteByPrimaryKey(Long id);
 
@@ -33,4 +42,5 @@ public interface MomentsPublishMomentsPublishDao {
     int updateByPrimaryKeySelective(MomentsPublishPO record);
 
     int updateByPrimaryKey(MomentsPublishPO record);
+
 }

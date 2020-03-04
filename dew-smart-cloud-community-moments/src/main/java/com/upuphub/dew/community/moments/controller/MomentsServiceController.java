@@ -118,4 +118,19 @@ public class MomentsServiceController {
                 .setPageInfo(momentsDetailsDTO.getPageInfo())
                 .build();
     }
+
+    /**
+     * 查询用户Moments信息通过用户地理位置信息
+     *
+     * @param momentDetailsUinRequest  拉取需要的请求参数
+     * @return  Moment的详细相关信息
+     */
+    @PostMapping(value = "/dynamic/search/uin")
+    MomentsDetailsResult fetchMomentsDetailByUin(@RequestBody MomentDetailsUinRequest momentDetailsUinRequest){
+        MomentsDetailsDTO momentsDetailsDTO = momentsService.fetchMomentsDetailByUin(momentDetailsUinRequest);
+        return MomentsDetailsResult.newBuilder()
+                .addAllMomentContentDetailResults(momentsDetailsDTO.getMomentCommentDetailResults())
+                .setPageInfo(momentsDetailsDTO.getPageInfo())
+                .build();
+    }
 }
