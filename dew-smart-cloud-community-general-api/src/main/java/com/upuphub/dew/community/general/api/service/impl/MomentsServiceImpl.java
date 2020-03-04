@@ -1,5 +1,7 @@
 package com.upuphub.dew.community.general.api.service.impl;
 
+import com.github.pagehelper.PageInfo;
+import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.constant.MomentsConst;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
 import com.upuphub.dew.community.general.api.bean.dto.MomentCommentDTO;
@@ -8,13 +10,22 @@ import com.upuphub.dew.community.general.api.bean.dto.MomentReplyDTO;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
 import com.upuphub.dew.community.general.api.bean.vo.req.*;
 import com.upuphub.dew.community.general.api.bean.vo.resp.MomentDynamicContentResp;
+import com.upuphub.dew.community.general.api.bean.vo.resp.MomentsDetailsResp;
+import com.upuphub.dew.community.general.api.bean.vo.resp.PageInfoResp;
+import com.upuphub.dew.community.general.api.service.AccountService;
 import com.upuphub.dew.community.general.api.service.MomentsService;
 import com.upuphub.dew.community.general.api.service.remote.DewMomentsService;
+import com.upuphub.dew.community.general.api.utils.DateUtil;
 import com.upuphub.dew.community.general.api.utils.EDSUtil;
 import com.upuphub.dew.community.general.api.utils.HttpUtil;
 import com.upuphub.dew.community.general.api.utils.basic.ResultMessageConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -25,6 +36,8 @@ import org.springframework.stereotype.Service;
 public class MomentsServiceImpl implements MomentsService {
     @Autowired
     DewMomentsService remoteMomentsService;
+    @Autowired
+    AccountService accountService;
 
     @Override
     public MomentIdDTO postMomentDynamicContent(MomentDynamicContentReq momentDynamicContentReq) {
@@ -96,6 +109,69 @@ public class MomentsServiceImpl implements MomentsService {
         }
         MomentDetailsLocationRequest momentDetailsLocationRequest = EDSUtil.toProtobufMessage(momentLocationFilterReq);
         MomentsDetailsResult momentsDetailsResult = remoteMomentsService.fetchMomentsDetailByLocation(momentDetailsLocationRequest);
-        return null;
+        MomentsDetailsResp momentsDetailsResp = new MomentsDetailsResp();
+        if(null != momentsDetailsResult){
+            PageInfoResp pageInfoResp = MessageUtil.messageToCommonPojo(momentsDetailsResult.getPageInfo(),PageInfoResp.class);
+            List<MomentsDetailsResp.MomentContent> momentContentList = new ArrayList<>(momentsDetailsResult.getMomentContentDetailResultsCount());
+            for (MomentContentDetailResult momentContentDetailResult : momentsDetailsResult.getMomentContentDetailResultsList()) {
+                MomentsDetailsResp.MomentContent momentContent =   MomentsDetailsResp.MomentContent.builder()
+                        .momentId(momentContentDetailResult.getMomentId())
+                        .publisher(accountService.pullSimpleProfileByUin(momentContentDetailResult.getPublisher()))
+                        .originPublisher(accountService.pullSimpleProfileByUin(momentContentDetailResult.getOriginPublisher()))
+                        .topic(momentContentDetailResult.getTopic())
+                        .title(momentContentDetailResult.getTitle())
+                        .classify(momentContentDetailResult.getClassify())
+                        .content(momentContentDetailResult.getContent())
+                        .pictures(momentContentDetailResult.getPicturesList())
+                        .publishedDate(momentContentDetailResult.getPublishedDate())
+                        .latitude(momentContentDetailResult.getLatitude())
+                        .longitude(momentContentDetailResult.getLongitude())
+                        .publishType(momentContentDetailResult.getPublishType().name())
+                        .momentCommentList(buildMomentCommentByDetailResult(momentContentDetailResult.getMomentCommentDetailResultsList()))
+                        .build();
+                momentContentList.add(momentContent);
+            }
+            momentsDetailsResp.setMomentContentList(momentContentList);
+            momentsDetailsResp.setPageInfoResp(pageInfoResp);
+        }
+        return ServiceResponseMessage.createBySuccessCodeMessage(momentsDetailsResp);
     }
+
+    private List<MomentsDetailsResp.MomentComment> buildMomentCommentByDetailResult(List<MomentCommentDetailResult> momentCommentDetailResultsList){
+        if(null == momentCommentDetailResultsList || momentCommentDetailResultsList.isEmpty()){
+            return Collections.emptyList();
+        }
+        List<MomentsDetailsResp.MomentComment> momentCommentList = new ArrayList<>(momentCommentDetailResultsList.size());
+        for (MomentCommentDetailResult momentCommentDetailResult : momentCommentDetailResultsList) {
+            MomentsDetailsResp.MomentComment momentComment = MomentsDetailsResp.MomentComment.builder()
+                    .commentId(momentCommentDetailResult.getCommentId())
+                    .commentType(momentCommentDetailResult.getCommentType())
+                    .content(momentCommentDetailResult.getContent())
+                    .commentator(accountService.pullSimpleProfileByUin(momentCommentDetailResult.getCommentator()))
+                    .commentDate(momentCommentDetailResult.getCommentDate())
+                    .commentReplyList(buildMomentCommentReplyByDetailResult(momentCommentDetailResult.getCommentReplyDetailResultsList()))
+                    .build();
+            momentCommentList.add(momentComment);
+        }
+        return momentCommentList;
+    }
+
+    private List<MomentsDetailsResp.CommentReply> buildMomentCommentReplyByDetailResult(List<CommentReplyDetailResult> momentCommentReplyDetailResultsList){
+        if(null == momentCommentReplyDetailResultsList || momentCommentReplyDetailResultsList.isEmpty()){
+            return Collections.emptyList();
+        }
+        List<MomentsDetailsResp.CommentReply> momentCommentList = new ArrayList<>(momentCommentReplyDetailResultsList.size());
+        for (CommentReplyDetailResult commentReplyDetailResult : momentCommentReplyDetailResultsList) {
+            MomentsDetailsResp.CommentReply commentReply = MomentsDetailsResp.CommentReply.builder()
+                    .replyId(commentReplyDetailResult.getReplyId())
+                    .content(commentReplyDetailResult.getContent())
+                    .replyBy(accountService.pullSimpleProfileByUin(commentReplyDetailResult.getReplyBy()))
+                    .replyDate(commentReplyDetailResult.getReplyDate())
+                    .build();
+            momentCommentList.add(commentReply);
+        }
+        return momentCommentList;
+    }
+
+
 }

@@ -32,6 +32,13 @@ public interface AccountService {
     SimpleProfileResp pullSimpleProfileByOpenId(String openId);
 
     /**
+     * 通过OpenId拉取基本用户信息
+     * @param uin 用户uin
+     * @return 用户的基本数据信息
+     */
+    SimpleProfileResp pullSimpleProfileByUin(Long uin);
+
+    /**
      * 完善用户注册信息
      * @param profileReq 用户注册信息
      * @return 完善信息的处理结果

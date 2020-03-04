@@ -81,6 +81,11 @@ public class AccountServiceImpl implements AccountService {
         if (uin == null) {
             return null;
         }
+        return pullSimpleProfileByUin(uin);
+    }
+
+    @Override
+    public SimpleProfileResp pullSimpleProfileByUin(Long uin) {
         GeneralProfile generalProfile = remoteAccountService.pullGeneralProfile(ProfileFilterCond.newBuilder()
                 .setUin(uin)
                 .addAllKeys(MessageUtil.getProtobufKeys(SimpleProfileResp.class))
@@ -88,7 +93,7 @@ public class AccountServiceImpl implements AccountService {
         if (generalProfile.getProfileMap().size() != 0) {
             SimpleProfileResp simpleProfileResp = MessageUtil.buildCommonBeanByMap(generalProfile.getProfileMap(), SimpleProfileResp.class, Collections.singleton("openId"));
             if (simpleProfileResp != null) {
-                simpleProfileResp.setOpenId(openId);
+                simpleProfileResp.setOpenId(DewOpenIdUtil.generateOpenId(uin));
                 return simpleProfileResp;
             }
         }

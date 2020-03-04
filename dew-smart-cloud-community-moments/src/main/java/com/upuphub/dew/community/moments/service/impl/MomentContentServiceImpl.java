@@ -82,7 +82,7 @@ public class MomentContentServiceImpl implements MomentContentService {
 
     @Override
     public MomentCommentPO searchMomentCommentByCommentId(long commentId) {
-        Map<String, Object> where = Collections.singletonMap(MongoKeysConst.MOMENTS_COMMENT_ID, commentId);
+        Map<String, Object> where = Collections.singletonMap("_id", commentId);
         MomentCommentPO momentCommentInfo = mongoTemplate.findOne(createEasyQuery(mongoSelectKeysList(MomentCommentPO.class, Collections.emptySet()), where, 1)
                 .with(new Sort(Sort.Direction.DESC, MongoKeysConst.MOMENTS_COMMENT_ID)), MomentCommentPO.class);
         if (!ObjectUtil.isEmpty(momentCommentInfo)) {
@@ -94,7 +94,7 @@ public class MomentContentServiceImpl implements MomentContentService {
     @Override
     public List<MomentCommentPO> searchMomentsCommentByMomentId(Long momentId) {
         Map<String, Object> where = Collections.singletonMap(MongoKeysConst.MOMENTS_DYNAMIC_ID, momentId);
-        List<MomentCommentPO> momentCommentInfos = mongoTemplate.find(createEasyQuery(mongoSelectKeysList(MomentCommentPO.class, Collections.emptySet()), where,null)
+        List<MomentCommentPO> momentCommentInfos = mongoTemplate.find(createEasyQueryNoResetKeys(mongoSelectKeysList(MomentCommentPO.class, Collections.emptySet()), where,null)
                 .with(new Sort(Sort.Direction.DESC, MongoKeysConst.MOMENTS_COMMENT_ID)), MomentCommentPO.class);
         if (!ObjectUtil.isEmpty(momentCommentInfos)) {
             return momentCommentInfos;
@@ -105,7 +105,7 @@ public class MomentContentServiceImpl implements MomentContentService {
     @Override
     public List<MomentReplyPO> searchMomentsCommentReplyByCommentId(Long commentId) {
         Map<String, Object> where = Collections.singletonMap("comment_id", commentId);
-        List<MomentReplyPO> momentReplyList = mongoTemplate.find(createEasyQuery(mongoSelectKeysList(MomentCommentPO.class, Collections.emptySet()), where, null)
+        List<MomentReplyPO> momentReplyList = mongoTemplate.find(createEasyQueryNoResetKeys(mongoSelectKeysList(MomentReplyPO.class, Collections.emptySet()), where, null)
                 .with(new Sort(Sort.Direction.DESC, "create_time")), MomentReplyPO.class);
         if (!ObjectUtil.isEmpty(momentReplyList)) {
             return momentReplyList;
@@ -189,13 +189,14 @@ public class MomentContentServiceImpl implements MomentContentService {
 
     private List<String> mongoSelectKeysList(Class<?> clazz, Set<String> ignoreSet) {
         List<String> mongoKeysList = new ArrayList<>();
-        for (Field field : clazz.getFields()) {
-            ProtobufField protobufField = field.getAnnotation(ProtobufField.class);
-            if (null != protobufField && !"".equals(protobufField.value())) {
-                if (ignoreSet.contains(protobufField.value())) {
+        for (Field field : clazz.getDeclaredFields()) {
+            org.springframework.data.mongodb.core.mapping.Field mongoField
+                    = field.getAnnotation(org.springframework.data.mongodb.core.mapping.Field.class);
+            if (null != mongoField && !"".equals(mongoField.value())) {
+                if (ignoreSet.contains(mongoField.value())) {
                     continue;
                 }
-                mongoKeysList.add(protobufField.value());
+                mongoKeysList.add(mongoField.value());
             } else {
                 if (ignoreSet.contains(field.getName())) {
                     continue;
@@ -221,6 +222,28 @@ public class MomentContentServiceImpl implements MomentContentService {
         }
         if (!ObjectUtil.isEmpty(where)) {
             where.forEach((key, value) -> query.addCriteria(Criteria.where(resetMomentWhereParamKey(key)).is(value)));
+        }
+        if (!ObjectUtil.isEmpty(limit)) {
+            query.limit(limit);
+        }
+        return query;
+    }
+
+    /**
+     * 根据Key和条件,返回条件筛选条件
+     *
+     * @param keys  需要查询的Key
+     * @param where 查询的限制条件
+     * @param limit 查询的限制数量
+     * @return 查询条件的返回结果
+     */
+    private Query createEasyQueryNoResetKeys(List<String> keys, Map<String, Object> where, Integer limit) {
+        Query query = new Query();
+        if (!ObjectUtil.isEmpty(keys)) {
+            keys.forEach(key -> query.fields().include(key));
+        }
+        if (!ObjectUtil.isEmpty(where)) {
+            where.forEach((key, value) -> query.addCriteria(Criteria.where(key).is(value)));
         }
         if (!ObjectUtil.isEmpty(limit)) {
             query.limit(limit);

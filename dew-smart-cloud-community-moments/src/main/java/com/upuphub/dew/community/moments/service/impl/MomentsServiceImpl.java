@@ -245,8 +245,9 @@ public class MomentsServiceImpl implements MomentsService {
                     .addAllPictures(momentDynamic.getPictures())
                     .addAllMomentCommentDetailResults(fetchMomentCommentDetailByMomentId(momentsPublish.getDynamicId()))
                     .build();
+            momentContentDetailResults.add(momentContentDetailResult);
         }
-       return Collections.emptyList();
+       return momentContentDetailResults;
     }
 
     private List<MomentCommentDetailResult> fetchMomentCommentDetailByMomentId(Long momentId){
@@ -257,12 +258,12 @@ public class MomentsServiceImpl implements MomentsService {
             List<MomentCommentDetailResult> momentCommentDetailResults = new ArrayList<>(momentCommentList.size());
             for (MomentCommentPO momentComment: momentCommentList) {
                 MomentCommentDetailResult momentCommentDetailResult = MomentCommentDetailResult.newBuilder()
-                        .setCommentId(momentComment.getMomentId())
+                        .setCommentId(momentComment.getId())
                         .setCommentType(momentComment.getContentType())
                         .setContent(momentComment.getContent())
                         .setCommentator(momentComment.getFromUin())
                         .setCommentDate(momentComment.getCreateTime())
-                        .addAllCommentReplyDetailResults(fetchMomentCommentReplyDetailByMomentId(momentComment.getMomentId()))
+                        .addAllCommentReplyDetailResults(fetchMomentCommentReplyDetailByCommentId(momentComment.getId()))
                         .build();
                 momentCommentDetailResults.add(momentCommentDetailResult);
             }
@@ -270,7 +271,7 @@ public class MomentsServiceImpl implements MomentsService {
         }
     }
 
-    private List<CommentReplyDetailResult> fetchMomentCommentReplyDetailByMomentId(Long commentId){
+    private List<CommentReplyDetailResult> fetchMomentCommentReplyDetailByCommentId(Long commentId){
         List<MomentReplyPO> momentReplyList = momentContentService.searchMomentsCommentReplyByCommentId(commentId);
         if(ObjectUtil.isEmpty(momentReplyList)){
             return Collections.emptyList();

@@ -1,15 +1,17 @@
 package com.upuphub.dew.community.general.api.bean.vo.resp;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 public class MomentsDetailsResp {
-
-    List<MomentContent> momentContentList;
+    private List<MomentContent> momentContentList;
+    private PageInfoResp pageInfoResp;
 
     @Data
+    @Builder
     public static class MomentContent{
         private long momentId;
         private SimpleProfileResp publisher;
@@ -22,12 +24,12 @@ public class MomentsDetailsResp {
         private Long publishedDate;
         private Double latitude;
         private Double longitude;
-        private int publishType;
-        private int likeNumber;
+        private String publishType;
         List<MomentComment> momentCommentList;
     }
 
     @Data
+    @Builder
     public static class MomentComment{
         private Long commentId;
         private int commentType;
@@ -38,6 +40,7 @@ public class MomentsDetailsResp {
     }
 
     @Data
+    @Builder
     public static class CommentReply{
         private Long replyId;
         private String content;
