@@ -79,4 +79,14 @@ public interface MomentsService {
     MomentsDetailsDTO fetchMomentsDetailByClassify(MomentDetailsClassifyRequest momentDetailsClassifyRequest);
 
     MomentsDetailsDTO fetchMomentsDetailByTopic(MomentDetailsTopicRequest momentDetailsTopicRequest);
+
+    /**
+     * 同步Moment活动信息,通过活动行为Id
+     *
+     * @param syncMomentActivityRequest 同步Moment信息请求
+     * @return MomentActivityResult
+     */
+    MomentActivityResult syncMomentActivityBySyncActivityId(SyncMomentActivityRequest syncMomentActivityRequest);
+
+    MomentActivityDetailsResult fetchMomentActivityBySyncActivityId(SyncMomentActivityRequest syncMomentActivityRequest);
 }

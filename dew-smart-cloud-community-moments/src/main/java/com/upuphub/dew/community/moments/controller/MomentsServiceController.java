@@ -163,4 +163,18 @@ public class MomentsServiceController {
                 .setPageInfo(momentsDetailsDTO.getPageInfo())
                 .build();
     }
+
+
+    /**
+     * 通过需要同步MomentsId同步Moments活动信息
+     *
+     * @param syncMomentActivityRequest 同步moment拉取
+     * @return 同步Moment信息拉取
+     */
+    @PostMapping(value = "/dynamic/activity/pull")
+    MomentActivityDetailsResult fetchMomentActivityBySyncActivityId(@RequestBody SyncMomentActivityRequest syncMomentActivityRequest){
+        return momentsService.fetchMomentActivityBySyncActivityId(syncMomentActivityRequest);
+    }
+
+
 }

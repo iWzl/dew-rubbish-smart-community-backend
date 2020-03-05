@@ -251,6 +251,19 @@ public class MomentsServiceImpl implements MomentsService {
         return buildMomentsDetailsResult(momentsPublishList);
     }
 
+
+    @Override
+    public MomentActivityResult syncMomentActivityBySyncActivityId(SyncMomentActivityRequest syncMomentActivityRequest) {
+        // todo Moment Activity 同步标识
+        return null;
+    }
+
+    @Override
+    public MomentActivityDetailsResult fetchMomentActivityBySyncActivityId(SyncMomentActivityRequest syncMomentActivityRequest) {
+        //todo Moment Activity 同步消息拉取
+        return null;
+    }
+
     private MomentsDetailsDTO buildMomentsDetailsResult(List<MomentsPublishPO> momentsPublishList) {
         PageInfo<MomentsPublishPO> pageOfMomentsPublishList = new PageInfo<>(momentsPublishList);
         if(!pageOfMomentsPublishList.getList().isEmpty()){

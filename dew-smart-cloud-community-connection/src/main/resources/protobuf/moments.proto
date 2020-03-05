@@ -166,3 +166,21 @@ message MomentCommentResult {
 message MomentReplyResult {
     int64 replyId = 1; // 评论回复ID
 }
+
+message SyncMomentActivityRequest{
+    int64 syncActivityId = 1;
+    int64 syncUin = 2;
+}
+
+message MomentActivityDetailsResult{
+    repeated MomentActivityResult momentActivityDetailsResult =1;
+}
+
+message MomentActivityResult{
+    int64 activityId = 1;
+    int64 activityFor = 2;
+    int64 activityBy = 3;
+    int64 momentId = 4;
+    int32 activityType = 5;
+    int64 updateTime = 6;
+}
