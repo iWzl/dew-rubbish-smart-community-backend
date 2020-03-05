@@ -19,9 +19,14 @@ public class MomentsPublishPO implements Serializable {
     private String geoHash;
 
     /**
-     * 点赞数量
+     * 分类属性
      */
-    private Integer likeNumber;
+    private Integer classify;
+
+    /**
+     * 参与的话题
+     */
+    private String topic;
 
     /**
      * 动态ID
@@ -64,8 +69,6 @@ public class MomentsPublishPO implements Serializable {
      */
     private Integer publishStatus;
 
-    private static final long serialVersionUID = 1L;
-
     public Long getId() {
         return id;
     }
@@ -78,16 +81,24 @@ public class MomentsPublishPO implements Serializable {
         return geoHash;
     }
 
-    public void setGeohash(String geohash) {
-        this.geoHash = geohash;
+    public void setGeoHash(String geoHash) {
+        this.geoHash = geoHash;
     }
 
-    public Integer getLikeNumber() {
-        return likeNumber;
+    public Integer getClassify() {
+        return classify;
     }
 
-    public void setLikeNumber(Integer likeNumber) {
-        this.likeNumber = likeNumber;
+    public void setClassify(Integer classify) {
+        this.classify = classify;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public Long getDynamicId() {
@@ -130,12 +141,11 @@ public class MomentsPublishPO implements Serializable {
         this.longitude = longitude;
     }
 
-    public Double getlatitude() {
-        return
-                latitude;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setlatitude(Double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
@@ -153,71 +163,5 @@ public class MomentsPublishPO implements Serializable {
 
     public void setPublishStatus(Integer publishStatus) {
         this.publishStatus = publishStatus;
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        MomentsPublishPO other = (MomentsPublishPO) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-                && (this.getGeoHash() == null ? other.getGeoHash() == null : this.getGeoHash().equals(other.getGeoHash()))
-                && (this.getLikeNumber() == null ? other.getLikeNumber() == null : this.getLikeNumber().equals(other.getLikeNumber()))
-                && (this.getDynamicId() == null ? other.getDynamicId() == null : this.getDynamicId().equals(other.getDynamicId()))
-                && (this.getPublishBy() == null ? other.getPublishBy() == null : this.getPublishBy().equals(other.getPublishBy()))
-                && (this.getPublishTime() == null ? other.getPublishTime() == null : this.getPublishTime().equals(other.getPublishTime()))
-                && (this.getPublishType() == null ? other.getPublishType() == null : this.getPublishType().equals(other.getPublishType()))
-                && (this.getLongitude() == null ? other.getLongitude() == null : this.getLongitude().equals(other.getLongitude()))
-                && (this.getlatitude() == null ? other.getlatitude() == null :this.getlatitude().equals(other.getlatitude()))
-            &&
-        (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-                && (this.getPublishStatus() == null ? other.getPublishStatus() == null : this.getPublishStatus().equals(other.getPublishStatus()));
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getGeoHash() == null) ? 0 : getGeoHash().hashCode());
-        result = prime * result + ((getLikeNumber() == null) ? 0 : getLikeNumber().hashCode());
-        result = prime * result + ((getDynamicId() == null) ? 0 : getDynamicId().hashCode());
-        result = prime * result + ((getPublishBy() == null) ? 0 : getPublishBy().hashCode());
-        result = prime * result + ((getPublishTime() == null) ? 0 : getPublishTime().hashCode());
-        result = prime * result + ((getPublishType() == null) ? 0 : getPublishType().hashCode());
-        result = prime * result + ((getLongitude() == null) ? 0 : getLongitude().hashCode());
-        result = prime * result + ((getlatitude() == null) ?0 :getlatitude().hashCode());
-        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
-        result = prime * result + ((getPublishStatus() == null) ? 0 : getPublishStatus().hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", geoHash=").append(geoHash);
-        sb.append(", likeNumber=").append(likeNumber);
-        sb.append(", dynamicId=").append(dynamicId);
-        sb.append(", publishBy=").append(publishBy);
-        sb.append(", publishTime=").append(publishTime);
-        sb.append(", publishType=").append(publishType);
-        sb.append(", longitude=").append(longitude);
-        sb.append(",latitude = ").append(latitude);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", publishStatus=").append(publishStatus);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
     }
 }

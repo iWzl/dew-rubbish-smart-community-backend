@@ -33,6 +33,22 @@ public interface MomentsPublishMomentsPublishDao {
      */
     List<MomentsPublishPO> selectMomentPublishRecordByUin(@Param("uin") long uin);
 
+    /**
+     * 查询Moment信息通过用户Classify
+     *
+     * @param classify 分类
+     * @return Moments发布详情
+     */
+    List<MomentsPublishPO> selectMomentPublishRecordByClassify(@Param("classify") int classify);
+
+    /**
+     * 查询Moment信息通过用户Topic
+     *
+     * @param topic 分类
+     * @return Moments发布详情
+     */
+    List<MomentsPublishPO> selectMomentPublishRecordByTopic(@Param("classify") String topic);
+
     int deleteByPrimaryKey(Long id);
 
     int insertSelective(MomentsPublishPO record);

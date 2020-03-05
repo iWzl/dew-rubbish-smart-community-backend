@@ -133,4 +133,34 @@ public class MomentsServiceController {
                 .setPageInfo(momentsDetailsDTO.getPageInfo())
                 .build();
     }
+
+    /**
+     * 查询用户Moments信息通过用户地理位置信息
+     *
+     * @param momentDetailsClassifyRequest  拉取需要的请求参数
+     * @return  Moment的详细相关信息
+     */
+    @PostMapping(value = "/dynamic/search/classify")
+    MomentsDetailsResult fetchMomentsDetailByClassify(@RequestBody MomentDetailsClassifyRequest momentDetailsClassifyRequest){
+        MomentsDetailsDTO momentsDetailsDTO = momentsService.fetchMomentsDetailByClassify(momentDetailsClassifyRequest);
+        return MomentsDetailsResult.newBuilder()
+                .addAllMomentContentDetailResults(momentsDetailsDTO.getMomentCommentDetailResults())
+                .setPageInfo(momentsDetailsDTO.getPageInfo())
+                .build();
+    }
+
+    /**
+     * 查询用户Moments信息通过用户地理位置信息
+     *
+     * @param momentDetailsTopicRequest  拉取需要的请求参数
+     * @return  Moment的详细相关信息
+     */
+    @PostMapping(value = "/dynamic/search/topic")
+    MomentsDetailsResult fetchMomentsDetailByTopic(@RequestBody MomentDetailsTopicRequest momentDetailsTopicRequest){
+        MomentsDetailsDTO momentsDetailsDTO = momentsService.fetchMomentsDetailByTopic(momentDetailsTopicRequest);
+        return MomentsDetailsResult.newBuilder()
+                .addAllMomentContentDetailResults(momentsDetailsDTO.getMomentCommentDetailResults())
+                .setPageInfo(momentsDetailsDTO.getPageInfo())
+                .build();
+    }
 }

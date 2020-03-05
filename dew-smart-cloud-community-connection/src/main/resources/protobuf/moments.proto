@@ -38,9 +38,22 @@ message MomentDetailsLocationRequest{
 
 message MomentDetailsUinRequest{
     int64 uin = 1; // 用户发布消息的经度
-    int32 pageSize = 3; // 每页的大小
-    int32 pageNum = 4; // 需要的页码数
+    int32 pageSize = 2; // 每页的大小
+    int32 pageNum = 3; // 需要的页码数
 }
+
+message MomentDetailsClassifyRequest{
+    int32 classify = 1; // 用户发布消息分类
+    int32 pageSize = 2; // 每页的大小
+    int32 pageNum = 3; // 需要的页码数
+}
+
+message MomentDetailsTopicRequest{
+    string topic = 1;    // 用户发布消息的经度
+    int32 pageSize = 2;   // 每页的大小
+    int32 pageNum = 3;   // 需要的页码数
+}
+
 
 message MomentContentDetailResult {
     int64 momentId = 1;

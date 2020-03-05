@@ -1,6 +1,5 @@
 package com.upuphub.dew.community.general.api.service.impl;
 
-import com.github.pagehelper.PageInfo;
 import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.constant.MomentsConst;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
@@ -15,13 +14,10 @@ import com.upuphub.dew.community.general.api.bean.vo.resp.PageInfoResp;
 import com.upuphub.dew.community.general.api.service.AccountService;
 import com.upuphub.dew.community.general.api.service.MomentsService;
 import com.upuphub.dew.community.general.api.service.remote.DewMomentsService;
-import com.upuphub.dew.community.general.api.utils.DateUtil;
 import com.upuphub.dew.community.general.api.utils.EDSUtil;
 import com.upuphub.dew.community.general.api.utils.HttpUtil;
 import com.upuphub.dew.community.general.api.utils.basic.ResultMessageConst;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -110,6 +106,30 @@ public class MomentsServiceImpl implements MomentsService {
         }
         MomentDetailsUinRequest momentDetailsUinRequest = EDSUtil.toProtobufMessage(momentUinFilterReq);
         MomentsDetailsResult momentsDetailsResult = remoteMomentsService.fetchMomentsDetailByUin(momentDetailsUinRequest);
+        return ServiceResponseMessage.createBySuccessCodeMessage(
+                buildMomentsResponseDetails(momentsDetailsResult)
+        );
+    }
+
+    @Override
+    public ServiceResponseMessage fetchMomentAndReplyDetailByTopic(MomentTopicFilterReq momentTopicFilterReq) {
+        if (null == momentTopicFilterReq || null == momentTopicFilterReq.getPageRequest()) {
+            return ServiceResponseMessage.createByFailCodeMessage("请求的参数不能为空");
+        }
+        MomentDetailsTopicRequest momentDetailsTopicRequest = EDSUtil.toProtobufMessage(momentTopicFilterReq);
+        MomentsDetailsResult momentsDetailsResult = remoteMomentsService.fetchMomentsDetailByTopic(momentDetailsTopicRequest);
+        return ServiceResponseMessage.createBySuccessCodeMessage(
+                buildMomentsResponseDetails(momentsDetailsResult)
+        );
+    }
+
+    @Override
+    public ServiceResponseMessage fetchMomentAndReplyDetailByClassify(MomentClassifyFilterReq momentClassifyFilterReq) {
+        if (null == momentClassifyFilterReq || null == momentClassifyFilterReq.getPageRequest()) {
+            return ServiceResponseMessage.createByFailCodeMessage("请求的参数不能为空");
+        }
+        MomentDetailsClassifyRequest momentDetailsClassifyRequest = EDSUtil.toProtobufMessage(momentClassifyFilterReq);
+        MomentsDetailsResult momentsDetailsResult = remoteMomentsService.fetchMomentsDetailByClassify(momentDetailsClassifyRequest);
         return ServiceResponseMessage.createBySuccessCodeMessage(
                 buildMomentsResponseDetails(momentsDetailsResult)
         );

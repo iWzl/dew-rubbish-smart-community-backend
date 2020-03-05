@@ -75,4 +75,20 @@ public interface MomentsService {
      * @return 查询处理的处理结果
      */
     ServiceResponseMessage fetchMomentAndReplyDetailByUin(MomentUinFilterReq momentUinFilterReq);
+
+    /**
+     * 拉取Moment和回复回复信息通过Topic
+     *
+     * @param momentTopicFilterReq  Topic和分页参数
+     * @return 查询处理的处理结果
+     */
+    ServiceResponseMessage fetchMomentAndReplyDetailByTopic(MomentTopicFilterReq momentTopicFilterReq);
+
+    /**
+     * 拉取Moment和回复回复信息通过Topic
+     *
+     * @param momentClassifyFilterReq  Topic和分页参数
+     * @return 查询处理的处理结果
+     */
+    ServiceResponseMessage fetchMomentAndReplyDetailByClassify(MomentClassifyFilterReq momentClassifyFilterReq);
 }

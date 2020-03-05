@@ -107,6 +107,17 @@ public class MomentsServiceImpl implements MomentsService {
         if (null == momentComment) {
             return MomentsConst.ERROR_CODE_COMMON_FAIL;
         }
+        if(momentCommentRequest.getCommentType().equals(MOMENTS_COMMENT_TYPE.FAVORITE)){
+            List<MomentCommentPO> momentFavorCommentList =
+                    momentContentService.searchMomentsCommentByMomentIdAndCommentType(
+                            momentComment.getMomentId(),MOMENTS_COMMENT_TYPE.FAVORITE_VALUE);
+            if(!ObjectUtil.isEmpty(momentFavorCommentList)){
+                for (MomentCommentPO momentFavorComment : momentFavorCommentList) {
+                    momentContentService.deleteMomentCommentByCommentId(momentFavorComment.getId());
+                }
+                return MomentsConst.ERROR_CODE_SUCCESS;
+            }
+        }
         if (momentComment.getFromUin() != momentCommentRequest.getCommentBy()) {
             notifyMomentActivityUin(momentComment.getMomentId(), momentCommentRequest.getCommentBy(),
                     Collections.singletonList(momentComment.getFromUin()), momentCommentRequest.getCommentType());
@@ -167,8 +178,9 @@ public class MomentsServiceImpl implements MomentsService {
             return MomentsConst.ERROR_CODE_PUBLISH_TYPE;
         }
         // 当DynamicId为空 并且发布类型不为转发类型,获取Moments信息
+        MomentDynamicPO momentDynamic = null;
         if (dynamicId == 0) {
-            MomentDynamicPO momentDynamic = momentContentService.searchMomentDynamicContent(dynamicPublish.getPublishBy());
+            momentDynamic = momentContentService.searchMomentDynamicContent(dynamicPublish.getPublishBy());
             if (null == momentDynamic) {
                 return MomentsConst.ERROR_CODE_NOT_EXISTS;
             }
@@ -179,12 +191,11 @@ public class MomentsServiceImpl implements MomentsService {
                 if (!ObjectUtil.isEmpty(notifyUinList)) {
                     notifyMomentActivityUin(momentDynamic.getMomentId(),
                             dynamicPublish.getPublishBy(), notifyUinList, MOMENTS_ACTIVITY_TYPE.AT);
-                    System.out.println(notifyUinList);
                 }
             }
             dynamicId = momentDynamic.getMomentId();
         } else {
-            MomentDynamicPO momentDynamic = momentContentService.searchMomentDynamicContentByMomentId(dynamicId);
+            momentDynamic = momentContentService.searchMomentDynamicContentByMomentId(dynamicId);
             if (null == momentDynamic) {
                 return MomentsConst.ERROR_CODE_NOT_EXISTS;
             } else {
@@ -195,7 +206,7 @@ public class MomentsServiceImpl implements MomentsService {
                 }
             }
         }
-        MomentsPublishPO momentsPublish = EdsUtil.toCommonBean(dynamicId, dynamicPublish);
+        MomentsPublishPO momentsPublish = EdsUtil.toCommonBean(momentDynamic, dynamicPublish);
         momentContentService.updateMomentDraftStatus(dynamicId, false);
         int error = momentsPublishMomentsPublishDao.insertMomentsPublishRecord(momentsPublish);
         if (error == EdsUtil.AFFECTED_ROWS_NUMBER_ONE) {
@@ -224,6 +235,22 @@ public class MomentsServiceImpl implements MomentsService {
         return buildMomentsDetailsResult(momentsPublishList);
     }
 
+    @Override
+    public MomentsDetailsDTO fetchMomentsDetailByClassify(MomentDetailsClassifyRequest momentDetailsClassifyRequest) {
+        PageHelper.startPage(momentDetailsClassifyRequest.getPageNum(),momentDetailsClassifyRequest.getPageSize());
+        List<MomentsPublishPO> momentsPublishList = momentsPublishMomentsPublishDao
+                .selectMomentPublishRecordByClassify(momentDetailsClassifyRequest.getClassify());
+        return buildMomentsDetailsResult(momentsPublishList);
+    }
+
+    @Override
+    public MomentsDetailsDTO fetchMomentsDetailByTopic(MomentDetailsTopicRequest momentDetailsTopicRequest) {
+        PageHelper.startPage(momentDetailsTopicRequest.getPageNum(),momentDetailsTopicRequest.getPageSize());
+        List<MomentsPublishPO> momentsPublishList = momentsPublishMomentsPublishDao
+                .selectMomentPublishRecordByTopic(momentDetailsTopicRequest.getTopic());
+        return buildMomentsDetailsResult(momentsPublishList);
+    }
+
     private MomentsDetailsDTO buildMomentsDetailsResult(List<MomentsPublishPO> momentsPublishList) {
         PageInfo<MomentsPublishPO> pageOfMomentsPublishList = new PageInfo<>(momentsPublishList);
         if(!pageOfMomentsPublishList.getList().isEmpty()){
@@ -245,7 +272,7 @@ public class MomentsServiceImpl implements MomentsService {
             MomentContentDetailResult momentContentDetailResult = MomentContentDetailResult.newBuilder()
                     .setMomentId(momentsPublish.getDynamicId())
                     .setPublisher(momentsPublish.getPublishBy())
-                    .setLatitude(momentsPublish.getlatitude())
+                    .setLatitude(momentsPublish.getLatitude())
                     .setLongitude(momentsPublish.getLongitude())
                     .setPublishType(MOMENTS_DYNAMIC_PUBLISH_TYPE.valueOf(momentsPublish.getPublishType()))
                     .setPublishedDate(momentsPublish.getPublishTime())

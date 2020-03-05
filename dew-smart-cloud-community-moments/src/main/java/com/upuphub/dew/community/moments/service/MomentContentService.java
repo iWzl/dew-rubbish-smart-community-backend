@@ -1,5 +1,6 @@
 package com.upuphub.dew.community.moments.service;
 
+import com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_COMMENT_TYPE;
 import com.upuphub.dew.community.moments.bean.po.MomentActivityPO;
 import com.upuphub.dew.community.moments.bean.po.MomentCommentPO;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
@@ -49,6 +50,15 @@ public interface MomentContentService {
      * @return 评论的详细信息
      */
     MomentCommentPO searchMomentCommentByCommentId(long commentId);
+
+    /**
+     * 根据MomentID和类型查询评论信息
+     *
+     * @param momentId 评论ID
+     * @param typeValue 类型
+     * @return 评论的详细信息
+     */
+    List<MomentCommentPO> searchMomentsCommentByMomentIdAndCommentType(Long momentId, int typeValue);
 
     /**
      * 查询MomentId下的所有评论
@@ -110,4 +120,10 @@ public interface MomentContentService {
      */
     int deleteDraftMomentDynamicContent(long founder);
 
+    /**
+     * 删除用户评论信息
+     *
+     * @param momentCommentId 用户评论信息
+     */
+    void deleteMomentCommentByCommentId(Long momentCommentId);
 }

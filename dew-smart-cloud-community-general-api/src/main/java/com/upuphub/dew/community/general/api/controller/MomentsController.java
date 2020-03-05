@@ -87,10 +87,16 @@ public class MomentsController {
     }
 
 
-    @ApiOperation(value = "按classify/topic分页拉取所有的Moment")
-    @PostMapping(value = "/tips/fetch", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ServiceResponseMessage fetchMomentAndReplyDetailByTipsCond(@RequestBody @Validated MomentTipsFilterReq momentTipsFilterReq) {
-        return ServiceResponseMessage.createBySuccessCodeMessage();
+    @ApiOperation(value = "按topic分页拉取所有的Moment")
+    @PostMapping(value = "/topic/fetch", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage fetchMomentAndReplyDetailByTopicCond(@RequestBody @Validated MomentTopicFilterReq momentTopicFilterReq) {
+        return momentsService.fetchMomentAndReplyDetailByTopic(momentTopicFilterReq);
+    }
+
+    @ApiOperation(value = "按classify分页拉取所有的Moment")
+    @PostMapping(value = "/topic/fetch", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage fetchMomentAndReplyDetailByClassifyCond(@RequestBody @Validated MomentClassifyFilterReq momentClassifyFilterReq) {
+        return momentsService.fetchMomentAndReplyDetailByClassify(momentClassifyFilterReq);
     }
 
 

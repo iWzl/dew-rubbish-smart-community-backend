@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author Leo Wang
  * @version 1.0
- * @date 2019/9/5 20:39
  */
 
 @FeignClient(qualifier = "dew-moments",value = "dew-smart-community-moments",configuration = ProtoFeignConfiguration.class,fallback = DewMomentsSentinel.class)
@@ -101,5 +100,24 @@ public interface DewMomentsService {
      */
     @PostMapping(value = "/dynamic/search/uin",consumes = "application/x-protobuf", produces = "application/x-protobuf")
     MomentsDetailsResult fetchMomentsDetailByUin(@RequestBody MomentDetailsUinRequest momentDetailsUinRequest);
+
+
+    /**
+     * 查询用户Moments信息通过用户地理位置信息
+     *
+     * @param momentDetailsClassifyRequest  拉取需要的请求参数
+     * @return  Moment的详细相关信息
+     */
+    @PostMapping(value = "/dynamic/search/classify",consumes = "application/x-protobuf", produces = "application/x-protobuf")
+    MomentsDetailsResult fetchMomentsDetailByClassify(@RequestBody MomentDetailsClassifyRequest momentDetailsClassifyRequest);
+
+    /**
+     * 查询用户Moments信息通过用户地理位置信息
+     *
+     * @param momentDetailsTopicRequest  拉取需要的请求参数
+     * @return  Moment的详细相关信息
+     */
+    @PostMapping(value = "/dynamic/search/topic",consumes = "application/x-protobuf", produces = "application/x-protobuf")
+    MomentsDetailsResult fetchMomentsDetailByTopic(@RequestBody MomentDetailsTopicRequest momentDetailsTopicRequest);
 
 }

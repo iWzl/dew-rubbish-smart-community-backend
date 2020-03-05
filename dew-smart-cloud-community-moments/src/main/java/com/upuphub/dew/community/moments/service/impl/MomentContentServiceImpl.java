@@ -94,6 +94,18 @@ public class MomentContentServiceImpl implements MomentContentService {
     @Override
     public List<MomentCommentPO> searchMomentsCommentByMomentId(Long momentId) {
         Map<String, Object> where = Collections.singletonMap(MongoKeysConst.MOMENTS_DYNAMIC_ID, momentId);
+        return searchMomentsCommentByWhereMap(where);
+    }
+
+    @Override
+    public List<MomentCommentPO> searchMomentsCommentByMomentIdAndCommentType(Long momentId, int typeValue) {
+        Map<String, Object> where = new HashMap<>();
+        where.put(MongoKeysConst.MOMENTS_DYNAMIC_ID, momentId);
+        where.put("content_type",typeValue);
+        return searchMomentsCommentByWhereMap(where);
+    }
+
+    private List<MomentCommentPO> searchMomentsCommentByWhereMap(Map<String, Object> where) {
         List<MomentCommentPO> momentCommentInfos = mongoTemplate.find(createEasyQueryNoResetKeys(mongoSelectKeysList(MomentCommentPO.class, Collections.emptySet()), where,null)
                 .with(new Sort(Sort.Direction.DESC, MongoKeysConst.MOMENTS_COMMENT_ID)), MomentCommentPO.class);
         if (!ObjectUtil.isEmpty(momentCommentInfos)) {
@@ -177,6 +189,12 @@ public class MomentContentServiceImpl implements MomentContentService {
         where.put(MongoKeysConst.MOMENTS_DYNAMIC_DRAFT, true);
         mongoTemplate.remove(createEasyQuery(null, where, null), MomentDynamicPO.class);
         return 0;
+    }
+
+    @Override
+    public void deleteMomentCommentByCommentId(Long momentCommentId) {
+        Map<String, Object> where = Collections.singletonMap("_id", momentCommentId);
+        mongoTemplate.remove(createEasyQuery(null, where, null), MomentCommentPO.class);
     }
 
     private Set<String> dynamicIgnoreSet() {

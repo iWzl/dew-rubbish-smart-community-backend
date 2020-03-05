@@ -28,13 +28,14 @@ public class EdsUtil {
                 .build();
     }
 
-    public static MomentsPublishPO toCommonBean(long dynamicId, MomentDynamicPublish dynamicPublish) {
+    public static MomentsPublishPO toCommonBean(MomentDynamicPO momentDynamic, MomentDynamicPublish dynamicPublish) {
         MomentsPublishPO momentsPublish = new MomentsPublishPO();
-        momentsPublish.setDynamicId(dynamicId);
-        momentsPublish.setGeohash(GeoHashUtil.buildGeoHash(dynamicPublish.getLatitude(), dynamicPublish.getLongitude()));
-        momentsPublish.setlatitude(dynamicPublish.getLatitude());
+        momentsPublish.setDynamicId(momentDynamic.getMomentId());
+        momentsPublish.setGeoHash(GeoHashUtil.buildGeoHash(dynamicPublish.getLatitude(), dynamicPublish.getLongitude()));
+        momentsPublish.setLatitude(dynamicPublish.getLatitude());
         momentsPublish.setLongitude(dynamicPublish.getLongitude());
-        momentsPublish.setLikeNumber(0);
+        momentsPublish.setClassify(momentDynamic.getClassify());
+        momentsPublish.setTopic(momentDynamic.getTopic());
         momentsPublish.setPublishBy(dynamicPublish.getPublishBy());
         momentsPublish.setPublishTime(System.currentTimeMillis());
         momentsPublish.setPublishType(dynamicPublish.getPublishType().name());

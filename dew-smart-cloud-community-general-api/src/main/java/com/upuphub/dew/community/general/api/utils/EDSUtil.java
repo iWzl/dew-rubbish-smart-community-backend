@@ -192,4 +192,20 @@ public class EDSUtil {
                 .setPageSize(momentUinFilterReq.getPageParamRequest().getPageSize())
                 .build();
     }
+
+    public static MomentDetailsTopicRequest toProtobufMessage(MomentTopicFilterReq momentTopicFilterReq) {
+        return MomentDetailsTopicRequest.newBuilder()
+                .setPageNum(momentTopicFilterReq.getPageRequest().getPageNumber())
+                .setTopic(momentTopicFilterReq.getTopic())
+                .setPageSize(momentTopicFilterReq.getPageRequest().getPageSize())
+                .build();
+    }
+
+    public static MomentDetailsClassifyRequest toProtobufMessage(MomentClassifyFilterReq momentClassifyFilterReq) {
+        return MomentDetailsClassifyRequest.newBuilder()
+                .setPageNum(momentClassifyFilterReq.getPageRequest().getPageNumber())
+                .setClassify(momentClassifyFilterReq.getClassify())
+                .setPageSize(momentClassifyFilterReq.getPageRequest().getPageSize())
+                .build();
+    }
 }

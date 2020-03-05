@@ -4,7 +4,8 @@
     <resultMap id="BaseResultMap" type="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="geo_hash" jdbcType="VARCHAR" property="geoHash"/>
-        <result column="like_number" jdbcType="INTEGER" property="likeNumber"/>
+        <result column="classify" jdbcType="INTEGER" property="classify"/>
+        <result column="topic" jdbcType="VARCHAR" property="topic"/>
         <result column="dynamic_id" jdbcType="BIGINT" property="dynamicId"/>
         <result column="publish_by" jdbcType="BIGINT" property="publishBy"/>
         <result column="publish_time" jdbcType="BIGINT" property="publishTime"/>
@@ -15,7 +16,7 @@
         <result column="publish_status" jdbcType="INTEGER" property="publishStatus"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, geo_hash, like_number, dynamic_id, publish_by, publish_time, publish_type, longitude,latitude, update_time, publish_status
+        id, geo_hash, classify,topic, dynamic_id, publish_by, publish_time, publish_type, longitude,latitude, update_time, publish_status
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -46,6 +47,24 @@
         order by update_time desc
     </select>
 
+    <select id="selectMomentPublishRecordByClassify"
+            resultType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
+        select
+        <include refid="Base_Column_List"/>
+        from moments_publish
+        where classify = #{classify}
+        order by update_time desc
+    </select>
+
+    <select id="selectMomentPublishRecordByTopic"
+            resultType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
+        select
+        <include refid="Base_Column_List"/>
+        from moments_publish
+        where topic = #{topic}
+        order by update_time desc
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
         from moments_publish
@@ -53,12 +72,12 @@
     </delete>
 
     <insert id="insertMomentsPublishRecord">
-        insert into moments_publish (geo_hash, like_number, dynamic_id,
+        insert into moments_publish (geo_hash, classify, topic, dynamic_id,
                                      publish_by, publish_time, publish_type,
                                      longitude, latitude, update_time,
                                      publish_status)
-        values (#{momentPublishPO.geoHash,jdbcType=VARCHAR}, #{momentPublishPO.likeNumber,jdbcType=INTEGER},
-                #{momentPublishPO.dynamicId,jdbcType=BIGINT},
+        values (#{momentPublishPO.geoHash,jdbcType=VARCHAR}, #{momentPublishPO.classify,jdbcType=INTEGER},
+                #{momentPublishPO.topic,jdbcType=VARCHAR}, #{momentPublishPO.dynamicId,jdbcType=BIGINT},
                 #{momentPublishPO.publishBy,jdbcType=BIGINT}, #{momentPublishPO.publishTime,jdbcType=BIGINT},
                 #{momentPublishPO.publishType,jdbcType=CHAR},
                 #{momentPublishPO.longitude,jdbcType=DOUBLE}, #{momentPublishPO.latitude,jdbcType=DOUBLE},
@@ -74,8 +93,11 @@
             <if test="geoHash != null">
                 geoHash,
             </if>
-            <if test="likeNumber != null">
-                like_number,
+            <if test="classify != null">
+                classify,
+            </if>
+            <if test="topic != null">
+                topic,
             </if>
             <if test="dynamicId != null">
                 dynamic_id,
@@ -106,8 +128,11 @@
             <if test="geoHash != null">
                 #{geoHash,jdbcType=VARCHAR},
             </if>
-            <if test="likeNumber != null">
-                #{likeNumber,jdbcType=INTEGER},
+            <if test="classify != null">
+                #{classify,jdbcType=INTEGER},
+            </if>
+            <if test="topic != null">
+                #{topic,jdbcType=VARCHAR},
             </if>
             <if test="dynamicId != null">
                 #{dynamicId,jdbcType=BIGINT},
@@ -142,8 +167,11 @@
             <if test="geoHash != null">
                 geoHash = #{geoHash,jdbcType=VARCHAR},
             </if>
-            <if test="likeNumber != null">
-                like_number = #{likeNumber,jdbcType=INTEGER},
+            <if test="classify != null">
+                classify = #{classify,jdbcType=INTEGER},
+            </if>
+            <if test="topic != null">
+                topic = #{classify,jdbcType=VARCHAR},
             </if>
             <if test="dynamicId != null">
                 dynamic_id = #{dynamicId,jdbcType=BIGINT},
@@ -176,7 +204,8 @@
     <update id="updateByPrimaryKey" parameterType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
         update moments_publish
         set geo_hash       = #{geoHash,jdbcType=VARCHAR},
-            like_number    = #{likeNumber,jdbcType=INTEGER},
+            classify       = #{classify,jdbcType=INTEGER},
+            topic          = #{topic,jdbcType=VARCHAR},
             dynamic_id     = #{dynamicId,jdbcType=BIGINT},
             publish_by     = #{publishBy,jdbcType=BIGINT},
             publish_time   = #{publishTime,jdbcType=BIGINT},
