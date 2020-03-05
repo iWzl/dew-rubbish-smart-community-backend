@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author Leo Wang
  * @version 1.0
- * @date 2019/8/6 21:27
  */
 @RestController
 @RequestMapping(value = "/api/moments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -94,7 +93,7 @@ public class MomentsController {
     }
 
     @ApiOperation(value = "按classify分页拉取所有的Moment")
-    @PostMapping(value = "/topic/fetch", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/classify/fetch", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ServiceResponseMessage fetchMomentAndReplyDetailByClassifyCond(@RequestBody @Validated MomentClassifyFilterReq momentClassifyFilterReq) {
         return momentsService.fetchMomentAndReplyDetailByClassify(momentClassifyFilterReq);
     }
@@ -105,6 +104,4 @@ public class MomentsController {
     public ServiceResponseMessage fetchMomentActivityDetailBySyncKey(@RequestBody @Validated MomentActivitySyncReq momentLocationFilterReq) {
         return ServiceResponseMessage.createBySuccessCodeMessage();
     }
-
-
 }

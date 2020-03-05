@@ -47,7 +47,7 @@ public interface MomentsPublishMomentsPublishDao {
      * @param topic 分类
      * @return Moments发布详情
      */
-    List<MomentsPublishPO> selectMomentPublishRecordByTopic(@Param("classify") String topic);
+    List<MomentsPublishPO> selectMomentPublishRecordByTopic(@Param("topic") String topic);
 
     int deleteByPrimaryKey(Long id);
 

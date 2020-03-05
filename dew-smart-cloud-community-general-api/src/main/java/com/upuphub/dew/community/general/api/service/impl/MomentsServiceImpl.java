@@ -113,7 +113,7 @@ public class MomentsServiceImpl implements MomentsService {
 
     @Override
     public ServiceResponseMessage fetchMomentAndReplyDetailByTopic(MomentTopicFilterReq momentTopicFilterReq) {
-        if (null == momentTopicFilterReq || null == momentTopicFilterReq.getPageRequest()) {
+        if (null == momentTopicFilterReq || null == momentTopicFilterReq.getPageParam()) {
             return ServiceResponseMessage.createByFailCodeMessage("请求的参数不能为空");
         }
         MomentDetailsTopicRequest momentDetailsTopicRequest = EDSUtil.toProtobufMessage(momentTopicFilterReq);
@@ -125,7 +125,7 @@ public class MomentsServiceImpl implements MomentsService {
 
     @Override
     public ServiceResponseMessage fetchMomentAndReplyDetailByClassify(MomentClassifyFilterReq momentClassifyFilterReq) {
-        if (null == momentClassifyFilterReq || null == momentClassifyFilterReq.getPageRequest()) {
+        if (null == momentClassifyFilterReq || null == momentClassifyFilterReq.getPageParam()) {
             return ServiceResponseMessage.createByFailCodeMessage("请求的参数不能为空");
         }
         MomentDetailsClassifyRequest momentDetailsClassifyRequest = EDSUtil.toProtobufMessage(momentClassifyFilterReq);

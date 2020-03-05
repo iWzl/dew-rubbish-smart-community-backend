@@ -1,7 +1,7 @@
 package com.upuphub.dew.community.general.api.bean.vo.req;
 
+import com.upuphub.dew.community.general.api.bean.vo.common.PageParamRequest;
 import lombok.Data;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @author Leo Wang
@@ -11,6 +11,6 @@ import org.springframework.data.domain.PageRequest;
 @Data
 public class MomentTopicFilterReq {
     private String topic;
-    private PageRequest pageRequest;
+    private PageParamRequest pageParam;
 
 }

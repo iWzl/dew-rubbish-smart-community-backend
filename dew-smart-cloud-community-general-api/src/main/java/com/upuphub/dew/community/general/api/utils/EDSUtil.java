@@ -195,17 +195,17 @@ public class EDSUtil {
 
     public static MomentDetailsTopicRequest toProtobufMessage(MomentTopicFilterReq momentTopicFilterReq) {
         return MomentDetailsTopicRequest.newBuilder()
-                .setPageNum(momentTopicFilterReq.getPageRequest().getPageNumber())
+                .setPageNum(momentTopicFilterReq.getPageParam().getPageNum())
                 .setTopic(momentTopicFilterReq.getTopic())
-                .setPageSize(momentTopicFilterReq.getPageRequest().getPageSize())
+                .setPageSize(momentTopicFilterReq.getPageParam().getPageSize())
                 .build();
     }
 
     public static MomentDetailsClassifyRequest toProtobufMessage(MomentClassifyFilterReq momentClassifyFilterReq) {
         return MomentDetailsClassifyRequest.newBuilder()
-                .setPageNum(momentClassifyFilterReq.getPageRequest().getPageNumber())
+                .setPageNum(momentClassifyFilterReq.getPageParam().getPageNum())
                 .setClassify(momentClassifyFilterReq.getClassify())
-                .setPageSize(momentClassifyFilterReq.getPageRequest().getPageSize())
+                .setPageSize(momentClassifyFilterReq.getPageParam().getPageSize())
                 .build();
     }
 }
