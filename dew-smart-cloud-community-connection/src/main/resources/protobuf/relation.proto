@@ -1,0 +1,26 @@
+syntax = "proto3"; // 定义语法类型，通常proto3好于proto2，proto2好于proto1
+
+
+option java_package = "com.upuphub.dew.community.connection.protobuf.relation";      // 定义报名
+option java_multiple_files = true;
+
+message RelationPersistRequest{
+    int64 sponsor = 1;
+    int64 recipient = 2;
+    RELATION_TYPE relationType = 3;
+    RELATION_SOURCE relationSource = 4;
+}
+
+enum RELATION_TYPE{
+    NONE = 0;
+    BLACK = 10;
+    LIKE = 20;
+    MATCH = 30;
+}
+
+enum RELATION_SOURCE{
+    DEFAULT= 0;
+    MOMENTS = 1;
+    SEARCH = 2;
+}
+

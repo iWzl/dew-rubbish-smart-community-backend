@@ -17,5 +17,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface DewPushService {
 
     @PostMapping(value = "/code/send",consumes = "application/x-protobuf",produces = "application/x-protobuf")
-    public void sendVerificationCodeMail(@RequestBody EmailAndCode emailAndCode);
+    void sendVerificationCodeMail(@RequestBody EmailAndCode emailAndCode);
 }
