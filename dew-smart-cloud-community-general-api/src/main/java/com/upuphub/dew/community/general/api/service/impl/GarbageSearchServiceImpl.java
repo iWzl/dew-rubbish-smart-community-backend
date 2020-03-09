@@ -45,4 +45,14 @@ public class GarbageSearchServiceImpl implements GarbageSearchService {
         }
         return ServiceResponseMessage.createBySuccessCodeMessage();
     }
+
+    @Override
+    public ServiceResponseMessage searchRandomGarbageGameQuestion() {
+        List<GarbageClassSearchPO> randomGarbageGameQuestions = garbageClassSearchDao.selectRandomGarbageGameQuestion();
+        if(randomGarbageGameQuestions != null){
+            // todo 没有VO 暂时直接处理
+            return ServiceResponseMessage.createBySuccessCodeMessage(randomGarbageGameQuestions);
+        }
+        return ServiceResponseMessage.createBySuccessCodeMessage();
+    }
 }

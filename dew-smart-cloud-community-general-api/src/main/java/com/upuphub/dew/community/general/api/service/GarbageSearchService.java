@@ -20,4 +20,11 @@ public interface GarbageSearchService {
      * @return 详细的垃圾分类信息
      */
     ServiceResponseMessage searchGarbageCategoriesByNum(Integer classNum);
+
+    /**
+     * 随机拉取垃圾分类问题
+     *
+     * @return 随机拉取垃圾分类问题
+     */
+    ServiceResponseMessage searchRandomGarbageGameQuestion();
 }

@@ -13,4 +13,6 @@ public interface GarbageClassSearchDao {
     public List<GarbageClassSearchPO> selectGarbageClassByLikeSearchKey(@Param("searchKey") String searchKey);
 
     public GarbageCategoriesPO selectGarbageCategoriesByNum(@Param("classNum") Integer classNum);
+
+    List<GarbageClassSearchPO> selectRandomGarbageGameQuestion();
 }

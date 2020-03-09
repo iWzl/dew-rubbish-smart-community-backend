@@ -20,4 +20,12 @@
         where id = #{classNum}
         limit 1
     </select>
+
+    <select id="selectRandomGarbageGameQuestion"
+            resultType="com.upuphub.dew.community.general.api.bean.po.GarbageClassSearchPO">
+        select name, sortId
+        from dew_garbage_search
+        ORDER BY RAND()
+        LIMIT 20
+    </select>
 </mapper>

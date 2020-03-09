@@ -62,4 +62,10 @@ public class CommonController {
     public ServiceResponseMessage searchGarbageCategoriesByNum(@PathVariable @Min(1) @Max(4) Integer classNum){
         return garbageSearchService.searchGarbageCategoriesByNum(classNum);
     }
+
+    @ApiOperation(value = "随机拉取垃圾分类问题")
+    @GetMapping(value = "/tools/game/question",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ServiceResponseMessage searchRandomGarbageGameQuestion(){
+        return garbageSearchService.searchRandomGarbageGameQuestion();
+    }
 }
