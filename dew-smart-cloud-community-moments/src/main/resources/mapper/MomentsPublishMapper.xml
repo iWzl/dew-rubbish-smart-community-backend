@@ -65,6 +65,15 @@
         order by update_time desc
     </select>
 
+    <select id="selectMomentPublishRecordByDynamicId"
+            resultType="com.upuphub.dew.community.moments.bean.po.MomentsPublishPO">
+        select
+        <include refid="Base_Column_List"/>
+        from moments_publish
+        where dynamic_id = #{momentId}
+        limit 1
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
         from moments_publish

@@ -150,6 +150,18 @@ public class MomentsServiceController {
     }
 
     /**
+     * 根据MomentId查询Moment请求消息
+     *
+     * @param momentIdRequest momentId
+     * @return 请求的Moment请求消息正文
+     */
+    @PostMapping(value = "/dynamic/search/id")
+    MomentContentDetailResult fetchMomentDetailByMomentId(@RequestBody MomentIdRequest momentIdRequest){
+        return momentsService.fetchMomentDetailByMomentId(momentIdRequest.getMomentId());
+    }
+
+
+    /**
      * 查询用户Moments信息通过用户地理位置信息
      *
      * @param momentDetailsTopicRequest  拉取需要的请求参数
@@ -175,6 +187,4 @@ public class MomentsServiceController {
     MomentActivityDetailsResult fetchMomentActivityBySyncActivityId(@RequestBody SyncMomentActivityRequest syncMomentActivityRequest){
         return momentsService.fetchMomentActivityBySyncActivityId(syncMomentActivityRequest);
     }
-
-
 }

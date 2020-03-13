@@ -76,8 +76,20 @@ public interface MomentsService {
      */
     MomentsDetailsDTO fetchMomentsDetailByUin(MomentDetailsUinRequest momentDetailsUinRequest);
 
+    /**
+     * 通过MomentClassify分类查询Moments
+     *
+     * @param momentDetailsClassifyRequest 带有MomentId的分类
+     * @return 查询到的Moment返回结果
+     */
     MomentsDetailsDTO fetchMomentsDetailByClassify(MomentDetailsClassifyRequest momentDetailsClassifyRequest);
 
+    /**
+     * 通过Moment参与的话题查询Moment信息
+     *
+     * @param momentDetailsTopicRequest moment详细信息请求
+     * @return 查询到的Moment话题查询的返回结果
+     */
     MomentsDetailsDTO fetchMomentsDetailByTopic(MomentDetailsTopicRequest momentDetailsTopicRequest);
 
     /**
@@ -88,5 +100,19 @@ public interface MomentsService {
      */
     MomentActivityResult syncMomentActivityBySyncActivityId(SyncMomentActivityRequest syncMomentActivityRequest);
 
+    /**
+     * 根据Moment行为ID请求查询Moment信息
+     *
+     * @param syncMomentActivityRequest moment行为请求
+     * @return 查询到的Moment行为请求的返回值
+     */
     MomentActivityDetailsResult fetchMomentActivityBySyncActivityId(SyncMomentActivityRequest syncMomentActivityRequest);
+
+    /**
+     * 根据MomentId查询Moments
+     *
+     * @param momentId MomentID
+     * @return 查询到的Moment结果
+     */
+    MomentContentDetailResult fetchMomentDetailByMomentId(long momentId);
 }

@@ -87,6 +87,9 @@ message CommentReplyDetailResult {
     int64 replyDate = 4;
 }
 
+message MomentIdRequest{
+    int64 momentId = 1;
+}
 
 message MomentsDetailsResult {
     repeated MomentContentDetailResult momentContentDetailResults = 1;

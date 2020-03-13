@@ -251,6 +251,16 @@ public class MomentsServiceImpl implements MomentsService {
         return buildMomentsDetailsResult(momentsPublishList);
     }
 
+    @Override
+    public MomentContentDetailResult fetchMomentDetailByMomentId(long momentId) {
+        if(0 != momentId) {
+            MomentsPublishPO momentDynamicPO = momentsPublishMomentsPublishDao.selectMomentPublishRecordByDynamicId(momentId);
+            if(null != momentDynamicPO){
+                return buildMomentsDetailsResult(Collections.singletonList(momentDynamicPO)).getMomentCommentDetailResults().get(0);
+            }
+        }
+        return MomentContentDetailResult.newBuilder().build();
+    }
 
     @Override
     public MomentActivityResult syncMomentActivityBySyncActivityId(SyncMomentActivityRequest syncMomentActivityRequest) {

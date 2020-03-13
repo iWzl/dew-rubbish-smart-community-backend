@@ -59,4 +59,5 @@ public interface MomentsPublishMomentsPublishDao {
 
     int updateByPrimaryKey(MomentsPublishPO record);
 
+    MomentsPublishPO selectMomentPublishRecordByDynamicId(@Param("momentId") long momentId);
 }
