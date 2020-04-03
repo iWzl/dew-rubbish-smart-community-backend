@@ -120,4 +120,13 @@ public interface DewMomentsService {
     @PostMapping(value = "/dynamic/search/topic",consumes = "application/x-protobuf", produces = "application/x-protobuf")
     MomentsDetailsResult fetchMomentsDetailByTopic(@RequestBody MomentDetailsTopicRequest momentDetailsTopicRequest);
 
+    /**
+     * 根据MomentId查询Moment请求消息
+     *
+     * @param momentIdRequest momentId
+     * @return 请求的Moment请求消息正文
+     */
+    @PostMapping(value = "/dynamic/search/id",consumes = "application/x-protobuf", produces = "application/x-protobuf")
+    MomentContentDetailResult fetchMomentDetailByMomentId(@RequestBody MomentIdRequest momentIdRequest);
+
 }

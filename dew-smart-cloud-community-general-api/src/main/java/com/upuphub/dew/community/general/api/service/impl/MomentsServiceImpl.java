@@ -11,6 +11,7 @@ import com.upuphub.dew.community.general.api.bean.vo.req.*;
 import com.upuphub.dew.community.general.api.bean.vo.resp.MomentDynamicContentResp;
 import com.upuphub.dew.community.general.api.bean.vo.resp.MomentsDetailsResp;
 import com.upuphub.dew.community.general.api.bean.vo.resp.PageInfoResp;
+import com.upuphub.dew.community.general.api.bean.vo.resp.SimpleProfileResp;
 import com.upuphub.dew.community.general.api.service.AccountService;
 import com.upuphub.dew.community.general.api.service.MomentsService;
 import com.upuphub.dew.community.general.api.service.remote.DewMomentsService;
@@ -20,9 +21,8 @@ import com.upuphub.dew.community.general.api.utils.basic.ResultMessageConst;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -135,29 +135,68 @@ public class MomentsServiceImpl implements MomentsService {
         );
     }
 
+    @Override
+    public ServiceResponseMessage fetchMomentAndReplyDetailByMomentId(Long momentId) {
+        if (null == momentId || momentId <= 10000) {
+            return ServiceResponseMessage.createByFailCodeMessage("请求的参数不能为空");
+        }
+        Map<Long, SimpleProfileResp> momentProfileRespMap = new HashMap<>();
+        MomentIdRequest momentIdRequest = MomentIdRequest.newBuilder().setMomentId(momentId).build();
+        MomentContentDetailResult momentContentDetailResult = remoteMomentsService.fetchMomentDetailByMomentId(momentIdRequest);
+        fetchMomentProfileInfos(momentProfileRespMap, momentContentDetailResult);
+        MomentsDetailsResp.MomentContent momentContent = buildMomentRespContent(momentProfileRespMap, momentContentDetailResult);
+        return ServiceResponseMessage.createBySuccessCodeMessage(momentContent);
+    }
+
+    private MomentsDetailsResp.MomentContent buildMomentRespContent(Map<Long, SimpleProfileResp> momentProfileRespMap, MomentContentDetailResult momentContentDetailResult) {
+        return MomentsDetailsResp.MomentContent.builder()
+                .momentId(momentContentDetailResult.getMomentId())
+                .publisher(momentProfileRespMap.get(momentContentDetailResult.getPublisher()))
+                .originPublisher(momentProfileRespMap.get(momentContentDetailResult.getOriginPublisher()))
+                .topic(momentContentDetailResult.getTopic())
+                .title(momentContentDetailResult.getTitle())
+                .classify(momentContentDetailResult.getClassify())
+                .content(momentContentDetailResult.getContent())
+                .pictures(momentContentDetailResult.getPicturesList())
+                .publishedDate(momentContentDetailResult.getPublishedDate())
+                .latitude(momentContentDetailResult.getLatitude())
+                .longitude(momentContentDetailResult.getLongitude())
+                .publishType(momentContentDetailResult.getPublishType().name())
+                .momentCommentList(buildMomentCommentByDetailResult(
+                        momentContentDetailResult.getMomentCommentDetailResultsList(),momentProfileRespMap))
+                .build();
+    }
+
+    private void fetchMomentProfileInfos(Map<Long, SimpleProfileResp> momentSenderUserMap, MomentContentDetailResult momentContentDetailResult) {
+        if(!momentSenderUserMap.containsKey(momentContentDetailResult.getPublisher())){
+            momentSenderUserMap.put(momentContentDetailResult.getPublisher(),accountService.pullSimpleProfileByUin(momentContentDetailResult.getPublisher()));
+        }
+        if(!momentSenderUserMap.containsKey(momentContentDetailResult.getOriginPublisher())){
+            momentSenderUserMap.put(momentContentDetailResult.getOriginPublisher(),accountService.pullSimpleProfileByUin(momentContentDetailResult.getOriginPublisher()));
+        }
+        for (MomentCommentDetailResult momentCommentDetailResult : momentContentDetailResult.getMomentCommentDetailResultsList()) {
+            if(!momentSenderUserMap.containsKey(momentCommentDetailResult.getCommentator())){
+                momentSenderUserMap.put(momentCommentDetailResult.getCommentator(),accountService.pullSimpleProfileByUin(momentCommentDetailResult.getCommentator()));
+            }
+        }
+    }
+
+    private Map<Long, SimpleProfileResp> fetchMomentProfileRespMap(MomentsDetailsResult momentsDetailsResult){
+        Map<Long, SimpleProfileResp> momentSenderUserMap = new HashMap<>();
+        for (MomentContentDetailResult momentContentDetailResult : momentsDetailsResult.getMomentContentDetailResultsList()) {
+            fetchMomentProfileInfos(momentSenderUserMap, momentContentDetailResult);
+        }
+        return momentSenderUserMap;
+    }
+
     private MomentsDetailsResp buildMomentsResponseDetails(MomentsDetailsResult momentsDetailsResult) {
         MomentsDetailsResp momentsDetailsResp = new MomentsDetailsResp();
         if (null != momentsDetailsResult) {
             PageInfoResp pageInfoResp = MessageUtil.messageToCommonPojo(momentsDetailsResult.getPageInfo(), PageInfoResp.class);
             List<MomentsDetailsResp.MomentContent> momentContentList = new ArrayList<>(momentsDetailsResult.getMomentContentDetailResultsCount());
+            Map<Long, SimpleProfileResp> momentProfileRespMap = fetchMomentProfileRespMap(momentsDetailsResult);
             for (MomentContentDetailResult momentContentDetailResult : momentsDetailsResult.getMomentContentDetailResultsList()) {
-                MomentsDetailsResp.MomentContent momentContent = MomentsDetailsResp.MomentContent.builder()
-                        .momentId(momentContentDetailResult.getMomentId())
-                        .publisher(accountService.pullSimpleProfileByUin(momentContentDetailResult.getPublisher()))
-                        .originPublisher(accountService.pullSimpleProfileByUin(momentContentDetailResult.getOriginPublisher()))
-                        .topic(momentContentDetailResult.getTopic())
-                        .title(momentContentDetailResult.getTitle())
-                        .classify(momentContentDetailResult.getClassify())
-                        .content(momentContentDetailResult.getContent())
-                        .pictures(momentContentDetailResult.getPicturesList())
-                        .publishedDate(momentContentDetailResult.getPublishedDate())
-                        .latitude(momentContentDetailResult.getLatitude())
-                        .longitude(momentContentDetailResult.getLongitude())
-                        .publishType(momentContentDetailResult.getPublishType().name())
-                        .momentCommentList(buildMomentCommentByDetailResult(
-                                momentContentDetailResult.getMomentCommentDetailResultsList()))
-                        .build();
-                momentContentList.add(momentContent);
+                momentContentList.add(buildMomentRespContent(momentProfileRespMap, momentContentDetailResult));
             }
             momentsDetailsResp.setMomentContentList(momentContentList);
             momentsDetailsResp.setPageInfoResp(pageInfoResp);
@@ -177,7 +216,7 @@ public class MomentsServiceImpl implements MomentsService {
         );
     }
 
-    private List<MomentsDetailsResp.MomentComment> buildMomentCommentByDetailResult(List<MomentCommentDetailResult> momentCommentDetailResultsList){
+    private List<MomentsDetailsResp.MomentComment> buildMomentCommentByDetailResult(List<MomentCommentDetailResult> momentCommentDetailResultsList, Map<Long, SimpleProfileResp> momentProfileRespMap){
         if(null == momentCommentDetailResultsList || momentCommentDetailResultsList.isEmpty()){
             return Collections.emptyList();
         }
@@ -187,7 +226,7 @@ public class MomentsServiceImpl implements MomentsService {
                     .commentId(momentCommentDetailResult.getCommentId())
                     .commentType(momentCommentDetailResult.getCommentType())
                     .content(momentCommentDetailResult.getContent())
-                    .commentator(accountService.pullSimpleProfileByUin(momentCommentDetailResult.getCommentator()))
+                    .commentator(momentProfileRespMap.get(momentCommentDetailResult.getCommentator()))
                     .commentDate(momentCommentDetailResult.getCommentDate())
                     .commentReplyList(buildMomentCommentReplyByDetailResult(momentCommentDetailResult.getCommentReplyDetailResultsList()))
                     .build();

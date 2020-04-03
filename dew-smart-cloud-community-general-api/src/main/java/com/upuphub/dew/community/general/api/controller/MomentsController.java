@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
+
 /**
  * 瞬间动态模块得前端控制器
  *
@@ -78,11 +80,16 @@ public class MomentsController {
         return momentsService.fetchMomentAndReplyDetailByLocationCond(momentLocationFilterReq);
     }
 
-
     @ApiOperation(value = "按uin分页拉取所有的Moment")
     @PostMapping(value = "/uin/fetch", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ServiceResponseMessage fetchMomentAndReplyDetailByUinCond(@RequestBody @Validated MomentUinFilterReq momentUinFilterReq) {
         return momentsService.fetchMomentAndReplyDetailByUin(momentUinFilterReq);
+    }
+
+    @ApiOperation(value = "根据MomentId拉取所有的Moments")
+    @GetMapping(value = "/moment/fetch", consumes = MediaType.ALL_VALUE)
+    public ServiceResponseMessage fetchMomentAndReplyDetailByMomentId(@RequestParam("momentId") @Min(0) Long momentId) {
+        return momentsService.fetchMomentAndReplyDetailByMomentId(momentId);
     }
 
 

@@ -91,4 +91,12 @@ public interface MomentsService {
      * @return 查询处理的处理结果
      */
     ServiceResponseMessage fetchMomentAndReplyDetailByClassify(MomentClassifyFilterReq momentClassifyFilterReq);
+
+    /**
+     * 查询通过Moment信息查询Moment
+     *
+     * @param momentId 用户的MomentID
+     * @return 查询到的用户Moment详细信息
+     */
+    ServiceResponseMessage fetchMomentAndReplyDetailByMomentId(Long momentId);
 }
