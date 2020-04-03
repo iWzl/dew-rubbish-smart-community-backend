@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 
 /**
  * @author Leo Wang
@@ -14,7 +15,7 @@ import javax.validation.constraints.Min;
 
 @Data
 @ApiModel("拉取查询条件的分页参数属性信息")
-public class PageParamRequest {
+public class PageParamRequest implements Serializable {
     @Min(1)
     @ApiModelProperty(value = "每页的数量",required = true)
     private int pageSize;

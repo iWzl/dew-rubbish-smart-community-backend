@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author Leo Wang
  * @version 1.0
@@ -11,7 +13,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(description = "位置")
-public class LocationReq {
+public class LocationReq implements Serializable {
     @ApiModelProperty(value = "街道",required = true,example = "天才大道")
     private String street;
     @ApiModelProperty(value = "县/区",required = true,example = "高新区")

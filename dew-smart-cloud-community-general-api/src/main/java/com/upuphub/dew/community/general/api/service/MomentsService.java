@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.general.api.service;
 
 
+import com.upuphub.dew.community.connection.protobuf.moments.MomentsDetailsResult;
 import com.upuphub.dew.community.general.api.bean.dto.MomentCommentDTO;
 import com.upuphub.dew.community.general.api.bean.dto.MomentIdDTO;
 import com.upuphub.dew.community.general.api.bean.dto.MomentReplyDTO;

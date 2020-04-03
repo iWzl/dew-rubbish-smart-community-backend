@@ -90,7 +90,7 @@ public class ShiroConfiguration {
      * 需要添加到securityManager中
      * @return RedisCacheManager对象
      */
-    @Bean
+    @Bean("shiroCacheManager")
     public RedisCacheManager cacheManager(){
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
@@ -121,7 +121,7 @@ public class ShiroConfiguration {
     }
 
     //RedisManager(使用Redis)
-    @Bean(name = "redisManager")
+    @Bean(name = "shiroRedisManager")
     public RedisManager redisManager() {
         return new RedisManager();
     }

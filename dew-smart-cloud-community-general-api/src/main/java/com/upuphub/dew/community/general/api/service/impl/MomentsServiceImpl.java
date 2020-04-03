@@ -18,6 +18,7 @@ import com.upuphub.dew.community.general.api.service.remote.DewMomentsService;
 import com.upuphub.dew.community.general.api.utils.EDSUtil;
 import com.upuphub.dew.community.general.api.utils.HttpUtil;
 import com.upuphub.dew.community.general.api.utils.basic.ResultMessageConst;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

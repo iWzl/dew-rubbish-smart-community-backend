@@ -5,6 +5,7 @@ import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
 import com.upuphub.dew.community.general.api.exception.RpcServiceConnectionException;
 import com.upuphub.dew.community.general.api.service.remote.DewMomentsService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 /**

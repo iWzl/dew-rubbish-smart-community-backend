@@ -4,6 +4,7 @@ import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
 import com.upuphub.dew.community.general.api.config.ProtoFeignConfiguration;
 import com.upuphub.dew.community.general.api.service.remote.sentinel.DewMomentsSentinel;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,6 +90,7 @@ public interface DewMomentsService {
      * @param momentDetailsLocationRequest  拉取用户的地理位置信息需要的请求参数
      * @return  Moment的详细相关信息
      */
+
     @PostMapping(value = "/dynamic/search/location",consumes = "application/x-protobuf", produces = "application/x-protobuf")
     MomentsDetailsResult fetchMomentsDetailByLocation(@RequestBody MomentDetailsLocationRequest momentDetailsLocationRequest);
 

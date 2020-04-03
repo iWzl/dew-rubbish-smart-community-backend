@@ -26,6 +26,7 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -85,6 +86,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Cacheable(value = "pullSimpleProfileByUin")
     public SimpleProfileResp pullSimpleProfileByUin(Long uin) {
         GeneralProfile generalProfile = remoteAccountService.pullGeneralProfile(ProfileFilterCond.newBuilder()
                 .setUin(uin)

@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.Valid;
+import java.io.Serializable;
 
 /**
  * @author Leo Wang
@@ -14,7 +15,7 @@ import javax.validation.Valid;
  */
 @Data
 @ApiModel("Moment按照地理位置拉取的条件")
-public class MomentLocationFilterReq {
+public class MomentLocationFilterReq implements Serializable {
     @ApiModelProperty("拉取Moment时可能会有的地理位置参数")
     private LocationReq locationReq;
     @Valid

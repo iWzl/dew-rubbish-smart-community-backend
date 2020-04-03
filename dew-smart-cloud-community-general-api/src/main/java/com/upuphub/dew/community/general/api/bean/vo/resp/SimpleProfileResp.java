@@ -3,6 +3,8 @@ package com.upuphub.dew.community.general.api.bean.vo.resp;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Leo Wang
@@ -12,7 +14,7 @@ import lombok.Data;
 
 @Data
 @ApiModel("基本用户信息返回")
-public class SimpleProfileResp {
+public class SimpleProfileResp implements Serializable {
     private String openId;
     private String name;
     private String avatar;
