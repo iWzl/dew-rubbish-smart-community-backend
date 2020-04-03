@@ -66,7 +66,7 @@ public class RedisConfiguration extends CachingConfigurerSupport {
                 cacheKeyBuilder.append(".");
             }
             String cacheKey = cacheKeyBuilder.toString();
-            log.info("调用缓存Key [{}] ....",cacheKey);
+            log.debug("call Cache Key [{}] ....",cacheKey);
             return cacheKey;
         };
     }
