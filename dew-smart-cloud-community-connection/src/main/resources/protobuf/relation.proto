@@ -11,6 +11,28 @@ message RelationPersistRequest{
     RELATION_SOURCE relationSource = 4;
 }
 
+message RelationSearchRequest{
+    int64 searchUin = 1;
+    bool isReverse= 2;
+    repeated RELATION_TYPE relationTypes = 3;
+}
+
+message RelationSearchUinRequest{
+    int64 uin = 1;
+}
+
+message RelationPersistResult{
+    int64 sponsor = 1;
+    int64 recipient = 2;
+    int32 relationType = 3;
+    int32 relationSource = 4;
+    int64 refreshTime = 5;
+}
+
+message RelationPersistResults{
+    repeated RelationPersistResult relationPersistResults = 1;
+}
+
 enum RELATION_TYPE{
     NONE = 0;
     BLACK = 10;
@@ -24,4 +46,3 @@ enum RELATION_SOURCE{
     MOMENTS = 1;
     SEARCH = 2;
 }
-
