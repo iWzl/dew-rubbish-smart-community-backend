@@ -1,5 +1,6 @@
 syntax = "proto3"; // 定义语法类型，通常proto3好于proto2，proto2好于proto1
 
+import "google/protobuf/any.proto";
 
 option java_package = "com.upuphub.dew.community.connection.protobuf.mqtt";
 option java_multiple_files = true;
@@ -23,9 +24,14 @@ enum NotifyType{
     SYNC_MOMENTS_FAVORITE = 3;
 }
 
+message Body{
+    repeated NotifyType notifyType = 1;
+    repeated google.protobuf.Any content = 2;
+}
+
 message NotifyMessage{
     repeated Header header = 1;
-    repeated string body = 2;
+    repeated Body body = 2;
 }
 
 message Header{
@@ -34,4 +40,14 @@ message Header{
     string notifyUUID = 3;
     int64 toUin = 4;
     int32 version = 5;
+}
+
+message MomentsNotifyMessage{
+    int64 momentId = 1;
+    int32 momentType = 2;
+}
+
+message ChatNotifyMessage{
+    string messageContent = 1;
+    int64 time = 2;
 }
