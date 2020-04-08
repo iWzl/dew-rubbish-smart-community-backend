@@ -10,6 +10,19 @@ spring:
       discovery:
         server-addr: support.upuphub.com:8848
 
+  datasource:
+    url: jdbc:mysql://10.147.20.155:13306/dew_relation?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    name: dew_account
+    username: Leo
+    password: A!@#456bnm
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
 logging:
   level:
     root: debug

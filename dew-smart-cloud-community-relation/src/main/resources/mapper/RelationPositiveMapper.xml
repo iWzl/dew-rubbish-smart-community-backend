@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphub.dew.community.relation.dao.RelationPositiveDao">
+
+    <insert id="insertNewRelation">
+        insert into relation_positive(sponsor, recipient, relation_type, relation_source, refresh_time, status)
+        values (#{relationDetail.sponsor}, #{relationDetail.recipient}, #{relationDetail.relationType},
+                #{relationDetail.relationSource}, UNIX_TIMESTAMP(now()) * 1000, 0)
+    </insert>
+    <select id="selectHistoryRelationPositiveDetailByUin"
+            resultType="com.upuphub.dew.community.relation.bean.po.RelationDetailPO">
+        select sponsor, recipient, relation_type, relation_source, refresh_time, status
+        from relation_positive
+        where sponsor = #{sponsorUin}
+          and recipient = #{recipientUin}
+        limit 1
+    </select>
+    <select id="selectHistoryRelationReverseDetailByUin"
+            resultType="com.upuphub.dew.community.relation.bean.po.RelationDetailPO">
+        select sponsor, recipient, relation_type, relation_source, refresh_time, status
+        from relation_positive
+        where sponsor = #{recipientUin}
+          and recipient = #{sponsorUin}
+        limit 1
+    </select>
+    <update id="updateRelationTypeByUinAndTypeNumber">
+        update relation_positive
+        set relation_type = #{relationType}
+        where sponsor = #{sponsorUin}
+          and recipient = #{recipientUin}
+    </update>
+    <update id="updateReversionRelationType">
+        update relation_positive
+        set relation_type = #{relationType},
+            recipient     = #{recipientUin},
+            sponsor       = #{sponsorUin}
+        where sponsor = #{recipientUin}
+          and recipient = #{sponsorUin}
+    </update>
+</mapper>

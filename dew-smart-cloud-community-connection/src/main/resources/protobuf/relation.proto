@@ -14,8 +14,9 @@ message RelationPersistRequest{
 enum RELATION_TYPE{
     NONE = 0;
     BLACK = 10;
-    LIKE = 20;
-    MATCH = 30;
+    TEMP = 20;
+    LIKE = 30;
+    MATCH = 40;
 }
 
 enum RELATION_SOURCE{

@@ -1,17 +1,16 @@
 package com.upuphub.dew.community.general.api.controller;
 
-import com.upuphub.dew.community.connection.protobuf.relation.RELATION_SOURCE;
-import com.upuphub.dew.community.connection.protobuf.relation.RELATION_TYPE;
-import com.upuphub.dew.community.connection.protobuf.relation.RelationPersistRequest;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
-import com.upuphub.dew.community.general.api.service.remote.DewRelationService;
+import com.upuphub.dew.community.general.api.bean.vo.req.PersistRelationReq;
+import com.upuphub.dew.community.general.api.service.RelationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,20 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class RelationController {
 
     @Autowired
-    DewRelationService dewRelationService;
+    RelationService relationService;
 
 
     @ApiOperation(value = "上传用户动态信息")
-    @ApiParam(name = "momentDynamicContent", required = true, value = "用户上传编辑文章正文")
-    @PostMapping(value = "/draft", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ServiceResponseMessage postMomentsDynamicContent() {
-        dewRelationService.persistRelation(RelationPersistRequest.newBuilder()
-                .setRecipient(100000L)
-                .setSponsor(200000L)
-                .setRelationType(RELATION_TYPE.LIKE)
-                .setRelationSource(RELATION_SOURCE.DEFAULT)
-                .build());
-        return ServiceResponseMessage.createBySuccessCodeMessage();
+    @ApiParam(name = "Persist Relation", required = true, value = "持久话用户好友关系")
+    @PostMapping(value = "/persist", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage persistRelation(@RequestBody @Validated PersistRelationReq persistRelationReq) {
+        return relationService.persistRelation(persistRelationReq);
     }
 
 }

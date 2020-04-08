@@ -6,6 +6,9 @@ import com.upuphub.dew.community.connection.protobuf.account.Location;
 import com.upuphub.dew.community.connection.protobuf.account.Profile;
 import com.upuphub.dew.community.connection.protobuf.account.UsernameAndPassword;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
+import com.upuphub.dew.community.connection.protobuf.relation.RELATION_SOURCE;
+import com.upuphub.dew.community.connection.protobuf.relation.RELATION_TYPE;
+import com.upuphub.dew.community.connection.protobuf.relation.RelationPersistRequest;
 import com.upuphub.dew.community.general.api.bean.vo.req.*;
 import com.upuphub.dew.community.general.api.bean.vo.resp.*;
 
@@ -206,6 +209,15 @@ public class EDSUtil {
                 .setPageNum(momentClassifyFilterReq.getPageParam().getPageNum())
                 .setClassify(momentClassifyFilterReq.getClassify())
                 .setPageSize(momentClassifyFilterReq.getPageParam().getPageSize())
+                .build();
+    }
+
+    public static RelationPersistRequest toProtobufMessage(PersistRelationReq persistRelationReq) {
+        return RelationPersistRequest.newBuilder()
+                .setSponsor(persistRelationReq.getSponsorUin())
+                .setRecipient(persistRelationReq.getRecipientUin())
+                .setRelationSource(RELATION_SOURCE.forNumber(persistRelationReq.getRelationSource().getType()))
+                .setRelationType(RELATION_TYPE.forNumber(persistRelationReq.getRelationType().getType()))
                 .build();
     }
 }
