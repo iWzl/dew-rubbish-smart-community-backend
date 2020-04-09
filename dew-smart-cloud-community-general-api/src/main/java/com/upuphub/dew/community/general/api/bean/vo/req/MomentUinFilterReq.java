@@ -12,5 +12,6 @@ import lombok.Data;
 @Data
 public class MomentUinFilterReq {
     private Long uin;
+    private String openId;
     private PageParamRequest pageParamRequest;
 }

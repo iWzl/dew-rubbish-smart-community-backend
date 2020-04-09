@@ -189,8 +189,18 @@ public class EDSUtil {
     }
 
     public static MomentDetailsUinRequest toProtobufMessage(MomentUinFilterReq momentUinFilterReq) {
+        Long uin = null;
+        if(null == momentUinFilterReq.getUin() || 0 == momentUinFilterReq.getUin()){
+            if(null == momentUinFilterReq.getOpenId() || "".equals(momentUinFilterReq.getOpenId())){
+                uin = HttpUtil.getUserUin();
+            }else {
+                uin = DewOpenIdUtil.generateUin(momentUinFilterReq.getOpenId());
+            }
+        }else {
+            uin = momentUinFilterReq.getUin();
+        }
         return MomentDetailsUinRequest.newBuilder()
-                .setUin(momentUinFilterReq.getUin())
+                .setUin(uin)
                 .setPageNum(momentUinFilterReq.getPageParamRequest().getPageNum())
                 .setPageSize(momentUinFilterReq.getPageParamRequest().getPageSize())
                 .build();
