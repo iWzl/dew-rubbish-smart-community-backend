@@ -49,8 +49,9 @@ public interface AccountService {
      * 刷新用户Profile信息
      *
      * @return 用户的Profile信息的刷新结果
+     * @param openId openId
      */
-    ServiceResponseMessage refreshUserProfile();
+    ServiceResponseMessage refreshUserProfile(String openId);
 
     /**
      * 执行用户注销

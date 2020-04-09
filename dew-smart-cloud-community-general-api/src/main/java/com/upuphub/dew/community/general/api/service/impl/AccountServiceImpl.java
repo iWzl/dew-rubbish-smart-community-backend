@@ -25,7 +25,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -121,8 +120,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ServiceResponseMessage refreshUserProfile() {
-        Long uin = HttpUtil.getUserUin();
+    public ServiceResponseMessage refreshUserProfile(String openId) {
+        Long uin = null;
+        if(openId == null || "".equals(openId)){
+           uin  = HttpUtil.getUserUin();
+        }else{
+            uin = DewOpenIdUtil.generateUin(openId);
+        }
+        if(null == uin || uin == 0){
+            return ServiceResponseMessage.createByFailCodeMessage(ResultMessageConst.UIN_NOT_FIND);
+        }
         List<String> refreshUserProfileKeys = MessageUtil.getProtobufKeys(UsrProfileResp.class);
         refreshUserProfileKeys.addAll(MessageUtil.getProtobufKeys(ProfileStatusResp.class));
         GeneralProfile generalProfile = remoteAccountService.pullGeneralProfile(ProfileFilterCond.newBuilder()

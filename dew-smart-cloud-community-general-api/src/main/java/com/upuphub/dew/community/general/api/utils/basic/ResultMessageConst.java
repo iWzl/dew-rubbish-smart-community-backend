@@ -24,6 +24,8 @@ public class ResultMessageConst {
     public static final String DELETE_MOMENTS_DRAFT_SUCCESS = "动态信息删除成功";
     public static final String DELETE_MOMENTS_DRAFT_FAIL = "动态信息删除失败";
 
+    public static final String UIN_NOT_FIND = "UIN无效或不存在";
+
 
 
     public static final String CALL_RPC_ACCOUNT_SVR_ERROR = "Call Rpc Account Model Error";

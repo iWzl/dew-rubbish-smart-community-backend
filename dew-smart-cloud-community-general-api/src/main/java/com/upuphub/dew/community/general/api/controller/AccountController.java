@@ -74,8 +74,8 @@ public class AccountController {
 
     @ApiOperation(value = "刷新用户Profile信息")
     @GetMapping(value = "/profile/refresh")
-    public ServiceResponseMessage refreshUserProfile(){
-        return accountService.refreshUserProfile();
+    public ServiceResponseMessage refreshUserProfile(@RequestParam(value = "openId",required = false) String openId){
+        return accountService.refreshUserProfile(openId);
     }
 
     @ApiOperation(value = "修改用户信息")
