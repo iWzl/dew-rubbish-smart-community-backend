@@ -2,15 +2,21 @@ package com.upuphub.dew.community.relation.service.impl;
 
 import com.upuphub.dew.community.connection.constant.RelationConst;
 import com.upuphub.dew.community.connection.protobuf.relation.RELATION_TYPE;
+import com.upuphub.dew.community.relation.bean.dto.RelationPersistResultDTO;
 import com.upuphub.dew.community.relation.bean.dto.RelationRequestDTO;
+import com.upuphub.dew.community.relation.bean.dto.RelationSearchDTO;
 import com.upuphub.dew.community.relation.bean.po.RelationDetailPO;
 import com.upuphub.dew.community.relation.dao.RelationPositiveDao;
 import com.upuphub.dew.community.relation.service.RelationService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class RelationServiceImpl implements RelationService {
@@ -43,5 +49,25 @@ public class RelationServiceImpl implements RelationService {
             }
         }
         return RelationConst.ERROR_CODE_SUCCESS;
+    }
+
+    @Override
+    public List<RelationPersistResultDTO> fetchRelationPersistResults(RelationSearchDTO relationSearch) {
+        return null;
+    }
+
+    @Override
+    public List<RelationPersistResultDTO> fetchMatchRelationPersistResults(long uin) {
+        List<RelationDetailPO> relationDetailsList = relationPositiveDao.selectMatchRelationDetailsByUin(uin);
+        if(null != relationDetailsList && !relationDetailsList.isEmpty()){
+            List<RelationPersistResultDTO> relationPersistResultList = new ArrayList<>(relationDetailsList.size());
+            for (RelationDetailPO relationDetail : relationDetailsList) {
+                RelationPersistResultDTO relationPersistResult = new RelationPersistResultDTO();
+                BeanUtils.copyProperties(relationDetail,relationPersistResult);
+                relationPersistResultList.add(relationPersistResult);
+            }
+            return relationPersistResultList;
+        }
+        return Collections.emptyList();
     }
 }

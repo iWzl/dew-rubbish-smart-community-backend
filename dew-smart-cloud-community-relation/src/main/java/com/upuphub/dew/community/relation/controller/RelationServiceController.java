@@ -2,14 +2,15 @@ package com.upuphub.dew.community.relation.controller;
 
 import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
-import com.upuphub.dew.community.connection.protobuf.relation.RelationPersistRequest;
-import com.upuphub.dew.community.connection.protobuf.relation.RelationPersistResults;
-import com.upuphub.dew.community.connection.protobuf.relation.RelationSearchRequest;
-import com.upuphub.dew.community.connection.protobuf.relation.RelationSearchUinRequest;
+import com.upuphub.dew.community.connection.protobuf.relation.*;
+import com.upuphub.dew.community.relation.bean.dto.RelationPersistResultDTO;
 import com.upuphub.dew.community.relation.bean.dto.RelationRequestDTO;
+import com.upuphub.dew.community.relation.bean.dto.RelationSearchDTO;
 import com.upuphub.dew.community.relation.service.RelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(consumes = "application/x-protobuf",produces = "application/x-protobuf")
@@ -29,11 +30,30 @@ public class RelationServiceController {
 
     @PostMapping("/relation/search")
     public RelationPersistResults fetchRelationPersistResults(@RequestBody RelationSearchRequest relationSearchRequest){
-        return null;
+        RelationSearchDTO relationSearch = MessageUtil.messageToCommonPojo(relationSearchRequest, RelationSearchDTO.class);
+        assert relationSearch != null;
+        List<Integer> relationType = relationSearchRequest.getRelationTypesValueList();
+        relationSearch.setRelationTypes(relationType);
+        List<RelationPersistResultDTO> relationPersistResultList=  relationService.fetchRelationPersistResults(relationSearch);
+        return buildRelationPersistResults(relationPersistResultList);
     }
+
 
     @PostMapping("/relation/match")
     public RelationPersistResults fetchMatchRelationPersistResults(@RequestBody RelationSearchUinRequest relationSearchUinRequest){
-        return null;
+        List<RelationPersistResultDTO> relationPersistResultList=  relationService.fetchMatchRelationPersistResults(relationSearchUinRequest.getUin());
+        return buildRelationPersistResults(relationPersistResultList);
+    }
+
+
+    private RelationPersistResults buildRelationPersistResults(List<RelationPersistResultDTO> relationPersistResultList) {
+        RelationPersistResults.Builder relationPersistResultsBuilder = RelationPersistResults.newBuilder();
+        if(!relationPersistResultList.isEmpty()){
+            for (RelationPersistResultDTO relationResult : relationPersistResultList) {
+                RelationPersistResult relationPersistResult = (RelationPersistResult) MessageUtil.buildMessageByBean(RelationPersistResult.getDescriptor(),RelationPersistResult.newBuilder(),relationResult);
+                relationPersistResultsBuilder.addRelationPersistResults(relationPersistResult);
+            }
+        }
+        return relationPersistResultsBuilder.build();
     }
 }

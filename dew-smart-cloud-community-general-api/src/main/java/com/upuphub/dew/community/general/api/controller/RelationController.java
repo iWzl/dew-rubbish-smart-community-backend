@@ -31,7 +31,7 @@ public class RelationController {
 
     @ApiOperation(value = "拉取用户Match关系")
     @ApiParam(name = "Persist Relation", required = true, value = "持久话用户好友关系")
-    @GetMapping(value = "/persist/match", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/persist/match", consumes = MediaType.ALL_VALUE)
     public ServiceResponseMessage fetchPersistMatchRelation() {
         return relationService.fetchPersistMatchRelation(HttpUtil.getUserUin());
     }

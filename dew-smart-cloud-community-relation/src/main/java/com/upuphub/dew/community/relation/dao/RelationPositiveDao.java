@@ -4,6 +4,8 @@ import com.upuphub.dew.community.relation.bean.po.RelationDetailPO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface RelationPositiveDao {
     /**
@@ -43,9 +45,17 @@ public interface RelationPositiveDao {
     /**
      * 反转关系属性类型
      *
-     * @param sponsorUin 发起者uin
+     * @param sponsorUin   发起者uin
      * @param recipientUin 接受者uin
      * @param relationType 关系类型
      */
     void updateReversionRelationType(@Param("sponsorUin") Long sponsorUin, @Param("recipientUin") Long recipientUin, @Param("relationType") int relationType);
+
+    /**
+     * 查询好友的Match好友关系
+     *
+     * @param uin 用户UIN
+     * @return 查询到的关系详细结果
+     */
+    List<RelationDetailPO> selectMatchRelationDetailsByUin(@Param("uin") Long uin);
 }

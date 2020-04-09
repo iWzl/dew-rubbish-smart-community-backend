@@ -15,6 +15,7 @@
           and recipient = #{recipientUin}
         limit 1
     </select>
+
     <select id="selectHistoryRelationReverseDetailByUin"
             resultType="com.upuphub.dew.community.relation.bean.po.RelationDetailPO">
         select sponsor, recipient, relation_type, relation_source, refresh_time, status
@@ -23,12 +24,14 @@
           and recipient = #{sponsorUin}
         limit 1
     </select>
+
     <update id="updateRelationTypeByUinAndTypeNumber">
         update relation_positive
         set relation_type = #{relationType}
         where sponsor = #{sponsorUin}
           and recipient = #{recipientUin}
     </update>
+
     <update id="updateReversionRelationType">
         update relation_positive
         set relation_type = #{relationType},
@@ -37,4 +40,12 @@
         where sponsor = #{recipientUin}
           and recipient = #{sponsorUin}
     </update>
+
+    <select id="selectMatchRelationDetailsByUin"
+            resultType="com.upuphub.dew.community.relation.bean.po.RelationDetailPO">
+        select sponsor, recipient, relation_type, relation_source, refresh_time, status
+        from relation_positive
+        where (sponsor = #{uin}
+         or recipient= #{uin}) and relation_type = 40
+    </select>
 </mapper>
