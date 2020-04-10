@@ -1,6 +1,8 @@
 package com.upuphub.dew.community.general.api.service.remote;
 
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.news.NewsDetailsResults;
+import com.upuphub.dew.community.connection.protobuf.news.NewsSyncWithPageSizeRequest;
 import com.upuphub.dew.community.connection.protobuf.relation.RelationPersistRequest;
 import com.upuphub.dew.community.general.api.config.ProtoFeignConfiguration;
 import com.upuphub.dew.community.general.api.service.remote.sentinel.DewMomentsSentinel;
@@ -13,5 +15,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface DewNewsService {
 
     @PostMapping(value = "/news/time",consumes = "application/x-protobuf",produces = "application/x-protobuf")
-    RpcResultCode fetchNewsWithNewCreateTimeBySyncKeyAndSize(@RequestBody RelationPersistRequest relationPersistRequest);
+    NewsDetailsResults fetchNewsWithNewCreateTimeBySyncKeyAndSize(@RequestBody NewsSyncWithPageSizeRequest newsSyncWithPageSizeRequest);
 }

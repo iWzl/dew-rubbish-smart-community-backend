@@ -1,0 +1,39 @@
+syntax = "proto3"; // 定义语法类型，通常proto3好于proto2，proto2好于proto1
+
+
+option java_package = "com.upuphub.dew.community.connection.protobuf.news";      // 定义报名
+option java_multiple_files = true;
+
+message NewsSyncWithPageSizeRequest{
+    int64 syncKey = 1;
+    int32 pageSize = 2;
+}
+
+message NewsDetailsResult{
+    int64 newsId = 1;
+    string title = 2;
+    int64 createDate = 3;
+    string category = 4;
+    int64 authorUin = 5;
+    NEWS_TYPE newsType = 6;
+    PAYLOAD_TYPE payloadType = 7;
+    string payload = 8;
+    repeated string frontCoverImages = 9;
+}
+
+message NewsDetailsResults{
+    repeated NewsDetailsResult relationPersistResults = 1;
+}
+
+enum NEWS_TYPE{
+    COMMON= 0;
+    BANNER = 1;
+}
+
+enum PAYLOAD_TYPE{
+    ERROR= 0;
+    TEXT = 1;
+    URL = 2;
+    MARKDOWN = 3;
+    HTML = 4;
+}
