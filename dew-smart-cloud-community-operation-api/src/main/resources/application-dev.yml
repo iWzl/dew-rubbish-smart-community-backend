@@ -1,0 +1,65 @@
+dew:
+  image:
+    accessKey: Mt6fBM0NAN4FIYLDQGOkoCse09OTdqEIELdLmx_z
+    secretKey: yDarC-phfP-_nWFgEnEP5R3gB0w59M9YdVmYvHOe
+  mqtt:
+    password: DewOperationApiDev
+    producer:
+      clientId: DewOperationDevProducer
+      defaultTopic: DewOpetationApiDevSvr
+    #url: tcp://119.3.147.11:19099
+    url: tcp://support.upuphub.com:6788
+    username: DewOperationApiDev
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 10000
+        readTimeout: 10000
+  sentinel:
+    enabled: true
+logging:
+  level:
+    root: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/*Mapper.xml
+server:
+  port: 18677
+spring:
+  application:
+    name: dew-smart-community-operation-api
+  cloud:
+    nacos:
+      discovery:
+        server-addr: support.upuphub.com:8848
+    sentinel:
+      transport:
+        dashboard: 10.147.20.142:18021
+        port: 18759
+        #client-ip: 10.147.20.216
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: dew_api_svr
+    password: A!@#456bnm
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://10.147.20.155:13306/dew_api_svr?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: Leo
+  redis:
+    database: 0
+    host: 10.147.20.155
+    port: 7250
+    timeout: 5000
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: LEGACYHTML5
+    servlet:
+      content-type: text/html
