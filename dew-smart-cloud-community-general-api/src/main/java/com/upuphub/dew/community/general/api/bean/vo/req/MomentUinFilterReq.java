@@ -8,7 +8,6 @@ import lombok.Data;
  * @version 1.0
  * @date 2020/2/1 16:22
  */
-
 @Data
 public class MomentUinFilterReq {
     private Long uin;
