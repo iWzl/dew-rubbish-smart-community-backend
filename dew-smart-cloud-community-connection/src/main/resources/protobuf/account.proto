@@ -9,6 +9,7 @@ message UsernameAndPassword {
     string password = 2;     // 密码
     Device device = 3;       // 设备信息
     int32 idType = 4;
+    string product = 5;
 
     message Device {
         string imei = 1;          // 设备imei

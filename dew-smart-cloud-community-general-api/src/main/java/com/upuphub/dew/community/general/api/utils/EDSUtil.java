@@ -21,6 +21,8 @@ import java.util.List;
  * @date 2019/9/4 23:40
  */
 public class EDSUtil {
+    private static final String PRODUCT = "DEW_USER";
+
     public static ProfileResp profile2ProfileResp(Profile rpcProfile) {
         ProfileResp profile = new ProfileResp();
         profile.setUin(rpcProfile.getUin());
@@ -48,6 +50,7 @@ public class EDSUtil {
                 .setUsername(usernameAndPasswordReq.getUserName())
                 .setPassword(usernameAndPasswordReq.getPassword())
                 .setIdType(usernameAndPasswordReq.getIdType())
+                .setProduct(PRODUCT)
                 .setDevice(UsernameAndPassword.Device.newBuilder()
                         .setImei(usernameAndPasswordReq.getDeviceInfo().getImei())
                         .setAppVersion(usernameAndPasswordReq.getDeviceInfo().getAppVersion())

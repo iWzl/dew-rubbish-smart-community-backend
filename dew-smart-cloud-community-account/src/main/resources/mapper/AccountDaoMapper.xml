@@ -14,8 +14,8 @@
     </insert>
 
     <insert id="insertAccountUin" useGeneratedKeys="true" keyProperty="uin.uin" keyColumn="uin">
-        insert into account_uin(id, id_type, secret, password, status, type, platform, create_time, update_time)
-        VALUES (#{uin.id}, #{uin.idType}, #{uin.secret}, #{uin.password}, #{uin.status}, #{uin.type}, #{uin.platform},
+        insert into account_uin(id, id_type, secret, password, product,status, type, platform, create_time, update_time)
+        VALUES (#{uin.id}, #{uin.idType}, #{uin.secret}, #{uin.password},#{uin.product}, #{uin.status}, #{uin.type}, #{uin.platform},
                 #{uin.createTime},
                 #{uin.updateTime})
     </insert>

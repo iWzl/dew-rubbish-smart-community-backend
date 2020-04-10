@@ -183,6 +183,7 @@ public class AccountServiceImpl implements AccountService {
         accountUinPO.setPassword(secretPassword);
         accountUinPO.setStatus(ACCOUNT_STATUS.ENABLE.name());
         accountUinPO.setType(ACCOUNT_TYPE.NORMAL.name());
+        accountUinPO.setProduct(usernameAndPassword.getProduct());
         accountUinPO.setPlatform(usernameAndPassword.getDevice().getPlatform());
         accountUinPO.setCreateTime(System.currentTimeMillis());
         accountUinPO.setUpdateTime(System.currentTimeMillis());

@@ -19,6 +19,7 @@ public class AccountUinPO {
     private String status;
     private String type;
     private String platform;
+    private String product;
     private Long createTime;
     private Long updateTime;
 }
