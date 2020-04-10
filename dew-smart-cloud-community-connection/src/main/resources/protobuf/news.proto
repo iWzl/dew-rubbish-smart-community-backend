@@ -21,6 +21,31 @@ message NewsDetailsResult{
     repeated string frontCoverImages = 9;
 }
 
+message NewsDetailRequest{
+    string title = 1;
+    int64 createDate = 2;
+    string category = 3;
+    int64 authorUin = 4;
+    NEWS_TYPE newsType = 5;
+    PAYLOAD_TYPE payloadType = 6;
+    string payload = 7;
+    repeated string frontCoverImages = 8;
+}
+
+message NewsDetailModifyRequest{
+    int64 newsId = 1;
+    string title = 2;
+    string category = 3;
+    string payload = 4;
+    NEWS_TYPE newsType = 5;
+    repeated string frontCoverImages = 6;
+}
+
+message NewsIdRequest{
+    int64 newsId = 1;
+}
+
+
 message NewsDetailsResults{
     repeated NewsDetailsResult relationPersistResults = 1;
 }
@@ -28,6 +53,7 @@ message NewsDetailsResults{
 enum NEWS_TYPE{
     COMMON= 0;
     BANNER = 1;
+    UNDEFINED = 2;
 }
 
 enum PAYLOAD_TYPE{
