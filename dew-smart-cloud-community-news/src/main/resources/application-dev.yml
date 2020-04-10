@@ -1,0 +1,32 @@
+server:
+  port: 8789
+
+spring:
+  application:
+    name: dew-smart-community-news
+  cloud:
+      # SpringCloud-Alibaba-Nacos服务注册中心配置
+    nacos:
+      discovery:
+        server-addr: support.upuphub.com:8848
+
+  data:
+    # mongodb数据库-服务配置
+    mongodb:
+      host: 10.147.20.155
+      database: dew_news
+      password: A!@#456bnm
+      port: 17017
+      username: dewnews
+
+
+logging:
+  level:
+    root: debug
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
