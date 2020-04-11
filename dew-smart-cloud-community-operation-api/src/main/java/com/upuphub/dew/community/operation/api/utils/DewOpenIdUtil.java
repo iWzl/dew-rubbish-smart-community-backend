@@ -22,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
 @Slf4j
 public class DewOpenIdUtil {
 
-    private static final String PASSWORD = "dew:account:open";
+    private static final String PASSWORD = "dew:operation:open";
     private static final String IV = "0000000000000000";
 
     public static String generateOpenId(Long uin) {

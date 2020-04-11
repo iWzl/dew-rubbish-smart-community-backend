@@ -20,8 +20,8 @@ public class JWTUtil {
 
     private static final long EXPIRE_TIME_PREFIX = 1296000L;
     private static final long EXPIRE_TIME = EXPIRE_TIME_PREFIX * 1000;
-    private final static String ISSUER = "RBC_SVR";
-    private final static String SUBJECT = "RBC_TOKEN";
+    private final static String ISSUER = "DEW_OSS";
+    private final static String SUBJECT = "DEW_OSS_TOKEN";
 
     /**
      * 创建用户Token

@@ -13,7 +13,7 @@ import java.util.Map;
 @Data
 public class RedisCacheManager implements CacheManager {
     private static final Long DEFAULT_EXPIRE = 18000L;
-    private static final String DEFAULT_CACHE_KEY_PREFIX = "shiro:cache:";
+    private static final String DEFAULT_CACHE_KEY_PREFIX = "shiro:oss:cache:";
     private Map<String,Cache> category2Cache = new HashMap<>();
 
     private RedisManager redisManager;

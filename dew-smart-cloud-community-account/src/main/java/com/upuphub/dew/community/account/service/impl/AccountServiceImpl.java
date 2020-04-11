@@ -77,7 +77,8 @@ public class AccountServiceImpl implements AccountService {
         // 查询是否存在记录
         AccountBasicPO accountBasic = accountDao.selectAccountBasicInfoWithKeyAndPwd(
                 usernameAndPassword.getUsername(),
-                MD5Utils.string2MD5WithSalt(usernameAndPassword.getPassword(), passwordSalt)
+                MD5Utils.string2MD5WithSalt(usernameAndPassword.getPassword(), passwordSalt),
+                usernameAndPassword.getProduct()
         );
         if (accountBasic == null) {
             return Profile.newBuilder().setErrorCode(AccountConst.ERROR_CODE_NOT_EXISTS).build();

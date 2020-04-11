@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Slf4j
 public class RedisCache<K, V> implements Cache<K, V> {
-    private RedisManager redisManager;
+    private final RedisManager redisManager;
     private long expireTime = 0L;
     private String keyPrefix = "";
 

@@ -11,11 +11,6 @@ public class RedisCacheUtil {
         if (uin == null) {
             return null;
         }
-        return String.format("shiro:cache:%s",uin);
+        return String.format("shiro:oss:cache:%s",uin);
     }
-
-    public static String getEmailCodeCacheKey(String email){
-        return String.format("temp:email:%s:%s",HttpUtil.getUserUin(),email);
-    }
-
 }

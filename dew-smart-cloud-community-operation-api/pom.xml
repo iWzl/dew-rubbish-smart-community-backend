@@ -166,6 +166,18 @@
             <artifactId>springfox-staticdocs</artifactId>
             <version>${springfox-staticdocs.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.upuphub.dew</groupId>
+            <artifactId>smart-cloud-community-general-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.upuphub.dew</groupId>
+            <artifactId>smart-cloud-community-general-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 

@@ -22,7 +22,8 @@ public interface AccountDao {
     AccountUinPO selectAccountUinByUin(@Param("uin") Long uin);
 
     AccountBasicPO selectAccountBasicInfoWithKeyAndPwd(@Param("loginKey") String loginKey,
-                                                       @Param("password") String password);
+                                                       @Param("password") String password,
+                                                       @Param("product") String product);
 
     AccountTrackPO selectAccountLastedLoginInfoByUin(@Param("uin") Long uin);
 

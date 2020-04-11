@@ -73,7 +73,8 @@
         from account_uin u
                  left join account_login l on l.uin = u.uin
         where l.login_key = #{loginKey}
-          and u.`password` = #{password};
+          and u.`password` = #{password}
+          and u.product = #{product};
     </select>
 
 

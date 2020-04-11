@@ -11,7 +11,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 public class JWTToken extends UsernamePasswordToken {
 
 	// JWT密钥
-	private String token;
+	private final String token;
 	
 	public JWTToken(String token) {
 		super(JWTUtil.getUin(token),JWTUtil.getPassword(token));
