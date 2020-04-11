@@ -33,7 +33,7 @@ mybatis:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:/mapper/*Mapper.xml
 server:
-  port: 18677
+  port: 18678
 spring:
   application:
     name: dew-smart-community-operation-api
