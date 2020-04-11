@@ -52,7 +52,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ServiceResponseMessage loginOrRegister(UsernameAndPasswordReq usernameAndPasswordReq) {
-        if(!usernameAndPasswordReq.getUserName().endsWith(registerLimit)){
+        if(!usernameAndPasswordReq.getUserName().endsWith(String.format("@%s",registerLimit))){
             return ServiceResponseMessage.createByFailCodeMessage("非法域的创建");
         }
         // 转换请求数据
