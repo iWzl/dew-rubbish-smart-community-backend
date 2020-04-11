@@ -6,12 +6,17 @@ import com.upuphub.dew.community.connection.protobuf.account.Location;
 import com.upuphub.dew.community.connection.protobuf.account.Profile;
 import com.upuphub.dew.community.connection.protobuf.account.UsernameAndPassword;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
+import com.upuphub.dew.community.connection.protobuf.news.NEWS_TYPE;
+import com.upuphub.dew.community.connection.protobuf.news.NewsDetailModifyRequest;
+import com.upuphub.dew.community.connection.protobuf.news.NewsDetailRequest;
+import com.upuphub.dew.community.connection.protobuf.news.PAYLOAD_TYPE;
 import com.upuphub.dew.community.connection.protobuf.relation.RELATION_SOURCE;
 import com.upuphub.dew.community.connection.protobuf.relation.RELATION_TYPE;
 import com.upuphub.dew.community.connection.protobuf.relation.RelationPersistRequest;
 import com.upuphub.dew.community.operation.api.bean.vo.req.*;
 import com.upuphub.dew.community.operation.api.bean.vo.resp.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +28,7 @@ import java.util.List;
 public class EDSUtil {
     private static final String PRODUCT = "DEW_OSS";
 
-    public static ProfileResp profile2ProfileResp(Profile rpcProfile) {
+    public static ProfileResp profile2ProfileResp(@NotNull Profile rpcProfile) {
         ProfileResp profile = new ProfileResp();
         profile.setUin(rpcProfile.getUin());
         profile.setOpenId(DewOpenIdUtil.generateOpenId(rpcProfile.getUin()));
@@ -44,7 +49,7 @@ public class EDSUtil {
         return profile;
     }
 
-    public static UsernameAndPassword toProtobufMessage(UsernameAndPasswordReq usernameAndPasswordReq){
+    public static UsernameAndPassword toProtobufMessage(@NotNull UsernameAndPasswordReq usernameAndPasswordReq){
         // 转换请求数据
         return UsernameAndPassword.newBuilder()
                 .setUsername(usernameAndPasswordReq.getUserName())
@@ -63,7 +68,7 @@ public class EDSUtil {
                 .build();
     }
 
-    public static BaseProfile toProtobufMessage(NewProfileReq profileReq) {
+    public static BaseProfile toProtobufMessage(@NotNull NewProfileReq profileReq) {
         return BaseProfile.newBuilder()
                 .setUin(HttpUtil.getUserUin())
                 .setBirthday(profileReq.getBirthday())
@@ -74,7 +79,7 @@ public class EDSUtil {
                 .build();
     }
 
-    public static Location toProtobufMessage(LocationReq locationReq) {
+    public static Location toProtobufMessage(@NotNull LocationReq locationReq) {
         return Location.newBuilder()
                 .setStreet(locationReq.getStreet())
                 .setDistrict(locationReq.getDistrict())
@@ -87,7 +92,7 @@ public class EDSUtil {
                 .build();
     }
 
-    public static MomentDynamicContent toProtobufMessage(MomentDynamicContentReq momentDynamicContentReq) {
+    public static MomentDynamicContent toProtobufMessage(@NotNull MomentDynamicContentReq momentDynamicContentReq) {
         return MomentDynamicContent.newBuilder()
                 .setUin(HttpUtil.getUserUin())
                 .setLatitude(momentDynamicContentReq.getLatitude())
@@ -101,7 +106,7 @@ public class EDSUtil {
     }
 
 
-    public static MomentCommentRequest toProtobufMessage(MomentCommentReq momentCommentReq) {
+    public static MomentCommentRequest toProtobufMessage(@NotNull MomentCommentReq momentCommentReq) {
         return MomentCommentRequest.newBuilder()
                 .setCommentBy(HttpUtil.getUserUin())
                 .setMomentId(momentCommentReq.getMomentId())
@@ -110,7 +115,7 @@ public class EDSUtil {
                 .build();
     }
 
-    public static MomentDynamicContentResp toHttpVoBean(MomentDynamicContent momentDynamicContent) {
+    public static MomentDynamicContentResp toHttpVoBean(@NotNull MomentDynamicContent momentDynamicContent) {
         MomentDynamicContentResp momentDynamicContentResp = new MomentDynamicContentResp();
         momentDynamicContentResp.setDynamicId(momentDynamicContent.getDynamicContentId());
         momentDynamicContentResp.setTopic(momentDynamicContent.getTopic());
@@ -125,7 +130,7 @@ public class EDSUtil {
     }
 
 
-    private static List<String> getPicsList(MomentDynamicContent dynamicContent){
+    private static List<String> getPicsList(@NotNull MomentDynamicContent dynamicContent){
         List<String> picList = new ArrayList<>();
         for (int i = 0; i < dynamicContent.getPicturesCount() ; i++) {
             picList.add(dynamicContent.getPictures(i));
@@ -133,7 +138,7 @@ public class EDSUtil {
         return picList;
     }
 
-    public static MomentDynamicPublish toProtobufMessage(MomentsPublishReq momentsPublishReq) {
+    public static MomentDynamicPublish toProtobufMessage(@NotNull MomentsPublishReq momentsPublishReq) {
         if(null == momentsPublishReq){
             return null;
         }
@@ -147,7 +152,7 @@ public class EDSUtil {
     }
 
 
-    public static MomentReplyRequest toProtobufMessage(MomentReplyReq momentReplyReq) {
+    public static MomentReplyRequest toProtobufMessage(@NotNull MomentReplyReq momentReplyReq) {
         if(null == momentReplyReq){
             return null;
         }
@@ -158,7 +163,7 @@ public class EDSUtil {
                 .build();
     }
 
-    private static MOMENTS_DYNAMIC_PUBLISH_TYPE toProtobufMomentsPublishType(MomentsPublishReq.PUBLISH_TYPE publishType){
+    private static MOMENTS_DYNAMIC_PUBLISH_TYPE toProtobufMomentsPublishType(@NotNull MomentsPublishReq.PUBLISH_TYPE publishType){
         switch (publishType){
             case ORDINARY:
                 return MOMENTS_DYNAMIC_PUBLISH_TYPE.ORDINARY;
@@ -171,7 +176,7 @@ public class EDSUtil {
         }
     }
 
-    private static MOMENTS_COMMENT_TYPE toProtobufMomentCommentType(MomentCommentReq.COMMENT_TYPE commentType){
+    private static MOMENTS_COMMENT_TYPE toProtobufMomentCommentType(@NotNull MomentCommentReq.COMMENT_TYPE commentType){
         switch (commentType){
             case FAVORITE:
                 return MOMENTS_COMMENT_TYPE.FAVORITE;
@@ -182,7 +187,7 @@ public class EDSUtil {
         }
     }
 
-    public static MomentDetailsLocationRequest toProtobufMessage(MomentLocationFilterReq momentLocationFilterReq) {
+    public static MomentDetailsLocationRequest toProtobufMessage(@NotNull MomentLocationFilterReq momentLocationFilterReq) {
         return MomentDetailsLocationRequest.newBuilder()
                 .setLatitude(momentLocationFilterReq.getLocationReq().getLatitude())
                 .setLongitude(momentLocationFilterReq.getLocationReq().getLongitude())
@@ -191,7 +196,7 @@ public class EDSUtil {
                 .build();
     }
 
-    public static MomentDetailsUinRequest toProtobufMessage(MomentUinFilterReq momentUinFilterReq) {
+    public static MomentDetailsUinRequest toProtobufMessage(@NotNull MomentUinFilterReq momentUinFilterReq) {
         Long uin = null;
         if(null == momentUinFilterReq.getUin() || 0 == momentUinFilterReq.getUin()){
             if(null == momentUinFilterReq.getOpenId() || "".equals(momentUinFilterReq.getOpenId())){
@@ -209,7 +214,7 @@ public class EDSUtil {
                 .build();
     }
 
-    public static MomentDetailsTopicRequest toProtobufMessage(MomentTopicFilterReq momentTopicFilterReq) {
+    public static MomentDetailsTopicRequest toProtobufMessage(@NotNull MomentTopicFilterReq momentTopicFilterReq) {
         return MomentDetailsTopicRequest.newBuilder()
                 .setPageNum(momentTopicFilterReq.getPageParam().getPageNum())
                 .setTopic(momentTopicFilterReq.getTopic())
@@ -217,7 +222,7 @@ public class EDSUtil {
                 .build();
     }
 
-    public static MomentDetailsClassifyRequest toProtobufMessage(MomentClassifyFilterReq momentClassifyFilterReq) {
+    public static MomentDetailsClassifyRequest toProtobufMessage(@NotNull MomentClassifyFilterReq momentClassifyFilterReq) {
         return MomentDetailsClassifyRequest.newBuilder()
                 .setPageNum(momentClassifyFilterReq.getPageParam().getPageNum())
                 .setClassify(momentClassifyFilterReq.getClassify())
@@ -225,7 +230,7 @@ public class EDSUtil {
                 .build();
     }
 
-    public static RelationPersistRequest toProtobufMessage(PersistRelationReq persistRelationReq) {
+    public static RelationPersistRequest toProtobufMessage(@NotNull PersistRelationReq persistRelationReq) {
         return RelationPersistRequest.newBuilder()
                 .setSponsor(persistRelationReq.getSponsorUin())
                 .setRecipient(persistRelationReq.getRecipientUin())
@@ -234,4 +239,27 @@ public class EDSUtil {
                 .build();
     }
 
+    public static NewsDetailRequest toProtobufMessage(@NotNull NewsDetailReq newsDetailReq) {
+        return NewsDetailRequest.newBuilder()
+                .setTitle(newsDetailReq.getTitle())
+                .setCategory(newsDetailReq.getCategory())
+                .setCreateDate(System.currentTimeMillis())
+                .setAuthorUin(HttpUtil.getUserUin())
+                .setPayload(newsDetailReq.getPayload())
+                .setPayloadTypeValue(newsDetailReq.getPayloadType())
+                .setNewsTypeValue(newsDetailReq.getNewsType())
+                .addAllFrontCoverImages(newsDetailReq.getFrontCoverImages())
+                .build();
+    }
+
+    public static NewsDetailModifyRequest toProtobufMessage(@NotNull NewsDetailModifyReq newsDetailReq) {
+        return NewsDetailModifyRequest.newBuilder()
+                .setNewsId(newsDetailReq.getNewsId())
+                .setCategory(newsDetailReq.getCategory())
+                .setTitle(newsDetailReq.getTitle())
+                .setPayload(newsDetailReq.getTitle())
+                .addAllFrontCoverImages(newsDetailReq.getFrontCoverImages())
+                .setNewsTypeValue(null != newsDetailReq.getNewsType() ? newsDetailReq.getNewsType() : NEWS_TYPE.UNDEFINED_VALUE)
+                .build();
+    }
 }
