@@ -1,0 +1,31 @@
+server:
+  port: 8796
+
+spring:
+  application:
+    name: dew-smart-community-machine
+  cloud:
+      # SpringCloud-Alibaba-Nacos服务注册中心配置
+    nacos:
+      discovery:
+        server-addr: support.upuphub.com:8848
+
+  data:
+    # mongodb数据库-服务配置
+    mongodb:
+      host: 10.147.20.155
+      database: dew_machine
+      password: A!@#456bnm
+      port: 17017
+      username: dewiotda
+
+logging:
+  level:
+    root: debug
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
