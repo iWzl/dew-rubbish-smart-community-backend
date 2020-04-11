@@ -49,7 +49,7 @@ public class EDSUtil {
         return UsernameAndPassword.newBuilder()
                 .setUsername(usernameAndPasswordReq.getUserName())
                 .setPassword(usernameAndPasswordReq.getPassword())
-                .setIdType(usernameAndPasswordReq.getIdType())
+                .setIdType(0)
                 .setProduct(PRODUCT)
                 .setDevice(UsernameAndPassword.Device.newBuilder()
                         .setImei(usernameAndPasswordReq.getDeviceInfo().getImei())

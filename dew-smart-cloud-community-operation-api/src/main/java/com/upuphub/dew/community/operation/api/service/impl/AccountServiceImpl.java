@@ -23,6 +23,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,9 @@ import java.util.UUID;
 @Service
 public class AccountServiceImpl implements AccountService {
 
+    @Value("${dew.register-limit}")
+    private String registerLimit;
+
     @Autowired
     private DewAccountService remoteAccountService;
 
@@ -48,6 +52,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ServiceResponseMessage loginOrRegister(UsernameAndPasswordReq usernameAndPasswordReq) {
+        if(!usernameAndPasswordReq.getUserName().endsWith(registerLimit)){
+            return ServiceResponseMessage.createByFailCodeMessage("非法域的创建");
+        }
         // 转换请求数据
         UsernameAndPassword usernameAndPassword = EDSUtil.toProtobufMessage(usernameAndPasswordReq);
         Profile profile;

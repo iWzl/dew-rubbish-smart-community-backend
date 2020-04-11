@@ -34,11 +34,6 @@ public class UsernameAndPasswordReq {
     @ApiModelProperty(value = "是否是注册",required = true,example = "false")
     private boolean register;
 
-    @Max(value = 4,message = "ID类型[0-4]")
-    @Min(value = 0,message = "ID类型[0-4]")
-    @ApiModelProperty(value = "Id类型[0-EMAIL/1-phone/2-QQ/3-微博/4-Other(保留)]",required = true,example = "0")
-    private int idType;
-
     @NotNull
     @ApiModelProperty(value = "设备信息",required = true)
     @Valid

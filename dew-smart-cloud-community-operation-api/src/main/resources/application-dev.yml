@@ -10,6 +10,7 @@ dew:
     #url: tcp://119.3.147.11:19099
     url: tcp://support.upuphub.com:6788
     username: DewOperationApiDev
+  register-limit: @upuphub.com
 
 feign:
   client:
