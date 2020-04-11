@@ -23,7 +23,7 @@ public class UsernameAndPasswordReq {
 
     @NotBlank(message="用户名不能为空")
     @Length(min = 4,message = "用户名大于4位")
-    @ApiModelProperty(value = "用户输入账户名",required = true,example = "LeoWong@upuphub.com")
+    @ApiModelProperty(value = "用户输入账户名",required = true,example = "SystemAdmin@upuphub.com")
     private String userName;
 
     @NotBlank(message="用户名不能为空")

@@ -2,6 +2,7 @@ package com.upuphub.dew.community.operation.api.controller;
 
 import com.upuphub.dew.community.operation.api.bean.vo.common.ServiceResponseMessage;
 import com.upuphub.dew.community.operation.api.bean.vo.req.QiNiuTokenReq;
+import com.upuphub.dew.community.operation.api.service.QiNiuCloudService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -22,12 +23,15 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "辅助功能",tags = "辅助功能模块")
 public class CommonController {
 
+    @Autowired
+    QiNiuCloudService qiNiuCloudService;
+
     @ApiOperation(value = "获取图片上传凭证")
     @ApiParam(name = "usernameAndPassword",required = true,value = "用户登录/注册信息，同时包含用户的设备信息")
     @PostMapping(value = "/image/token",consumes =  MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ServiceResponseMessage qiNiuCloudImageToken(@RequestBody @Validated QiNiuTokenReq qiNiuTokenReq){
         return ServiceResponseMessage.createBySuccessCodeMessage(
-               // qiNiuCloudService.buildQiNiuImageToken(qiNiuTokenReq.getBucketName(),qiNiuTokenReq.getFileKeys())
+               qiNiuCloudService.buildQiNiuImageToken(qiNiuTokenReq.getBucketName(),qiNiuTokenReq.getFileKeys())
         );
     }
 }

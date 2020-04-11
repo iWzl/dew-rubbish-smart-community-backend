@@ -1,2 +1,2 @@
-scp ./target/generated-resources/appassembler/jsw/dew-account/lib/*.jar root@116.62.51.50:/opt/Dew/DewAccountSvrApplication/lib
+scp ./target/generated-resources/appassembler/jsw/dew-account/lib/*.jar root@10.147.20.155:/opt/Dews/DewAccountApplication/lib
 
