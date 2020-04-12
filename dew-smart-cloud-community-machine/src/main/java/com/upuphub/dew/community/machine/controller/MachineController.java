@@ -2,9 +2,12 @@ package com.upuphub.dew.community.machine.controller;
 
 import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineMacAddressRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineRegisterRequest;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 import com.upuphub.dew.community.machine.service.MachineService;
+import com.upuphub.dew.community.machine.utils.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(consumes = "application/x-protobuf", produces = "application/x-protobuf")
-public class MatchineController {
+public class MachineController {
 
     @Autowired
     private MachineService machineService;
@@ -24,5 +27,14 @@ public class MatchineController {
         return RpcResultCode.newBuilder().setCode(
                 machineService.registerNewMachine(machineRegisterInfo)
         ).build();
+    }
+
+    @PostMapping("/IoTDA/simpleInfo")
+    public MachineSimpleInfoResult fetchSimpleMachineInfoByMacAddress(@RequestBody MachineMacAddressRequest machineMacAddressRequest) {
+        String macAddress = machineMacAddressRequest.getMacAddress();
+        if(ObjectUtil.isEmpty(macAddress)){
+            return MachineSimpleInfoResult.newBuilder().build();
+        }
+        return machineService.fetchSimpleMachineInfoByMacAddress(macAddress);
     }
 }

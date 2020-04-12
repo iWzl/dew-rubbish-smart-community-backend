@@ -21,10 +21,16 @@ public class MachineHealthReq {
     private double memorySize;
     @ApiModelProperty("已经使用的内存大小")
     private double usedMemorySize;
+    @ApiModelProperty("已经使用的内存大小")
+    private double freeMemorySize;
     @ApiModelProperty("硬盘大小")
-    private double hardDiskSize;
+    private String hardDiskSize;
     @ApiModelProperty("已经使用的硬盘大小")
-    private double usedHardDiskSize;
+    private String usedHardDiskSize;
+    @ApiModelProperty("已经使用的硬盘大小")
+    private String freeDiskSize;
+    @ApiModelProperty("已经使用的硬盘大小")
+    private String diskUseRate;
     @ApiModelProperty("CPU核心数量")
     private int cpuCoreCount;
     @ApiModelProperty("系统属性描述")

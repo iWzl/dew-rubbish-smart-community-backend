@@ -15,4 +15,12 @@ public interface MachineService {
      * @return 处理结果
      */
     int hardwareHealthMonitoring(MachineHealthReq machineHealthReq);
+
+    /**
+     * 判断设备的硬件Mac地址
+     *
+     * @param macAddress mac地址请求
+     * @return 判断的结果
+     */
+    boolean checkHardwareMacAddress(String macAddress);
 }

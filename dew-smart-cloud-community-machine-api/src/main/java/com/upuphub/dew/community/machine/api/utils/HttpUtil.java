@@ -16,8 +16,6 @@ import java.util.Objects;
  */
 @Slf4j
 public class HttpUtil {
-
-
     /**
      * 获取Request
      * @return HttpServletRequest
@@ -33,8 +31,8 @@ public class HttpUtil {
      * 获取用户Token
      * @return 用户Token
      */
-    public static String getUserToken(){
-        return getHttpServletRequest().getHeader("X-Token");
+    public static String getMachineMacAddr(){
+        return getHttpServletRequest().getHeader("X-DEW-IoTDA-MAC");
     }
 
 

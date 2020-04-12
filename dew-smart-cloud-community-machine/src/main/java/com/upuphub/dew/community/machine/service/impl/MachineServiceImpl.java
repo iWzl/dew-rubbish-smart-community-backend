@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.machine.service.impl;
 
 import com.upuphub.dew.community.connection.constant.MachineConst;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 import com.upuphub.dew.community.machine.bean.po.MachineHardwareDetailPO;
 import com.upuphub.dew.community.machine.dao.MachineHardwareDetailRepositoryDao;
@@ -10,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Optional;
 
 /**
  * @author Leo Wang
@@ -37,5 +39,15 @@ public class MachineServiceImpl implements MachineService {
             machineHardwareDetailRepositoryDao.save(machineHardwareDetail);
             return MachineConst.ERROR_CODE_SUCCESS;
         }
+    }
+
+    @Override
+    public MachineSimpleInfoResult fetchSimpleMachineInfoByMacAddress(String macAddress) {
+        Optional<MachineHardwareDetailPO> machineHardwareDetail = machineHardwareDetailRepositoryDao.findById(macAddress);
+        return machineHardwareDetail.map(machineHardwareInfo -> MachineSimpleInfoResult.newBuilder()
+                .setBindUin(machineHardwareInfo.getBindUin() == null ? 0 : machineHardwareInfo.getBindUin())
+                .setMachineMacAddress(machineHardwareInfo.getMachineMacAddress())
+                .setMachineName(machineHardwareInfo.getMachineName())
+                .build()).orElseGet(() -> MachineSimpleInfoResult.newBuilder().build());
     }
 }

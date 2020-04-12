@@ -4,6 +4,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 
 /**
  * SpringBean构建的工具类
@@ -13,6 +14,7 @@ import org.springframework.lang.NonNull;
  * @date 2019/8/6 21:20
  */
 
+@Component
 public class SpringUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
