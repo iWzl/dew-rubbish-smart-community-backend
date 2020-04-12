@@ -2,9 +2,12 @@ package com.upuphub.dew.community.machine.service.impl;
 
 import com.upuphub.dew.community.connection.constant.MachineConst;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
+import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 import com.upuphub.dew.community.machine.bean.po.MachineHardwareDetailPO;
+import com.upuphub.dew.community.machine.bean.po.MachineHealthInfoPO;
 import com.upuphub.dew.community.machine.dao.MachineHardwareDetailRepositoryDao;
+import com.upuphub.dew.community.machine.dao.MachineHealthInfoRepositoryDao;
 import com.upuphub.dew.community.machine.service.MachineService;
 import com.upuphub.dew.community.machine.utils.ObjectUtil;
 import org.springframework.beans.BeanUtils;
@@ -24,6 +27,8 @@ public class MachineServiceImpl implements MachineService {
 
     @Resource
     MachineHardwareDetailRepositoryDao machineHardwareDetailRepositoryDao;
+    @Resource
+    MachineHealthInfoRepositoryDao machineHealthInfoRepositoryDao;
 
     @Override
     public int registerNewMachine(MachineRegisterDTO machineRegisterInfo) {
@@ -49,5 +54,14 @@ public class MachineServiceImpl implements MachineService {
                 .setMachineMacAddress(machineHardwareInfo.getMachineMacAddress())
                 .setMachineName(machineHardwareInfo.getMachineName())
                 .build()).orElseGet(() -> MachineSimpleInfoResult.newBuilder().build());
+    }
+
+    @Override
+    public int refreshMachineHealthInfo(MachineHealthDTO machineHealthInfo) {
+        MachineHealthInfoPO machineHealthInfoEntity = new MachineHealthInfoPO();
+        BeanUtils.copyProperties(machineHealthInfo,machineHealthInfoEntity);
+        machineHealthInfoEntity.setRefreshTime(System.currentTimeMillis());
+        machineHealthInfoRepositoryDao.save(machineHealthInfoEntity);
+        return MachineConst.ERROR_CODE_SUCCESS;
     }
 }

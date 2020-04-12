@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.machine.service;
 
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
+import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 
 /**
@@ -24,4 +25,12 @@ public interface MachineService {
      * @return 设备Mac地址和其他基础属性
      */
     MachineSimpleInfoResult fetchSimpleMachineInfoByMacAddress(String macAddress);
+
+    /**
+     * 刷新新的硬件属性信息
+     *
+     * @param machineHealthInfo 硬件属性信息
+     * @return 硬件属性信息的刷新结果
+     */
+    int refreshMachineHealthInfo(MachineHealthDTO machineHealthInfo);
 }

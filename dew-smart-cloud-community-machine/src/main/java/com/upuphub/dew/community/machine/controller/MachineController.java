@@ -2,9 +2,11 @@ package com.upuphub.dew.community.machine.controller;
 
 import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineMacAddressRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineRegisterRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
+import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 import com.upuphub.dew.community.machine.service.MachineService;
 import com.upuphub.dew.community.machine.utils.ObjectUtil;
@@ -36,5 +38,14 @@ public class MachineController {
             return MachineSimpleInfoResult.newBuilder().build();
         }
         return machineService.fetchSimpleMachineInfoByMacAddress(macAddress);
+    }
+
+
+    @PostMapping("/IoTDA/health")
+    public RpcResultCode refreshMachineHealthInfo(@RequestBody MachineHealthRequest machineHealthRequest) {
+        MachineHealthDTO machineHealthInfo = MessageUtil.messageToCommonPojo(machineHealthRequest,MachineHealthDTO.class);
+        return RpcResultCode.newBuilder().setCode(
+                machineService.refreshMachineHealthInfo(machineHealthInfo)
+        ).build();
     }
 }
