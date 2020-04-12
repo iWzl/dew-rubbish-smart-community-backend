@@ -1,0 +1,46 @@
+feign:
+  sentinel:
+    enabled: true
+logging:
+  level:
+    root: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/*Mapper.xml
+server:
+  port: 18998
+spring:
+  application:
+    name: dew-smart-community-machine-api
+  cloud:
+    nacos:
+      discovery:
+        server-addr: support.upuphub.com:8848
+    sentinel:
+      transport:
+        dashboard: 119.3.147.11:18020
+        port: 18719
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: dew_api_svr
+    password: A!@#456bnm
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://10.147.20.155:13306/dew_api_svr?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: Leo
+  redis:
+    database: 0
+    host: 10.147.20.155
+    port: 7250
+    timeout: 5000
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: LEGACYHTML5
+    servlet:
+      content-type: text/html
