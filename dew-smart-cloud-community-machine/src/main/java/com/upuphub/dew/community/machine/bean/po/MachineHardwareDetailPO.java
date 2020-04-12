@@ -17,6 +17,9 @@ public class MachineHardwareDetailPO {
     @Field("bind_uin")
     private Long bindUin;
 
+    @Field("bindKey")
+    private String bindKey;
+
     @Field("machine_name")
     private String machineName;
 

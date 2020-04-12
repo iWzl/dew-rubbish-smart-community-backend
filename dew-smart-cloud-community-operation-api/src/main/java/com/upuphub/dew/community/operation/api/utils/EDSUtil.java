@@ -5,6 +5,7 @@ import com.upuphub.dew.community.connection.protobuf.account.BaseProfile;
 import com.upuphub.dew.community.connection.protobuf.account.Location;
 import com.upuphub.dew.community.connection.protobuf.account.Profile;
 import com.upuphub.dew.community.connection.protobuf.account.UsernameAndPassword;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineRegisterRequest;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
 import com.upuphub.dew.community.connection.protobuf.news.NEWS_TYPE;
 import com.upuphub.dew.community.connection.protobuf.news.NewsDetailModifyRequest;
@@ -19,6 +20,7 @@ import com.upuphub.dew.community.operation.api.bean.vo.resp.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Leo Wang
@@ -260,6 +262,17 @@ public class EDSUtil {
                 .setPayload(newsDetailReq.getTitle())
                 .addAllFrontCoverImages(newsDetailReq.getFrontCoverImages())
                 .setNewsTypeValue(null != newsDetailReq.getNewsType() ? newsDetailReq.getNewsType() : NEWS_TYPE.UNDEFINED_VALUE)
+                .build();
+    }
+
+    public static MachineRegisterRequest toProtobufMessage(@NotNull MachineRegisterReq machineRegisterReq) {
+        return MachineRegisterRequest.newBuilder()
+                .setBindKey(UUID.randomUUID().toString().substring(2,10))
+                .setMachineName(machineRegisterReq.getMachineName())
+                .setMachineMaker(machineRegisterReq.getMachineMaker())
+                .setMachineType(machineRegisterReq.getMachineType())
+                .setMachineMacAddress(machineRegisterReq.getMachineMacAddress())
+                .setMachineVersion(machineRegisterReq.getMachineVersion())
                 .build();
     }
 }

@@ -21,4 +21,7 @@ public class MachineRegisterDTO {
     private String machineVersion;
     @ProtobufField
     private String machineMaker;
+    @ProtobufField
+    private String bindKey;
+
 }

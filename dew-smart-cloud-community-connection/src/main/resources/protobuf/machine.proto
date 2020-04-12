@@ -10,4 +10,5 @@ message MachineRegisterRequest{
     int32 machineType = 3;
     string machineVersion =4;
     string machineMaker = 5;
+    string bindKey = 6;
 }
