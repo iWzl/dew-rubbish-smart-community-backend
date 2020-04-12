@@ -1,5 +1,7 @@
 package com.upuphub.dew.community.machine.api.service.remote;
 
+import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineMacAddressRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
 import com.upuphub.dew.community.machine.api.config.ProtoFeignConfiguration;
@@ -24,4 +26,14 @@ public interface DewMachineService {
      */
     @PostMapping("/IoTDA/simpleInfo")
     MachineSimpleInfoResult fetchSimpleMachineInfoByMacAddress(@RequestBody MachineMacAddressRequest machineMacAddressRequest);
+
+    /**
+     * 上报刷新机器的设备相关信息
+     *
+     * @param machineHealthRequest 机器的健康请求信息
+     * @return 机器的监考请求保存处理返回
+     */
+    @PostMapping("/IoTDA/health")
+    RpcResultCode refreshMachineHealthInfo(@RequestBody MachineHealthRequest machineHealthRequest);
+
 }

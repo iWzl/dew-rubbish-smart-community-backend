@@ -1,6 +1,8 @@
 package com.upuphub.dew.community.machine.api.service.impl;
 
 import com.upuphub.dew.community.connection.common.MessageUtil;
+import com.upuphub.dew.community.connection.constant.MachineConst;
+import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineMacAddressRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
@@ -35,8 +37,11 @@ public class MachineServiceImpl implements MachineService {
                 MachineHealthRequest.newBuilder(machineHealthProtoReq)
                         .setMacAddress(HttpUtil.getMachineMacAddr())
                         .setIpAddr(HttpUtil.getIpAddr()).build();
-
-        return 0;
+        RpcResultCode rpcResultCode = dewMachineService.refreshMachineHealthInfo(machineHealthRequest);
+        if(null != rpcResultCode){
+            return rpcResultCode.getCode();
+        }
+        return -1;
     }
 
     @Override
@@ -45,7 +50,7 @@ public class MachineServiceImpl implements MachineService {
                 = dewMachineService.fetchSimpleMachineInfoByMacAddress(MachineMacAddressRequest.newBuilder().setMacAddress(macAddress).build());
         if (null != machineSimpleInfoResult && macAddress.equals(machineSimpleInfoResult.getMachineMacAddress())) {
             if(machineSimpleInfoResult.getBindUin() == 0L){
-                log.warn("IoTDA Not Bind User Name[{}] Mac[{}]",macAddress,machineSimpleInfoResult.getMachineName());
+                log.warn("IoTDA Not Bind User MAC[{}] NAME[{}]",macAddress,machineSimpleInfoResult.getMachineName());
             }
             return true;
         } else {
