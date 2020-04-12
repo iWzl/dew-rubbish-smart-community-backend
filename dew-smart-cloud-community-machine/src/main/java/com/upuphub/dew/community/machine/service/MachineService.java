@@ -3,6 +3,7 @@ package com.upuphub.dew.community.machine.service;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
+import org.springframework.scheduling.annotation.Async;
 
 /**
  * @author Leo Wang
@@ -33,4 +34,13 @@ public interface MachineService {
      * @return 硬件属性信息的刷新结果
      */
     int refreshMachineHealthInfo(MachineHealthDTO machineHealthInfo);
+
+    /**
+     * 记录硬件设备的查询历史记录
+     *
+     * @param macAddress 硬件设备的IP地址
+     * @param searchKey 查询的Key
+     * @return 追踪的处理结果
+     */
+    int journalMachineSearchHistory(String macAddress, String searchKey);
 }

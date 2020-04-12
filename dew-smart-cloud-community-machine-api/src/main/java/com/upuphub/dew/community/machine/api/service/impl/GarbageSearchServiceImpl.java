@@ -6,6 +6,8 @@ import com.upuphub.dew.community.machine.api.bean.vo.common.ServiceResponseMessa
 import com.upuphub.dew.community.machine.api.bean.vo.resp.GarbageClassResp;
 import com.upuphub.dew.community.machine.api.dao.GarbageClassSearchDao;
 import com.upuphub.dew.community.machine.api.service.GarbageSearchService;
+import com.upuphub.dew.community.machine.api.service.MachineService;
+import com.upuphub.dew.community.machine.api.utils.HttpUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,9 +25,12 @@ public class GarbageSearchServiceImpl implements GarbageSearchService {
 
     @Resource
     GarbageClassSearchDao garbageClassSearchDao;
+    @Resource
+    MachineService machineService;
 
     @Override
     public ServiceResponseMessage searchGarbageClassByKey(String searchKey) {
+        machineService.asyncTrackMachineSearchHistory(searchKey, HttpUtil.getMachineMacAddr());
         List<GarbageClassSearchPO> garbageClassList = garbageClassSearchDao.selectGarbageClassByLikeSearchKey(searchKey);
         if(garbageClassList == null || garbageClassList.isEmpty()){
             return ServiceResponseMessage.createBySuccessCodeMessage(Collections.emptyList());

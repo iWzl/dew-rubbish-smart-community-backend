@@ -42,3 +42,8 @@ message MachineHealthRequest{
     string macAddress = 12;
     string ipAddr = 13;
 }
+
+message MachineSearchJournalRequest{
+    string macAddress = 1;
+    string searchKey = 2;
+}

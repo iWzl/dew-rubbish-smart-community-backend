@@ -1,15 +1,14 @@
 package com.upuphub.dew.community.machine.api.service.impl;
 
 import com.upuphub.dew.community.connection.common.MessageUtil;
-import com.upuphub.dew.community.connection.constant.MachineConst;
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineMacAddressRequest;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineSearchJournalRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
 import com.upuphub.dew.community.machine.api.bean.vo.req.MachineHealthReq;
 import com.upuphub.dew.community.machine.api.service.MachineService;
 import com.upuphub.dew.community.machine.api.service.remote.DewMachineService;
-import com.upuphub.dew.community.machine.api.utils.EDSUtil;
 import com.upuphub.dew.community.machine.api.utils.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -56,6 +55,14 @@ public class MachineServiceImpl implements MachineService {
         } else {
             return false;
         }
+    }
 
+    @Override
+    public void asyncTrackMachineSearchHistory(String searchKey, String machineMacAddress) {
+        dewMachineService.journalMachineSearchHistory(
+                MachineSearchJournalRequest.newBuilder()
+                        .setSearchKey(searchKey)
+                        .setMacAddress(machineMacAddress)
+                        .build());
     }
 }

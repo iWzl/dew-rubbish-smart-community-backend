@@ -6,14 +6,18 @@ import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 import com.upuphub.dew.community.machine.bean.po.MachineHardwareDetailPO;
 import com.upuphub.dew.community.machine.bean.po.MachineHealthInfoPO;
+import com.upuphub.dew.community.machine.bean.po.MachineSearchHistoryPO;
 import com.upuphub.dew.community.machine.dao.MachineHardwareDetailRepositoryDao;
 import com.upuphub.dew.community.machine.dao.MachineHealthInfoRepositoryDao;
+import com.upuphub.dew.community.machine.dao.MachineSearchHistoryRepositoryDao;
 import com.upuphub.dew.community.machine.service.MachineService;
+import com.upuphub.dew.community.machine.utils.DateUtil;
 import com.upuphub.dew.community.machine.utils.ObjectUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -29,6 +33,8 @@ public class MachineServiceImpl implements MachineService {
     MachineHardwareDetailRepositoryDao machineHardwareDetailRepositoryDao;
     @Resource
     MachineHealthInfoRepositoryDao machineHealthInfoRepositoryDao;
+    @Resource
+    MachineSearchHistoryRepositoryDao machineSearchHistoryRepositoryDao;
 
     @Override
     public int registerNewMachine(MachineRegisterDTO machineRegisterInfo) {
@@ -62,6 +68,26 @@ public class MachineServiceImpl implements MachineService {
         BeanUtils.copyProperties(machineHealthInfo,machineHealthInfoEntity);
         machineHealthInfoEntity.setRefreshTime(System.currentTimeMillis());
         machineHealthInfoRepositoryDao.save(machineHealthInfoEntity);
+        return MachineConst.ERROR_CODE_SUCCESS;
+    }
+
+    @Override
+    public int journalMachineSearchHistory(String macAddress, String searchKey) {
+        String key = String.format("%s-%s", DateUtil.getTodayKey(),macAddress);
+        Optional<MachineSearchHistoryPO> machineSearchHistory = machineSearchHistoryRepositoryDao.findById(key);
+        if(machineSearchHistory.isPresent()){
+            machineSearchHistory.get().getSearchKeyAndTimes().put(searchKey,
+                    (machineSearchHistory.get().getSearchKeyAndTimes().getOrDefault(searchKey,0) + 1));
+            machineSearchHistoryRepositoryDao.save(machineSearchHistory.get());
+        }else {
+            MachineSearchHistoryPO machineSearchHistoryDetail = new MachineSearchHistoryPO();
+            machineSearchHistoryDetail.setKey(key);
+            machineSearchHistoryDetail.setMachineAddress(macAddress);
+            machineSearchHistoryDetail.setRecordTime( DateUtil.getTodayKey());
+            machineSearchHistoryDetail.setRecordTimestamp(System.currentTimeMillis());
+            machineSearchHistoryDetail.setSearchKeyAndTimes(Collections.singletonMap(searchKey,1));
+            machineSearchHistoryRepositoryDao.save(machineSearchHistoryDetail);
+        }
         return MachineConst.ERROR_CODE_SUCCESS;
     }
 }

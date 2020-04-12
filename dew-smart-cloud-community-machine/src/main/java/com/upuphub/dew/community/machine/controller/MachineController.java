@@ -2,10 +2,7 @@ package com.upuphub.dew.community.machine.controller;
 
 import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthRequest;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineMacAddressRequest;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineRegisterRequest;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
+import com.upuphub.dew.community.connection.protobuf.machine.*;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 import com.upuphub.dew.community.machine.service.MachineService;
@@ -48,4 +45,15 @@ public class MachineController {
                 machineService.refreshMachineHealthInfo(machineHealthInfo)
         ).build();
     }
+
+
+
+    @PostMapping("/IoTDA/search/journal")
+    public RpcResultCode journalMachineSearchHistory(@RequestBody MachineSearchJournalRequest machineSearchJournalRequest) {
+        return RpcResultCode.newBuilder().setCode(
+                machineService.journalMachineSearchHistory(machineSearchJournalRequest.getMacAddress(),machineSearchJournalRequest.getSearchKey())
+        ).build();
+    }
+
+
 }
