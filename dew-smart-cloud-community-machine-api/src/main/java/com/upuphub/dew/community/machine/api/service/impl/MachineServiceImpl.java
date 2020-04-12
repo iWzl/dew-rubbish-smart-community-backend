@@ -1,10 +1,14 @@
 package com.upuphub.dew.community.machine.api.service.impl;
 
+import com.upuphub.dew.community.connection.common.MessageUtil;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineMacAddressRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
 import com.upuphub.dew.community.machine.api.bean.vo.req.MachineHealthReq;
 import com.upuphub.dew.community.machine.api.service.MachineService;
 import com.upuphub.dew.community.machine.api.service.remote.DewMachineService;
+import com.upuphub.dew.community.machine.api.utils.EDSUtil;
+import com.upuphub.dew.community.machine.api.utils.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,12 @@ public class MachineServiceImpl implements MachineService {
 
     @Override
     public int hardwareHealthMonitoring(MachineHealthReq machineHealthReq) {
+        MachineHealthRequest machineHealthProtoReq = (MachineHealthRequest) MessageUtil.buildMessageByBean(
+                MachineHealthRequest.getDescriptor(),MachineHealthRequest.newBuilder(),machineHealthReq);
+        MachineHealthRequest machineHealthRequest =
+                MachineHealthRequest.newBuilder(machineHealthProtoReq)
+                        .setMacAddress(HttpUtil.getMachineMacAddr())
+                        .setIpAddr(HttpUtil.getIpAddr()).build();
 
         return 0;
     }

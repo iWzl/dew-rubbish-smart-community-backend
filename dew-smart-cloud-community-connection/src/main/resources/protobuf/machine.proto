@@ -28,12 +28,17 @@ message MachineUinRequest{
 }
 
 message MachineHealthRequest{
-    int32 cpuCoreCount = 1;
-    double cpuTemperature =2;
-    double cpuUsageRate = 3;
-    double hardDiskSize =4;
-    double memorySize = 5;
-    string systemName = 6;
-    double usedHardDiskSize = 7;
-    double usedMemorySize = 8;
+	int32 cpuCoreCount = 1;
+	double cpuTemperature = 2;
+	double cpuUsageRate = 3;
+	string diskUseRate = 4;
+	string freeDiskSize = 5;
+	int32 freeMemorySize = 6;
+	string hardDiskSize = 7;
+	int32 memorySize = 8;
+	string systemName = 9;
+	string usedHardDiskSize = 10;
+	int32 usedMemorySize = 11;
+    string macAddress = 12;
+    string ipAddr = 13;
 }

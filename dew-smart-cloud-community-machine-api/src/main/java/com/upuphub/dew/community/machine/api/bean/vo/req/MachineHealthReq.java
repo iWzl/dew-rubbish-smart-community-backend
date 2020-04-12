@@ -18,11 +18,11 @@ public class MachineHealthReq {
     @ApiModelProperty("CPU使用率")
     private double cpuUsageRate;
     @ApiModelProperty("内存大小")
-    private double memorySize;
+    private Integer memorySize;
     @ApiModelProperty("已经使用的内存大小")
-    private double usedMemorySize;
+    private Integer usedMemorySize;
     @ApiModelProperty("已经使用的内存大小")
-    private double freeMemorySize;
+    private Integer freeMemorySize;
     @ApiModelProperty("硬盘大小")
     private String hardDiskSize;
     @ApiModelProperty("已经使用的硬盘大小")
