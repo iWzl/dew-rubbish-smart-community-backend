@@ -8,6 +8,7 @@ spring:
       # SpringCloud-Alibaba-Nacos服务注册中心配置
     nacos:
       discovery:
+        ip: 10.147.20.20
         server-addr: support.upuphub.com:8848
 
   data:

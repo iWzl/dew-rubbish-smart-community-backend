@@ -81,7 +81,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.upuphub.dew.community.news.DewNewsApplication</mainClass>
+                    <mainClass>com.upuphub.dew.community.machine.DewMachineApplication</mainClass>
                     <skip>true</skip>
                     <!--重写包含依赖，包含不存在的依赖，jar里没有pom里的依赖-->
                     <includes>
@@ -102,8 +102,8 @@
                     <includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
                     <daemons>
                         <daemon>
-                            <id>dew-news</id>
-                            <mainClass>com.upuphub.dew.community.news.DewNewsApplication</mainClass>
+                            <id>dew-machine</id>
+                            <mainClass>com.upuphub.dew.community.machine.DewMachineApplication</mainClass>
                             <!--<commandLineArguments>-->
                             <!--<commandLineArgument>start</commandLineArgument>-->
                             <!--</commandLineArguments>-->
