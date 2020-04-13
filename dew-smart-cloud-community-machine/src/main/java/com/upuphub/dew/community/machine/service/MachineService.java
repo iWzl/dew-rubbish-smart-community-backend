@@ -3,7 +3,7 @@ package com.upuphub.dew.community.machine.service;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
-import org.springframework.scheduling.annotation.Async;
+
 
 /**
  * @author Leo Wang

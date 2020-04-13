@@ -21,11 +21,12 @@ spring:
   cloud:
     nacos:
       discovery:
+        ip: 10.147.20.20
         server-addr: support.upuphub.com:8848
     sentinel:
       transport:
         dashboard: 119.3.147.11:18020
-        port: 18719
+        port: 18729
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: dew_api_svr
