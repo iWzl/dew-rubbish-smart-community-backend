@@ -32,6 +32,12 @@ logging:
 #  MQTT 配置
 ##################
 push:
+  mailgun:
+    api-key: 03f60638f75fcac2879af85d43642a43-aa4b0867-4da10346
+    domain: support.upuphub.com
+    url: https://api.mailgun.net/v3/%s/messages
+
+
   mqtt:
     username: DewDevTest
     password: DewDevTest
