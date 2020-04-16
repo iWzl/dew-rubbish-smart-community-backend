@@ -12,14 +12,6 @@ import org.springframework.scheduling.annotation.Async;
  */
 public interface MqttHandlerService {
 
-    /**
-     * 发送邮箱验证码
-     * @param payload 邮箱验证码(邮箱验证码protobuf)
-     */
-    @MqttTopic(topic = MqttConst.TOPIC_RBC_API_SVT,tag = MqttConst.TAG_RBC_API_EMAIL_CODE)
-    @Async("mqttHandlerExecutor")
-    void sendEmailCode(ByteString payload);
-
     @MqttTopic(topic = MqttConst.TOPIC_MOMENTS,tag = MqttConst.TAG_MOMENT_SYNC_ACTIVITY)
     @Async("mqttHandlerExecutor")
     void pushSyncMomentActivity(ByteString payload);

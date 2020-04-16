@@ -27,20 +27,6 @@ public class MqttHandlerServiceImpl implements MqttHandlerService {
     MailService mailService;
 
     @Override
-    public void sendEmailCode(ByteString payload) {
-        try {
-            EmailAndCode emailAndCode = EmailAndCode.parseFrom(payload);
-            if (!RegexUtils.isEmail(emailAndCode.getEmail())) {
-                return;
-            }
-            int error = mailService.sendVerificationCodeMail(emailAndCode.getEmail(), emailAndCode.getCode().toUpperCase());
-            if (error != PushConst.ERROR_CODE_SUCCESS) {
-                log.error("Send Email Error {}", error);
-            }
-        } catch (InvalidProtocolBufferException ignore) { }
-    }
-
-    @Override
     public void pushSyncMomentActivity(ByteString payload) {
         try {
             MomentSyncActivityNotify momentSyncActivityNotify = MomentSyncActivityNotify.parseFrom(payload);
