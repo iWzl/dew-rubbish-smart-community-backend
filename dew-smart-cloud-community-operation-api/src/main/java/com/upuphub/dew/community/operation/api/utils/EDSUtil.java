@@ -259,7 +259,7 @@ public class EDSUtil {
                 .setNewsId(newsDetailReq.getNewsId())
                 .setCategory(newsDetailReq.getCategory())
                 .setTitle(newsDetailReq.getTitle())
-                .setPayload(newsDetailReq.getTitle())
+                .setPayload(newsDetailReq.getPayload())
                 .addAllFrontCoverImages(newsDetailReq.getFrontCoverImages())
                 .setNewsTypeValue(null != newsDetailReq.getNewsType() ? newsDetailReq.getNewsType() : NEWS_TYPE.UNDEFINED_VALUE)
                 .build();

@@ -54,7 +54,7 @@ public class NewsController {
         );
     }
 
-    @ApiOperation(value = "修改News相关信息")
+    @ApiOperation(value = "拉取指定News的详细信息")
     @GetMapping(value = "/one",consumes = MediaType.ALL_VALUE)
     public ServiceResponseMessage fetchNewsDetailByNewsId(@RequestParam("newsId") Long newsId) {
         return ServiceResponseMessage.createBySuccessCodeMessage(
