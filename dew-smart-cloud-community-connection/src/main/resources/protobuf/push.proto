@@ -9,6 +9,12 @@ message EmailAndCode{
     string email = 2;
 }
 
+message EmailTemplateAndParams{
+    string email = 1;
+    string templateId = 2;
+    map<string,string> replaceParameters = 3;
+}
+
 message MomentSyncActivityNotify{
     int64 forUin = 1;
     int64 activityId = 2;

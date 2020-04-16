@@ -32,7 +32,6 @@ import java.util.Map;
 public class MailServiceImpl implements MailService {
     @Value("${spring.mail.username}")
     private String senderMailAddress;
-
     @Resource
     private TemplateEngine templateEngine;
     @Resource
@@ -91,5 +90,12 @@ public class MailServiceImpl implements MailService {
             log.error("Mail Send Error", e);
             return PushConst.ERROR_CODE_COMMON_FAIL;
         }
+    }
+
+
+    @Override
+    public Integer sendEmailWithTemplateId(String email, String templateId, Map<String, String> replaceParametersMap) {
+
+        return null;
     }
 }
