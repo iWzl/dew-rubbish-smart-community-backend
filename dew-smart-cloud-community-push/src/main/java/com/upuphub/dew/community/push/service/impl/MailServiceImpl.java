@@ -1,6 +1,9 @@
 package com.upuphub.dew.community.push.service.impl;
 
 import com.upuphub.dew.community.connection.constant.PushConst;
+import com.upuphub.dew.community.push.bean.po.MailTemplatePO;
+import com.upuphub.dew.community.push.component.sender.MailGunSender;
+import com.upuphub.dew.community.push.dao.MailTemplateDao;
 import com.upuphub.dew.community.push.service.MailService;
 import com.upuphub.dew.community.push.vo.MailData;
 import lombok.extern.slf4j.Slf4j;
@@ -90,12 +93,5 @@ public class MailServiceImpl implements MailService {
             log.error("Mail Send Error", e);
             return PushConst.ERROR_CODE_COMMON_FAIL;
         }
-    }
-
-
-    @Override
-    public Integer sendEmailWithTemplateId(String email, String templateId, Map<String, String> replaceParametersMap) {
-
-        return null;
     }
 }

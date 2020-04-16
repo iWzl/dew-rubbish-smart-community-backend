@@ -13,4 +13,5 @@ public interface PushConst {
     public static final int ERROR_CODE_NON_STANDARD_EMAIL = 10003;
     public static final int ERROR_CODE_NOT_EXISTS = 10004;
     public static final int ERROR_CODE_CALL_ACCOUNT_ERROR = 10005;
+    public static final int ERROR_CODE_TEMPLATE_NOT_EXISTS = 10006;
 }

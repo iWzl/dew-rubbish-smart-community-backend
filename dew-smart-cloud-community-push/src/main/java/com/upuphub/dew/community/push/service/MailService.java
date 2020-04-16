@@ -27,13 +27,4 @@ public interface MailService {
      * @return 邮件的发送状态
      */
     Integer sendMail(MailData mailData);
-
-    /**
-     * 使用邮件ID和单个发送邮件相关信息
-     *
-     * @param email 邮件地址
-     * @param templateId 邮件需要的发送的模板ID
-     * @param replaceParametersMap 邮件模板中的需要替代的模板参数
-     */
-    Integer sendEmailWithTemplateId(String email, String templateId, Map<String, String> replaceParametersMap);
 }
