@@ -2,6 +2,7 @@ package com.upuphub.dew.community.machine.service.impl;
 
 import com.upuphub.dew.community.connection.constant.MachineConst;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
+import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 import com.upuphub.dew.community.machine.bean.po.MachineHardwareDetailPO;
@@ -89,5 +90,29 @@ public class MachineServiceImpl implements MachineService {
             machineSearchHistoryRepositoryDao.save(machineSearchHistoryDetail);
         }
         return MachineConst.ERROR_CODE_SUCCESS;
+    }
+
+    @Override
+    public int bindHardwareDevices(MachineBindDTO machineBindInfo) {
+        if(ObjectUtil.isEmpty(machineBindInfo.getMachineMacAddress())
+                || ObjectUtil.isEmpty(machineBindInfo.getBindKey())
+                || ObjectUtil.isEmpty(machineBindInfo.getBindUin())){
+            return MachineConst.ERROR_CODE_COMMON_FAIL;
+        }
+        Optional<MachineHardwareDetailPO> machineHardwareDetailOptional = machineHardwareDetailRepositoryDao.findById(machineBindInfo.getMachineMacAddress());
+        if(!machineHardwareDetailOptional.isPresent()){
+            return MachineConst.ERROR_CODE_NOT_EXISTS;
+        }else if(ObjectUtil.isEmpty(machineHardwareDetailOptional.get().getBindUin())){
+            return MachineConst.ERROR_CODE_ALREADY_EXISTS;
+        }else if(machineHardwareDetailOptional.get().getBindKey().equals(machineBindInfo.getBindKey())){
+            MachineHardwareDetailPO machineHardwareDetail = machineHardwareDetailOptional.get();
+            machineHardwareDetail.setBindUin(machineBindInfo.getBindUin());
+            machineHardwareDetail.setBindTime(System.currentTimeMillis());
+            machineHardwareDetail.setNikeName(machineBindInfo.getMachineName());
+            machineHardwareDetailRepositoryDao.save(machineHardwareDetail);
+            return MachineConst.ERROR_CODE_SUCCESS;
+        }else {
+            return MachineConst.ERROR_CODE_COMMON_FAIL;
+        }
     }
 }

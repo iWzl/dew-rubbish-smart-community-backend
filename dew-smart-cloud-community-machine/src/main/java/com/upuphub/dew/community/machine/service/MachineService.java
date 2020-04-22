@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.machine.service;
 
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
+import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 
@@ -43,4 +44,12 @@ public interface MachineService {
      * @return 追踪的处理结果
      */
     int journalMachineSearchHistory(String macAddress, String searchKey);
+
+    /**
+     * 绑定硬件设备和驱动信息
+     *
+     * @param machineBindInfo 机器绑定的相关信息
+     * @return 绑定设备的处理结果
+     */
+    int bindHardwareDevices(MachineBindDTO machineBindInfo);
 }

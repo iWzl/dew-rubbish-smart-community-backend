@@ -19,6 +19,13 @@ message MachineSimpleInfoResult{
     int64 bindUin = 3;
 }
 
+message MachineBindInfoRequest{
+    string machineMacAddress = 1;
+    string machineName = 2;
+    string bindKey = 3;
+    int64 bindUin = 4;
+}
+
 message MachineMacAddressRequest{
     string macAddress = 1;
 }

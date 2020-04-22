@@ -3,6 +3,7 @@ package com.upuphub.dew.community.machine.controller;
 import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.machine.*;
+import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 import com.upuphub.dew.community.machine.service.MachineService;
@@ -37,7 +38,6 @@ public class MachineController {
         return machineService.fetchSimpleMachineInfoByMacAddress(macAddress);
     }
 
-
     @PostMapping("/IoTDA/health")
     public RpcResultCode refreshMachineHealthInfo(@RequestBody MachineHealthRequest machineHealthRequest) {
         MachineHealthDTO machineHealthInfo = MessageUtil.messageToCommonPojo(machineHealthRequest,MachineHealthDTO.class);
@@ -46,12 +46,18 @@ public class MachineController {
         ).build();
     }
 
-
-
     @PostMapping("/IoTDA/search/journal")
     public RpcResultCode journalMachineSearchHistory(@RequestBody MachineSearchJournalRequest machineSearchJournalRequest) {
         return RpcResultCode.newBuilder().setCode(
                 machineService.journalMachineSearchHistory(machineSearchJournalRequest.getMacAddress(),machineSearchJournalRequest.getSearchKey())
+        ).build();
+    }
+
+    @PostMapping("/IoTDA/bind")
+    public RpcResultCode bindHardwareDevices(@RequestBody MachineBindInfoRequest machineBindInfoRequest) {
+        MachineBindDTO machineBindInfo = MessageUtil.messageToCommonPojo(machineBindInfoRequest,MachineBindDTO.class);
+        return RpcResultCode.newBuilder().setCode(
+                machineService.bindHardwareDevices(machineBindInfo)
         ).build();
     }
 
