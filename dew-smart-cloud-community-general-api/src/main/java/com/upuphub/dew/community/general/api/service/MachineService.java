@@ -14,8 +14,7 @@ public interface MachineService {
     /**
      * 将用户和硬件设备绑定
      *
-     *
-     * @param address
+     * @param nikeName 设备的别称
      * @param macAddress 硬件设备的Mac地址
      * @param bindKey 硬件设备的bindKey
      * @return 绑定硬件设备的处理结果
