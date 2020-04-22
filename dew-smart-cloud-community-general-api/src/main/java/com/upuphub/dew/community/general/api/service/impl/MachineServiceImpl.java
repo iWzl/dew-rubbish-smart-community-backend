@@ -41,4 +41,9 @@ public class MachineServiceImpl implements MachineService {
         }
         return ServiceResponseMessage.createByFailCodeMessage("参数错误或者绑定Key无效");
     }
+
+    @Override
+    public ServiceResponseMessage fetchMachineHealthInfo() {
+        return null;
+    }
 }

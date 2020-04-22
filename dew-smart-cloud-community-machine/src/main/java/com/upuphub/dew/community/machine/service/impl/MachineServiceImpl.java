@@ -2,6 +2,7 @@ package com.upuphub.dew.community.machine.service.impl;
 
 import com.upuphub.dew.community.connection.constant.MachineConst;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
+import com.upuphub.dew.community.connection.protobuf.machine.MachinesHealthResult;
 import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -114,5 +116,10 @@ public class MachineServiceImpl implements MachineService {
         }else {
                 return MachineConst.ERROR_CODE_COMMON_FAIL;
         }
+    }
+
+    @Override
+    public List<MachinesHealthResult> fetchMachineInfoAndHealthByUin(Long uin) {
+        return null;
     }
 }

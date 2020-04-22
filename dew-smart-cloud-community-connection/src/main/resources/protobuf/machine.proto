@@ -34,6 +34,36 @@ message MachineUinRequest{
     int64 uin = 1;
 }
 
+message MachinesHealthResult{
+    repeated MachinesHealthResult machinesHealthResult = 1;
+}
+
+message MachineHealthResult{
+    string machineMacAddress = 1;
+    string machineName = 2;
+    int32 machineType = 3;
+    string machineVersion =4;
+    string machineMaker = 5;
+    string nikeName = 6;
+    HealthInfoResult healthInfoResult = 7;
+}
+
+message HealthInfoResult{
+    int32 cpuCoreCount = 1;
+    double cpuTemperature = 2;
+    double cpuUsageRate = 3;
+    string diskUseRate = 4;
+    string freeDiskSize = 5;
+    int32 freeMemorySize = 6;
+    string hardDiskSize = 7;
+    int32 memorySize = 8;
+    string systemName = 9;
+    string usedHardDiskSize = 10;
+    int32 usedMemorySize = 11;
+    string macAddress = 12;
+    string ipAddr = 13;
+}
+
 message MachineHealthRequest{
 	int32 cpuCoreCount = 1;
 	double cpuTemperature = 2;

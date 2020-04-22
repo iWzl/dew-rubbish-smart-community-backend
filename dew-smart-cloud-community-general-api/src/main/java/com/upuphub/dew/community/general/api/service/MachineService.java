@@ -20,4 +20,11 @@ public interface MachineService {
      * @return 绑定硬件设备的处理结果
      */
     ServiceResponseMessage bindHardwareDevices(@NotBlank String macAddress,@NotBlank String bindKey, @NotBlank String nikeName);
+
+    /**
+     * 查询设备的健康状态
+     *
+     * @return 设备健康状态的查询结果
+     */
+    ServiceResponseMessage fetchMachineHealthInfo();
 }

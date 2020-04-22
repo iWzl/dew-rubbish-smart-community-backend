@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.machine.controller;
 
 import com.upuphub.dew.community.connection.common.MessageUtil;
+import com.upuphub.dew.community.connection.protobuf.account.Uin;
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.machine.*;
 import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
@@ -60,6 +61,16 @@ public class MachineController {
                 machineService.bindHardwareDevices(machineBindInfo)
         ).build();
     }
+
+
+    @PostMapping("/IoTDA/health/search")
+    public MachinesHealthResult fetchMachineInfoAndHealthByUin(@RequestBody MachineUinRequest machineUinRequest) {
+        Long uin = machineUinRequest.getUin();
+        return MachinesHealthResult.newBuilder().addAllMachinesHealthResult(
+                machineService.fetchMachineInfoAndHealthByUin(uin)
+        ).build();
+    }
+
 
 
 }

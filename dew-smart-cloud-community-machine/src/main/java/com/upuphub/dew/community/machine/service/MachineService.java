@@ -1,9 +1,12 @@
 package com.upuphub.dew.community.machine.service;
 
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
+import com.upuphub.dew.community.connection.protobuf.machine.MachinesHealthResult;
 import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
+
+import java.util.List;
 
 
 /**
@@ -52,4 +55,12 @@ public interface MachineService {
      * @return 绑定设备的处理结果
      */
     int bindHardwareDevices(MachineBindDTO machineBindInfo);
+
+    /**
+     * 根据UIN查询指定用户的健康状态信息
+     *
+     * @param uin 用户UIN
+     * @return 设备健康状态的处理结果
+     */
+    List<MachinesHealthResult> fetchMachineInfoAndHealthByUin(Long uin);
 }
