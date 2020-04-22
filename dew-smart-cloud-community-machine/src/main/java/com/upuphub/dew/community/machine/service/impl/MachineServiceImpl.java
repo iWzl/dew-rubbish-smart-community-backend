@@ -102,7 +102,7 @@ public class MachineServiceImpl implements MachineService {
         Optional<MachineHardwareDetailPO> machineHardwareDetailOptional = machineHardwareDetailRepositoryDao.findById(machineBindInfo.getMachineMacAddress());
         if(!machineHardwareDetailOptional.isPresent()){
             return MachineConst.ERROR_CODE_NOT_EXISTS;
-        }else if(ObjectUtil.isEmpty(machineHardwareDetailOptional.get().getBindUin())){
+        }else if(!ObjectUtil.isEmpty(machineHardwareDetailOptional.get().getBindUin())){
             return MachineConst.ERROR_CODE_ALREADY_EXISTS;
         }else if(machineHardwareDetailOptional.get().getBindKey().equals(machineBindInfo.getBindKey())){
             MachineHardwareDetailPO machineHardwareDetail = machineHardwareDetailOptional.get();
@@ -112,7 +112,7 @@ public class MachineServiceImpl implements MachineService {
             machineHardwareDetailRepositoryDao.save(machineHardwareDetail);
             return MachineConst.ERROR_CODE_SUCCESS;
         }else {
-            return MachineConst.ERROR_CODE_COMMON_FAIL;
+                return MachineConst.ERROR_CODE_COMMON_FAIL;
         }
     }
 }

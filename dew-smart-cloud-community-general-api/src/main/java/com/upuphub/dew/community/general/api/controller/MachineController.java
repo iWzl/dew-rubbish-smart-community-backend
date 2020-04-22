@@ -39,6 +39,6 @@ public class MachineController {
     @ApiParam(name = "iotDABindReq", required = true, value = "iotDABindReq")
     @PostMapping(value = "/bind", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ServiceResponseMessage bindHardwareDevices(@RequestBody @Validated IoTDABindReq iotDABindReq){
-        return machineService.bindHardwareDevices(iotDABindReq.getMacAddress(),iotDABindReq.getBindKey());
+        return machineService.bindHardwareDevices(iotDABindReq.getMacAddress(),iotDABindReq.getBindKey(),iotDABindReq.getNikeName());
     }
 }

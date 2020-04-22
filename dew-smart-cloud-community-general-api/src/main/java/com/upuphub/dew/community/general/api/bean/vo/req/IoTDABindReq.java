@@ -15,4 +15,7 @@ public class IoTDABindReq {
     @NotBlank(message = "绑定的Key不能为空")
     @ApiModelProperty("去除非合法绑定的Key")
     private String bindKey;
+    @NotBlank(message = "硬件设备的别名不能为空")
+    @ApiModelProperty("硬件设备的别名")
+    private String nikeName;
 }

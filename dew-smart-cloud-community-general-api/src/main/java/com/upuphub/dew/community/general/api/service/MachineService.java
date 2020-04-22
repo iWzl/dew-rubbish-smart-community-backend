@@ -2,8 +2,7 @@ package com.upuphub.dew.community.general.api.service;
 
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
 
-import java.util.List;
-import java.util.Map;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author Leo Wang
@@ -15,9 +14,11 @@ public interface MachineService {
     /**
      * 将用户和硬件设备绑定
      *
+     *
+     * @param address
      * @param macAddress 硬件设备的Mac地址
      * @param bindKey 硬件设备的bindKey
      * @return 绑定硬件设备的处理结果
      */
-    ServiceResponseMessage bindHardwareDevices(String macAddress, String bindKey);
+    ServiceResponseMessage bindHardwareDevices(@NotBlank String macAddress,@NotBlank String bindKey, @NotBlank String nikeName);
 }
