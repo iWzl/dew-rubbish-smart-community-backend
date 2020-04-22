@@ -3,14 +3,7 @@
 <mapper namespace="com.upuphub.dew.community.push.dao.MailTemplateDao">
     <select id="fetchMailTemplateByTemplateCode"
             resultType="com.upuphub.dew.community.push.bean.po.MailTemplatePO">
-        select code,
-               template,
-               domain_name,
-               `from`,
-               subject,
-               type,
-               version,
-               status
+        select code, template, sender, `from`, subject, type, tag, version, status
         from mail_template
         where code = #{templateCode}
         limit 1

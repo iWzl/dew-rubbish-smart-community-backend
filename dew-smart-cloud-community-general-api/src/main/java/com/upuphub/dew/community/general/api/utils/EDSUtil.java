@@ -6,6 +6,7 @@ import com.upuphub.dew.community.connection.protobuf.account.Location;
 import com.upuphub.dew.community.connection.protobuf.account.Profile;
 import com.upuphub.dew.community.connection.protobuf.account.UsernameAndPassword;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
+import com.upuphub.dew.community.connection.protobuf.push.EmailTemplateAndParams;
 import com.upuphub.dew.community.connection.protobuf.relation.RELATION_SOURCE;
 import com.upuphub.dew.community.connection.protobuf.relation.RELATION_TYPE;
 import com.upuphub.dew.community.connection.protobuf.relation.RelationPersistRequest;
@@ -13,7 +14,9 @@ import com.upuphub.dew.community.general.api.bean.vo.req.*;
 import com.upuphub.dew.community.general.api.bean.vo.resp.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Leo Wang
@@ -231,6 +234,14 @@ public class EDSUtil {
                 .setRecipient(persistRelationReq.getRecipientUin())
                 .setRelationSource(RELATION_SOURCE.forNumber(persistRelationReq.getRelationSource().getType()))
                 .setRelationType(RELATION_TYPE.forNumber(persistRelationReq.getRelationType().getType()))
+                .build();
+    }
+
+    public static EmailTemplateAndParams toProtobufMessage(String email, String emailTemplateCode, Map<String,String> paramsMap) {
+        return EmailTemplateAndParams.newBuilder()
+                .setEmail(email)
+                .setTemplateId(emailTemplateCode)
+                .putAllReplaceParameters(paramsMap)
                 .build();
     }
 }

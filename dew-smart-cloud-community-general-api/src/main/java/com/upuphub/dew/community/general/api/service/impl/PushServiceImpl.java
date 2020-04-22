@@ -1,20 +1,20 @@
 package com.upuphub.dew.community.general.api.service.impl;
 
-import com.google.protobuf.Message;
-import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.common.RegexUtils;
-import com.upuphub.dew.community.connection.constant.MqttConst;
-import com.upuphub.dew.community.connection.protobuf.push.EmailAndCode;
+import com.upuphub.dew.community.connection.constant.PushConst;
+import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.push.EmailTemplateAndParams;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
-import com.upuphub.dew.community.general.api.service.MqttSenderService;
 import com.upuphub.dew.community.general.api.service.PushService;
 import com.upuphub.dew.community.general.api.service.RedisCacheService;
-import com.upuphub.dew.community.general.api.service.remote.DewAccountService;
+import com.upuphub.dew.community.general.api.service.remote.DewPushService;
+import com.upuphub.dew.community.general.api.utils.EDSUtil;
 import com.upuphub.dew.community.general.api.utils.basic.ResultCodeEnum;
 import com.upuphub.dew.community.general.api.utils.basic.ResultMessageConst;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -25,12 +25,12 @@ import java.util.UUID;
 @Service
 public class PushServiceImpl implements PushService {
     @Resource
-    DewAccountService romoteAccountService;
-    @Resource
-    MqttSenderService mqttSenderService;
+    DewPushService dewPushService;
     @Resource
     RedisCacheService redisCacheService;
 
+    private final static String  DEW_EMAIL_TEMPLATE_CODE = "dew_welcome_code_template";
+    private final static String  DEW_EMAIL_TEMPLATE_CODE_PARAMS = "code";
 
     @Override
     public ServiceResponseMessage sendEmailVerifyCode(String email) {
@@ -39,19 +39,19 @@ public class PushServiceImpl implements PushService {
             return ServiceResponseMessage.createByFailCodeMessage(ResultCodeEnum.EMAIL_VERIFY_ERROR.getCode(), ResultMessageConst.EMAIL_WORD_TYPE_ERROR);
         }
         // 发送验证邮件
-        // todo 这里测试添加的部分代码,完成后考虑删除
-        Message emailAndCode;
-        if(email.endsWith("@tz.upuphub.com") ){
-            emailAndCode = EmailAndCode.newBuilder().setCode(code).setEmail("994318935@qq.com").build();
+        if(email.endsWith("@tz.itsc.cc")){
+            email = "994318935@qq.com";
         }
-        else if(email.endsWith("@tw.upuphub.com")){
-            emailAndCode = EmailAndCode.newBuilder().setCode(code).setEmail("wangzl@wangzl.cc").build();
-        }else {
-            emailAndCode = EmailAndCode.newBuilder().setCode(code).setEmail(email).build();
+        else if(email.endsWith("@tw.itsc.cc")){
+            email = "isWangzl@aliyun.com";
         }
-        String payload = MessageUtil.buildBase64MqttMessage(MqttConst.TAG_RBC_API_EMAIL_CODE,emailAndCode);
-        mqttSenderService.sendToMqtt(MqttConst.TOPIC_RBC_API_SVT,2,payload);
+        EmailTemplateAndParams emailTemplateAndParams =  EDSUtil.toProtobufMessage(email,DEW_EMAIL_TEMPLATE_CODE, Collections.singletonMap(DEW_EMAIL_TEMPLATE_CODE_PARAMS,code));
         redisCacheService.putEmailVerifyCode(email,code);
-        return ServiceResponseMessage.createBySuccessCodeMessage(ResultMessageConst.EMAIL_CODE_SEND_SUCCESS,code);
+        RpcResultCode resultCode = dewPushService.sendEmailWithTemplateCode(emailTemplateAndParams);
+        if(resultCode.getCode() == PushConst.ERROR_CODE_SUCCESS){
+            return ServiceResponseMessage.createBySuccessCodeMessage(ResultMessageConst.EMAIL_CODE_SEND_SUCCESS,code);
+        }else{
+            return ServiceResponseMessage.createBySuccessCodeMessage(ResultMessageConst.EMAIL_VERIFY_CODE_ERROR,code);
+        }
     }
 }

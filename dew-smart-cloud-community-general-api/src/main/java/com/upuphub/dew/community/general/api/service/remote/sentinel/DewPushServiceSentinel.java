@@ -1,7 +1,9 @@
 package com.upuphub.dew.community.general.api.service.remote.sentinel;
 
 
+import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.push.EmailAndCode;
+import com.upuphub.dew.community.connection.protobuf.push.EmailTemplateAndParams;
 import com.upuphub.dew.community.general.api.service.remote.DewPushService;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class DewPushServiceSentinel implements DewPushService {
 
     @Override
-    public void sendVerificationCodeMail(EmailAndCode verifyCode){
+    public RpcResultCode sendEmailWithTemplateCode(EmailTemplateAndParams emailTemplateAndParams) {
+        return null;
     }
 }

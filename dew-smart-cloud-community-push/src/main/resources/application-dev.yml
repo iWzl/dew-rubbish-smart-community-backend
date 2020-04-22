@@ -29,7 +29,7 @@ spring:
     name: dew_push
     password: A!@#456bnm
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://10.147.20.155:13306/dew_push?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://10.147.20.20:3306/dew_push?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: Leo
 
 logging:

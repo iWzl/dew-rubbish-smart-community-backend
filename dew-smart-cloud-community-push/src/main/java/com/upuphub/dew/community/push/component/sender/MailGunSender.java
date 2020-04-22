@@ -3,13 +3,16 @@ package com.upuphub.dew.community.push.component.sender;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
+import com.upuphub.dew.community.connection.common.JsonHelper;
 import com.upuphub.dew.community.connection.constant.PushConst;
 import com.upuphub.dew.community.push.bean.po.MailTemplatePO;
 import com.upuphub.dew.community.push.dao.MailTemplateDao;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.Future;
 
@@ -31,11 +34,11 @@ public class MailGunSender {
     private static final String MAIL_FORM_TEMPLATE = "%s<%s@%s>";
 
     @Value("${push.mailgun.api-key}")
-    private static String mailGunApiKey;
+    private String mailGunApiKey;
     @Value("${push.mailgun.domain}")
-    private static String mailDomainName;
+    private String mailDomainName;
     @Value("${push.mailgun.url}")
-    private static String mailGunUrl;
+    private String mailGunUrl;
 
 
     /**
@@ -45,6 +48,7 @@ public class MailGunSender {
      * @param templateCode         邮件需要的发送的模板Code
      * @param replaceParametersMap 邮件模板中的需要替代的模板参数
      */
+    @SneakyThrows
     public Integer sendEmailWithTemplateCode(String email, String templateCode, Map<String, String> replaceParametersMap) {
         MailTemplatePO mailTemplate = mailTemplateDao.fetchMailTemplateByTemplateCode(templateCode);
         if (null == mailTemplate) {
@@ -56,7 +60,7 @@ public class MailGunSender {
                 .field(MAIL_GUN_KEY_TO, email)
                 .field(MAIL_GUN_KEY_SUBJECT, mailTemplate.getSubject())
                 .field(MAIL_GUN_KEY_TAG,mailTemplate.getTag())
-                .field(MAIL_GUN_KEY_VARIABLES,replaceParametersMap)
+                .field(MAIL_GUN_KEY_VARIABLES, JsonHelper.allToJson(Collections.singletonMap(email,replaceParametersMap)))
                 .field(mailTemplate.getType(), mailTemplate.getTemplate())
                 .asJsonAsync();
         return PushConst.ERROR_CODE_SUCCESS;

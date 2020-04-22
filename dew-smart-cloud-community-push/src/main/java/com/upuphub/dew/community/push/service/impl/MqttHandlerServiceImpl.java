@@ -2,9 +2,6 @@ package com.upuphub.dew.community.push.service.impl;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.upuphub.dew.community.connection.common.RegexUtils;
-import com.upuphub.dew.community.connection.constant.PushConst;
-import com.upuphub.dew.community.connection.protobuf.push.EmailAndCode;
 import com.upuphub.dew.community.connection.protobuf.push.MomentSyncActivityNotify;
 import com.upuphub.dew.community.push.service.MailService;
 import com.upuphub.dew.community.push.service.MqttHandlerService;
