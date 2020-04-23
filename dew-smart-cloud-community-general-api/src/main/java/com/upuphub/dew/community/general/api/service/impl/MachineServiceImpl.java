@@ -12,7 +12,6 @@ import com.upuphub.dew.community.general.api.bean.vo.resp.MachineHealthResp;
 import com.upuphub.dew.community.general.api.service.MachineService;
 import com.upuphub.dew.community.general.api.service.remote.DewMachineService;
 import com.upuphub.dew.community.general.api.utils.HttpUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
