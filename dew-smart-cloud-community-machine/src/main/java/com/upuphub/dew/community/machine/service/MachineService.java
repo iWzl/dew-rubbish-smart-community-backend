@@ -1,5 +1,6 @@
 package com.upuphub.dew.community.machine.service;
 
+import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthResult;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
 import com.upuphub.dew.community.connection.protobuf.machine.MachinesHealthResult;
 import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
@@ -62,5 +63,5 @@ public interface MachineService {
      * @param uin 用户UIN
      * @return 设备健康状态的处理结果
      */
-    List<MachinesHealthResult> fetchMachineInfoAndHealthByUin(Long uin);
+    List<MachineHealthResult> fetchMachineInfoAndHealthByUin(Long uin);
 }

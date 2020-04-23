@@ -35,7 +35,7 @@ message MachineUinRequest{
 }
 
 message MachinesHealthResult{
-    repeated MachinesHealthResult machinesHealthResult = 1;
+    repeated MachineHealthResult machinesHealthResult = 1;
 }
 
 message MachineHealthResult{

@@ -1,6 +1,8 @@
 package com.upuphub.dew.community.machine.service.impl;
 
 import com.upuphub.dew.community.connection.constant.MachineConst;
+import com.upuphub.dew.community.connection.protobuf.machine.HealthInfoResult;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthResult;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
 import com.upuphub.dew.community.connection.protobuf.machine.MachinesHealthResult;
 import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
@@ -16,12 +18,14 @@ import com.upuphub.dew.community.machine.service.MachineService;
 import com.upuphub.dew.community.machine.utils.DateUtil;
 import com.upuphub.dew.community.machine.utils.ObjectUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Leo Wang
@@ -38,6 +42,8 @@ public class MachineServiceImpl implements MachineService {
     MachineHealthInfoRepositoryDao machineHealthInfoRepositoryDao;
     @Resource
     MachineSearchHistoryRepositoryDao machineSearchHistoryRepositoryDao;
+    @Resource
+    MongoTemplate mongoTemplate;
 
     @Override
     public int registerNewMachine(MachineRegisterDTO machineRegisterInfo) {
@@ -101,7 +107,8 @@ public class MachineServiceImpl implements MachineService {
                 || ObjectUtil.isEmpty(machineBindInfo.getBindUin())){
             return MachineConst.ERROR_CODE_COMMON_FAIL;
         }
-        Optional<MachineHardwareDetailPO> machineHardwareDetailOptional = machineHardwareDetailRepositoryDao.findById(machineBindInfo.getMachineMacAddress());
+        Optional<MachineHardwareDetailPO> machineHardwareDetailOptional = machineHardwareDetailRepositoryDao
+                .findById(machineBindInfo.getMachineMacAddress());
         if(!machineHardwareDetailOptional.isPresent()){
             return MachineConst.ERROR_CODE_NOT_EXISTS;
         }else if(!ObjectUtil.isEmpty(machineHardwareDetailOptional.get().getBindUin())){
@@ -119,7 +126,53 @@ public class MachineServiceImpl implements MachineService {
     }
 
     @Override
-    public List<MachinesHealthResult> fetchMachineInfoAndHealthByUin(Long uin) {
-        return null;
+    public List<MachineHealthResult> fetchMachineInfoAndHealthByUin(Long uin) {
+        if(ObjectUtil.isEmpty(uin)){
+            return Collections.emptyList();
+        }
+        Query machineByUinQuery = new Query();
+        machineByUinQuery.addCriteria(Criteria.where("bind_uin").is(uin));
+        List<MachineHardwareDetailPO> machineHardwareDetailList = mongoTemplate.find(machineByUinQuery,MachineHardwareDetailPO.class);
+        if(machineHardwareDetailList.isEmpty()){
+            return Collections.emptyList();
+        }
+        List<MachineHealthResult> machineHealthResultList = new ArrayList<>(machineHardwareDetailList.size());
+        Query machineHealthQuery = new Query();
+        List<String> macAddressList = machineHardwareDetailList
+                .stream().map(MachineHardwareDetailPO::getMachineMacAddress).collect(Collectors.toList());
+        machineByUinQuery.addCriteria(Criteria.where("_id").in(macAddressList));
+        List<MachineHealthInfoPO> machineHealthInfoList = mongoTemplate.find(machineHealthQuery,MachineHealthInfoPO.class);
+        Map<String,MachineHealthInfoPO> mackAddressAndHealthInfo = machineHealthInfoList
+                .stream().collect(Collectors.toMap(MachineHealthInfoPO::getMacAddress,(info)->info));
+        for (MachineHardwareDetailPO machineHardwareDetail : machineHardwareDetailList) {
+            MachineHealthInfoPO machineHealthInfo = mackAddressAndHealthInfo
+                    .getOrDefault(machineHardwareDetail.getMachineMacAddress(),new MachineHealthInfoPO());
+            HealthInfoResult healthInfoResult = HealthInfoResult.newBuilder()
+                    .setCpuCoreCount(machineHealthInfo.getCpuCoreCount())
+                    .setCpuTemperature(machineHealthInfo.getCpuTemperature())
+                    .setCpuUsageRate(machineHealthInfo.getCpuUsageRate())
+                    .setDiskUseRate(machineHealthInfo.getDiskUseRate())
+                    .setFreeDiskSize(machineHealthInfo.getFreeDiskSize())
+                    .setFreeMemorySize(machineHealthInfo.getFreeMemorySize())
+                    .setHardDiskSize(machineHealthInfo.getHardDiskSize())
+                    .setMemorySize(machineHealthInfo.getMemorySize())
+                    .setSystemName(machineHealthInfo.getSystemName())
+                    .setUsedHardDiskSize(machineHealthInfo.getUsedHardDiskSize())
+                    .setUsedMemorySize(machineHealthInfo.getUsedMemorySize())
+                    .setMacAddress(machineHealthInfo.getMacAddress())
+                    .setIpAddr(machineHealthInfo.getIpAddr())
+                    .build();
+            MachineHealthResult machineHealthResult = MachineHealthResult.newBuilder()
+                    .setMachineMacAddress(machineHardwareDetail.getMachineMacAddress())
+                    .setMachineName(machineHardwareDetail.getMachineName())
+                    .setNikeName(machineHardwareDetail.getNikeName())
+                    .setMachineType(machineHardwareDetail.getMachineType())
+                    .setMachineVersion(machineHardwareDetail.getMachineVersion())
+                    .setMachineMaker(machineHardwareDetail.getMachineMaker())
+                    .setHealthInfoResult(healthInfoResult)
+                    .build();
+            machineHealthResultList.add(machineHealthResult);
+        }
+        return machineHealthResultList;
     }
 }
