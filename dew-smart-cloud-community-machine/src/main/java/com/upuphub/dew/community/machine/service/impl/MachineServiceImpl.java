@@ -140,7 +140,7 @@ public class MachineServiceImpl implements MachineService {
         Query machineHealthQuery = new Query();
         List<String> macAddressList = machineHardwareDetailList
                 .stream().map(MachineHardwareDetailPO::getMachineMacAddress).collect(Collectors.toList());
-        machineByUinQuery.addCriteria(Criteria.where("_id").in(macAddressList));
+        machineHealthQuery.addCriteria(Criteria.where("_id").in(macAddressList));
         List<MachineHealthInfoPO> machineHealthInfoList = mongoTemplate.find(machineHealthQuery,MachineHealthInfoPO.class);
         Map<String,MachineHealthInfoPO> mackAddressAndHealthInfo = machineHealthInfoList
                 .stream().collect(Collectors.toMap(MachineHealthInfoPO::getMacAddress,(info)->info));

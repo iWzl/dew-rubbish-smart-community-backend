@@ -43,7 +43,7 @@ public class MachineController {
     }
 
     @ApiOperation(value = "获取设备的健康状态")
-    @GetMapping(value = "/health", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/health", consumes = MediaType.ALL_VALUE)
     public ServiceResponseMessage fetchMachineHealthInfo(){
         return machineService.fetchMachineHealthInfo();
     }
