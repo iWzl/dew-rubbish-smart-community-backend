@@ -6,6 +6,7 @@ import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.machine.*;
 import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
+import com.upuphub.dew.community.machine.bean.dto.MachineHistorySearchDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 import com.upuphub.dew.community.machine.service.MachineService;
 import com.upuphub.dew.community.machine.utils.ObjectUtil;
@@ -73,6 +74,9 @@ public class MachineController {
 
     @PostMapping("/IoTDA/search/history")
     public MachinesSearchHistoryResult fetchMachineSearchHistoryByUin(@RequestBody MachineSearchHistoryRequest machineSearchHistoryRequest) {
-       return null;
+        MachineHistorySearchDTO machineHistorySearch = MessageUtil.messageToCommonPojo(machineSearchHistoryRequest,MachineHistorySearchDTO.class);
+        return MachinesSearchHistoryResult.newBuilder().addAllMachineSearchHistoryResultList(
+                machineService.fetchMachineSearchHistoryByUin(machineHistorySearch)
+        ).build();
     }
 }

@@ -13,6 +13,10 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(new Date(date));
     }
+    public static String convertDateToYearMonthAndDay(Long date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(new Date(date));
+    }
 
     public static String getTodayKey(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

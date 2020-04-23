@@ -1,12 +1,10 @@
 package com.upuphub.dew.community.machine.service.impl;
 
 import com.upuphub.dew.community.connection.constant.MachineConst;
-import com.upuphub.dew.community.connection.protobuf.machine.HealthInfoResult;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthResult;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
-import com.upuphub.dew.community.connection.protobuf.machine.MachinesHealthResult;
+import com.upuphub.dew.community.connection.protobuf.machine.*;
 import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
+import com.upuphub.dew.community.machine.bean.dto.MachineHistorySearchDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 import com.upuphub.dew.community.machine.bean.po.MachineHardwareDetailPO;
 import com.upuphub.dew.community.machine.bean.po.MachineHealthInfoPO;
@@ -174,5 +172,42 @@ public class MachineServiceImpl implements MachineService {
             machineHealthResultList.add(machineHealthResult);
         }
         return machineHealthResultList;
+    }
+
+    @Override
+    public List<MachineSearchHistoryResult> fetchMachineSearchHistoryByUin(MachineHistorySearchDTO machineHistorySearch) {
+        if(null == machineHistorySearch){
+            return Collections.emptyList();
+        }
+        String startTime = DateUtil.convertDateToYearMonthAndDay(machineHistorySearch.getStartTime());
+        String endTime = DateUtil.convertDateToYearMonthAndDay(machineHistorySearch.getEndTime());
+        Query machineDetailQuery = new Query();
+        boolean checkUin = false;
+        if(!ObjectUtil.isEmpty(machineHistorySearch.getMachineMacAddress())){
+            checkUin = true;
+            machineDetailQuery.addCriteria(Criteria.where("_id").is(machineHistorySearch.getMachineMacAddress()));
+        }else if(!ObjectUtil.isEmpty(machineHistorySearch.getUin())){
+            machineDetailQuery.addCriteria(Criteria.where("bind_uin").is(machineHistorySearch.getUin()));
+        }else {
+            machineDetailQuery = null;
+        }
+        if(null != machineDetailQuery){
+            List<MachineHardwareDetailPO> machineHardwareDetailList = mongoTemplate.find(machineDetailQuery,MachineHardwareDetailPO.class);
+            if(checkUin && !ObjectUtil.isEmpty(machineHistorySearch.getUin()) && machineHardwareDetailList.size() == 1){
+                if(machineHardwareDetailList.get(0).getBindUin().equals(machineHistorySearch.getUin())){
+                    // 查询满足条件的 指定Mac地址的设备检测信息
+                }else {
+                    return Collections.emptyList();
+                }
+            }else {
+                List<String> macAddress = machineHardwareDetailList.stream().map(MachineHardwareDetailPO::getMachineMacAddress)
+                        .collect(Collectors.toList());
+                // 查询满足条件的 指定Mac地址的设备检测信息
+            }
+        }else {
+            // 查询所有的满足条件的设备搜索结果信息
+        }
+        // todo 待完善
+        return Collections.emptyList();
     }
 }

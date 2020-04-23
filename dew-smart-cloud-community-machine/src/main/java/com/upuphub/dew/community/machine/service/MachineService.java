@@ -1,10 +1,12 @@
 package com.upuphub.dew.community.machine.service;
 
 import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthResult;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineSearchHistoryResult;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
 import com.upuphub.dew.community.connection.protobuf.machine.MachinesHealthResult;
 import com.upuphub.dew.community.machine.bean.dto.MachineBindDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineHealthDTO;
+import com.upuphub.dew.community.machine.bean.dto.MachineHistorySearchDTO;
 import com.upuphub.dew.community.machine.bean.dto.MachineRegisterDTO;
 
 import java.util.List;
@@ -64,4 +66,12 @@ public interface MachineService {
      * @return 设备健康状态的处理结果
      */
     List<MachineHealthResult> fetchMachineInfoAndHealthByUin(Long uin);
+
+    /**
+     * 查询机器的查询历史信息
+     *
+     * @param machineHistorySearch 机器的查询历史信息
+     * @return 查询的历史信息的返回结果
+     */
+    List<MachineSearchHistoryResult> fetchMachineSearchHistoryByUin(MachineHistorySearchDTO machineHistorySearch);
 }
