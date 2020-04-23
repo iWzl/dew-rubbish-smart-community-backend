@@ -1,25 +1,16 @@
 package com.upuphub.dew.community.general.api.controller;
 
-import com.upuphub.dew.community.connection.protobuf.account.Location;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
+import com.upuphub.dew.community.general.api.bean.vo.req.MachineSearchHistoryReq;
 import com.upuphub.dew.community.general.api.bean.vo.req.IoTDABindReq;
 import com.upuphub.dew.community.general.api.service.MachineService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.zip.GZIPInputStream;
 
 /**
  * 硬件设备相关的用户端的前端控制器
@@ -46,5 +37,15 @@ public class MachineController {
     @GetMapping(value = "/health", consumes = MediaType.ALL_VALUE)
     public ServiceResponseMessage fetchMachineHealthInfo(){
         return machineService.fetchMachineHealthInfo();
+    }
+
+
+    @ApiOperation(value = "查询设备的检索信息历史")
+    @PostMapping(value = "/search/history", consumes = MediaType.ALL_VALUE)
+    public ServiceResponseMessage fetchMachineSearchHistoryInfo(@RequestBody @Validated MachineSearchHistoryReq machineSearchHistoryReq){
+        return machineService.fetchMachineSearchHistoryInfo(
+                machineSearchHistoryReq.getStartTime(),
+                machineSearchHistoryReq.getEndTime(),
+                machineSearchHistoryReq.getMacAddress());
     }
 }

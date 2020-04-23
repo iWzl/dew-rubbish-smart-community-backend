@@ -27,4 +27,14 @@ public interface MachineService {
      * @return 设备健康状态的查询结果
      */
     ServiceResponseMessage fetchMachineHealthInfo();
+
+    /**
+     * 查询指定范围的设备检索信息
+     *
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param macAddress 设备的MAC弟子
+     * @return 检索完成的处理结果
+     */
+    ServiceResponseMessage fetchMachineSearchHistoryInfo(Long startTime, Long endTime, String macAddress);
 }

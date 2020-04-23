@@ -3,16 +3,16 @@ package com.upuphub.dew.community.general.api.service.impl;
 import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.constant.MachineConst;
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineBindInfoRequest;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthResult;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineUinRequest;
-import com.upuphub.dew.community.connection.protobuf.machine.MachinesHealthResult;
+import com.upuphub.dew.community.connection.protobuf.machine.*;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
 import com.upuphub.dew.community.general.api.bean.vo.resp.MachineHealthResp;
+import com.upuphub.dew.community.general.api.bean.vo.resp.MachineSearchHistoryResp;
 import com.upuphub.dew.community.general.api.service.MachineService;
 import com.upuphub.dew.community.general.api.service.remote.DewMachineService;
+import com.upuphub.dew.community.general.api.utils.EDSUtil;
 import com.upuphub.dew.community.general.api.utils.HttpUtil;
 import org.springframework.stereotype.Service;
+
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
@@ -69,5 +69,32 @@ public class MachineServiceImpl implements MachineService {
         }
         machineHealthResp.setMachineHeathInfoList(machineHeathInfoList);
         return ServiceResponseMessage.createBySuccessCodeMessage("获取成功",machineHealthResp);
+    }
+
+    @Override
+    public ServiceResponseMessage fetchMachineSearchHistoryInfo(Long startTime, Long endTime, String macAddress) {
+        MachineSearchHistoryRequest machineSearchHistoryRequest = EDSUtil.toProtobufMessage(startTime,endTime,macAddress);
+        MachinesSearchHistoryResult machinesSearchHistory = dewMachineService.fetchMachineSearchHistoryByUin(machineSearchHistoryRequest);
+        if(null == machinesSearchHistory || machinesSearchHistory.getMachineSearchHistoryResultListCount() == 0){
+            return ServiceResponseMessage.createBySuccessCodeMessage("没有查询指定的属性信息");
+        }
+        MachineSearchHistoryResp machineSearchHistoryResp = new MachineSearchHistoryResp();
+        List<MachineSearchHistoryResp.History> machineSearchHistoryList = new ArrayList<>(machinesSearchHistory.getMachineSearchHistoryResultListCount());
+        for (MachineSearchHistoryResult machineSearchHistoryResult : machinesSearchHistory.getMachineSearchHistoryResultListList()) {
+            MachineSearchHistoryResp.History searchHistory = MessageUtil.messageToCommonPojo(machineSearchHistoryResult, MachineSearchHistoryResp.History.class);
+            if(null == searchHistory){
+                continue;
+            }
+            List<MachineSearchHistoryResp.History.SearchCount> searchCountList = new ArrayList<>(machineSearchHistoryResult.getMachineSearchCountResultListCount());
+            for (MachineSearchCountResult machineSearchCountResult : machineSearchHistoryResult.getMachineSearchCountResultListList()) {
+                MachineSearchHistoryResp.History.SearchCount searchCount = MessageUtil.messageToCommonPojo(machineSearchCountResult,
+                        MachineSearchHistoryResp.History.SearchCount.class);
+                searchCountList.add(searchCount);
+            }
+            searchHistory.setSearchCountList(searchCountList);
+            machineSearchHistoryList.add(searchHistory);
+        }
+        machineSearchHistoryResp.setMachineSearchHistoryList(machineSearchHistoryList);
+        return ServiceResponseMessage.createBySuccessCodeMessage(machineSearchHistoryResp);
     }
 }

@@ -71,6 +71,8 @@ public class MachineController {
         ).build();
     }
 
-
-
+    @PostMapping("/IoTDA/search/history")
+    public MachinesSearchHistoryResult fetchMachineSearchHistoryByUin(@RequestBody MachineSearchHistoryRequest machineSearchHistoryRequest) {
+       return null;
+    }
 }

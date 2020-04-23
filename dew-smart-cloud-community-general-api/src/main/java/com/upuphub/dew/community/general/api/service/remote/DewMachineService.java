@@ -1,9 +1,7 @@
 package com.upuphub.dew.community.general.api.service.remote;
 
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineBindInfoRequest;
-import com.upuphub.dew.community.connection.protobuf.machine.MachineUinRequest;
-import com.upuphub.dew.community.connection.protobuf.machine.MachinesHealthResult;
+import com.upuphub.dew.community.connection.protobuf.machine.*;
 import com.upuphub.dew.community.general.api.config.ProtoFeignConfiguration;
 import com.upuphub.dew.community.general.api.service.remote.sentinel.DewMachineServiceSentinel;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -30,4 +28,8 @@ public interface DewMachineService {
      */
     @PostMapping(value = "/IoTDA/health/search",consumes = "application/x-protobuf",produces = "application/x-protobuf")
     MachinesHealthResult fetchMachineInfoAndHealthByUin(@RequestBody MachineUinRequest machineUinRequest);
-}
+
+
+    @PostMapping(value = "/IoTDA/search/history",consumes = "application/x-protobuf",produces = "application/x-protobuf")
+    MachinesSearchHistoryResult fetchMachineSearchHistoryByUin(@RequestBody MachineSearchHistoryRequest machineSearchHistoryRequest);
+    }

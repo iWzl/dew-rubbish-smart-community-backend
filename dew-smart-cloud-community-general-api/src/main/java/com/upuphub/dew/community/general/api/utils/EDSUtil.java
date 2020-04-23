@@ -5,6 +5,7 @@ import com.upuphub.dew.community.connection.protobuf.account.BaseProfile;
 import com.upuphub.dew.community.connection.protobuf.account.Location;
 import com.upuphub.dew.community.connection.protobuf.account.Profile;
 import com.upuphub.dew.community.connection.protobuf.account.UsernameAndPassword;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineSearchHistoryRequest;
 import com.upuphub.dew.community.connection.protobuf.moments.*;
 import com.upuphub.dew.community.connection.protobuf.push.EmailTemplateAndParams;
 import com.upuphub.dew.community.connection.protobuf.relation.RELATION_SOURCE;
@@ -31,8 +32,8 @@ public class EDSUtil {
         profile.setUin(rpcProfile.getUin());
         profile.setOpenId(DewOpenIdUtil.generateOpenId(rpcProfile.getUin()));
         profile.setProfileCompletion(rpcProfile.getProfileCompletion());
-        UsrProfileResp usrProfile = MessageUtil.messageToCommonPojo(rpcProfile.getUsrProfile(),UsrProfileResp.class);
-        UsrStatusFlagResp usrStatusFlag = MessageUtil.messageToCommonPojo(rpcProfile.getUsrStatusFlag(),UsrStatusFlagResp.class);
+        UsrProfileResp usrProfile = MessageUtil.messageToCommonPojo(rpcProfile.getUsrProfile(), UsrProfileResp.class);
+        UsrStatusFlagResp usrStatusFlag = MessageUtil.messageToCommonPojo(rpcProfile.getUsrStatusFlag(), UsrStatusFlagResp.class);
         UsrSettingResp usrSetting = new UsrSettingResp();
         usrSetting.setNotification(true);
         usrSetting.setVoiceNotification(true);
@@ -47,7 +48,7 @@ public class EDSUtil {
         return profile;
     }
 
-    public static UsernameAndPassword toProtobufMessage(UsernameAndPasswordReq usernameAndPasswordReq){
+    public static UsernameAndPassword toProtobufMessage(UsernameAndPasswordReq usernameAndPasswordReq) {
         // 转换请求数据
         return UsernameAndPassword.newBuilder()
                 .setUsername(usernameAndPasswordReq.getUserName())
@@ -128,16 +129,16 @@ public class EDSUtil {
     }
 
 
-    private static List<String> getPicsList(MomentDynamicContent dynamicContent){
+    private static List<String> getPicsList(MomentDynamicContent dynamicContent) {
         List<String> picList = new ArrayList<>();
-        for (int i = 0; i < dynamicContent.getPicturesCount() ; i++) {
+        for (int i = 0; i < dynamicContent.getPicturesCount(); i++) {
             picList.add(dynamicContent.getPictures(i));
         }
         return picList;
     }
 
     public static MomentDynamicPublish toProtobufMessage(MomentsPublishReq momentsPublishReq) {
-        if(null == momentsPublishReq){
+        if (null == momentsPublishReq) {
             return null;
         }
         return MomentDynamicPublish.newBuilder()
@@ -151,7 +152,7 @@ public class EDSUtil {
 
 
     public static MomentReplyRequest toProtobufMessage(MomentReplyReq momentReplyReq) {
-        if(null == momentReplyReq){
+        if (null == momentReplyReq) {
             return null;
         }
         return MomentReplyRequest.newBuilder()
@@ -161,8 +162,8 @@ public class EDSUtil {
                 .build();
     }
 
-    private static MOMENTS_DYNAMIC_PUBLISH_TYPE toProtobufMomentsPublishType(MomentsPublishReq.PUBLISH_TYPE publishType){
-        switch (publishType){
+    private static MOMENTS_DYNAMIC_PUBLISH_TYPE toProtobufMomentsPublishType(MomentsPublishReq.PUBLISH_TYPE publishType) {
+        switch (publishType) {
             case ORDINARY:
                 return MOMENTS_DYNAMIC_PUBLISH_TYPE.ORDINARY;
             case ORIGINAL:
@@ -174,8 +175,8 @@ public class EDSUtil {
         }
     }
 
-    private static MOMENTS_COMMENT_TYPE toProtobufMomentCommentType(MomentCommentReq.COMMENT_TYPE commentType){
-        switch (commentType){
+    private static MOMENTS_COMMENT_TYPE toProtobufMomentCommentType(MomentCommentReq.COMMENT_TYPE commentType) {
+        switch (commentType) {
             case FAVORITE:
                 return MOMENTS_COMMENT_TYPE.FAVORITE;
             case REPLY:
@@ -196,13 +197,13 @@ public class EDSUtil {
 
     public static MomentDetailsUinRequest toProtobufMessage(MomentUinFilterReq momentUinFilterReq) {
         Long uin = null;
-        if(null == momentUinFilterReq.getUin() || 0 == momentUinFilterReq.getUin()){
-            if(null == momentUinFilterReq.getOpenId() || "".equals(momentUinFilterReq.getOpenId())){
+        if (null == momentUinFilterReq.getUin() || 0 == momentUinFilterReq.getUin()) {
+            if (null == momentUinFilterReq.getOpenId() || "".equals(momentUinFilterReq.getOpenId())) {
                 uin = HttpUtil.getUserUin();
-            }else {
+            } else {
                 uin = DewOpenIdUtil.generateUin(momentUinFilterReq.getOpenId());
             }
-        }else {
+        } else {
             uin = momentUinFilterReq.getUin();
         }
         return MomentDetailsUinRequest.newBuilder()
@@ -237,11 +238,20 @@ public class EDSUtil {
                 .build();
     }
 
-    public static EmailTemplateAndParams toProtobufMessage(String email, String emailTemplateCode, Map<String,String> paramsMap) {
+    public static EmailTemplateAndParams toProtobufMessage(String email, String emailTemplateCode, Map<String, String> paramsMap) {
         return EmailTemplateAndParams.newBuilder()
                 .setEmail(email)
                 .setTemplateId(emailTemplateCode)
                 .putAllReplaceParameters(paramsMap)
+                .build();
+    }
+
+    public static MachineSearchHistoryRequest toProtobufMessage(Long startTime, Long endTime, String macAddress) {
+        return MachineSearchHistoryRequest.newBuilder()
+                .setEndTime(endTime)
+                .setStartTime(startTime)
+                .setMachineMacAddress(null == macAddress ? "" : macAddress)
+                .setUin(HttpUtil.getUserUin())
                 .build();
     }
 }

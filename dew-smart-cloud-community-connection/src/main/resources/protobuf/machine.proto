@@ -48,6 +48,34 @@ message MachineHealthResult{
     HealthInfoResult healthInfoResult = 7;
 }
 
+message MachineSearchHistoryRequest{
+    int64 uin = 1;
+    int64 startTime = 2;
+    int64 endTime = 3;
+    string machineMacAddress = 4;
+}
+
+message MachinesSearchHistoryResult{
+    repeated MachineSearchHistoryResult machineSearchHistoryResultList = 1;
+}
+
+
+message MachineSearchHistoryResult{
+    string machineMacAddress = 1;
+    string machineName = 2;
+    int32 machineType = 3;
+    string machineVersion =4;
+    string machineMaker = 5;
+    string nikeName = 6;
+    repeated MachineSearchCountResult machineSearchCountResultList = 7;
+}
+
+message MachineSearchCountResult{
+    string searchName = 1;
+    string searchCount = 2;
+}
+
+
 message HealthInfoResult{
     int32 cpuCoreCount = 1;
     double cpuTemperature = 2;
