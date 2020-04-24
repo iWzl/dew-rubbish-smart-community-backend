@@ -32,7 +32,7 @@ public class MachineSearchHistoryResp {
         @Data
         public static class SearchCount{
             private String searchName;
-            private String searchCount;
+            private Integer searchCount;
         }
     }
 }

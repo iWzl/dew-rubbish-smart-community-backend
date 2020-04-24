@@ -72,7 +72,7 @@ message MachineSearchHistoryResult{
 
 message MachineSearchCountResult{
     string searchName = 1;
-    string searchCount = 2;
+    int32 searchCount = 2;
 }
 
 

@@ -179,8 +179,6 @@ public class MachineServiceImpl implements MachineService {
         if(null == machineHistorySearch){
             return Collections.emptyList();
         }
-        String startTime = DateUtil.convertDateToYearMonthAndDay(machineHistorySearch.getStartTime());
-        String endTime = DateUtil.convertDateToYearMonthAndDay(machineHistorySearch.getEndTime());
         Query machineDetailQuery = new Query();
         boolean checkUin = false;
         if(!ObjectUtil.isEmpty(machineHistorySearch.getMachineMacAddress())){
@@ -196,18 +194,85 @@ public class MachineServiceImpl implements MachineService {
             if(checkUin && !ObjectUtil.isEmpty(machineHistorySearch.getUin()) && machineHardwareDetailList.size() == 1){
                 if(machineHardwareDetailList.get(0).getBindUin().equals(machineHistorySearch.getUin())){
                     // 查询满足条件的 指定Mac地址的设备检测信息
+                    List<MachineSearchHistoryPO> machineSearchHistoryList = fetchMachineSearchHistoryByDateRange(
+                            machineHistorySearch.getStartTime(),machineHistorySearch.getEndTime(),Collections.singletonList(machineHistorySearch.getMachineMacAddress()));
+                    return buildMachineSearchHistoryResult(machineHardwareDetailList,machineSearchHistoryList);
                 }else {
                     return Collections.emptyList();
                 }
             }else {
-                List<String> macAddress = machineHardwareDetailList.stream().map(MachineHardwareDetailPO::getMachineMacAddress)
+                List<String> macAddressList = machineHardwareDetailList.stream().map(MachineHardwareDetailPO::getMachineMacAddress)
                         .collect(Collectors.toList());
                 // 查询满足条件的 指定Mac地址的设备检测信息
+                List<MachineSearchHistoryPO> machineSearchHistoryList = fetchMachineSearchHistoryByDateRange(
+                        machineHistorySearch.getStartTime(),machineHistorySearch.getEndTime(),macAddressList);
+                return buildMachineSearchHistoryResult(machineHardwareDetailList,machineSearchHistoryList);
             }
         }else {
             // 查询所有的满足条件的设备搜索结果信息
+            List<MachineSearchHistoryPO> machineSearchHistoryList = fetchMachineSearchHistoryByDateRange(
+                    machineHistorySearch.getStartTime(),machineHistorySearch.getEndTime(),Collections.emptyList());
+            List<String> machineAddressList = machineSearchHistoryList.stream().map(MachineSearchHistoryPO::getMachineAddress).collect(Collectors.toList());
+            machineDetailQuery = new Query();
+            machineDetailQuery.addCriteria(Criteria.where("_id").in(machineAddressList));
+            List<MachineHardwareDetailPO> machineHardwareDetailList = mongoTemplate.find(machineDetailQuery,MachineHardwareDetailPO.class);
+            return buildMachineSearchHistoryResult(machineHardwareDetailList,machineSearchHistoryList);
         }
-        // todo 待完善
-        return Collections.emptyList();
+    }
+
+
+    private List<MachineSearchHistoryResult> buildMachineSearchHistoryResult(List<MachineHardwareDetailPO> machineHardwareDetailList,List<MachineSearchHistoryPO>  machineSearchHistoryList){
+        List<MachineSearchHistoryResult> machineSearchHistoryResultList = new ArrayList<>(machineHardwareDetailList.size());
+        Map<String,Map<String,Integer>> searchHistoryCountMap =new HashMap<>(machineHardwareDetailList.size());
+        for (MachineSearchHistoryPO machineSearchHistory : machineSearchHistoryList) {
+            if(searchHistoryCountMap.containsKey(machineSearchHistory.getMachineAddress())){
+                for (String searchKey : machineSearchHistory.getSearchKeyAndTimes().keySet()) {
+                    if(searchHistoryCountMap.get(machineSearchHistory.getMachineAddress()).containsKey(searchKey)){
+                        searchHistoryCountMap.get(machineSearchHistory.getMachineAddress()).put(searchKey,
+                                searchHistoryCountMap.get(machineSearchHistory.getMachineAddress()).get(searchKey)
+                                        + machineSearchHistory.getSearchKeyAndTimes().get(searchKey)
+                                );
+                    }else {
+                        searchHistoryCountMap.get(machineSearchHistory.getMachineAddress()).put(searchKey,machineSearchHistory.getSearchKeyAndTimes().get(searchKey));
+                    }
+                }
+            }else {
+                searchHistoryCountMap.put(machineSearchHistory.getMachineAddress(),machineSearchHistory.getSearchKeyAndTimes());
+            }
+        }
+        for (MachineHardwareDetailPO machineHardwareDetail : machineHardwareDetailList) {
+
+            Map<String,Integer> searchCountMap = searchHistoryCountMap.get(machineHardwareDetail.getMachineMacAddress());
+            List<MachineSearchCountResult> machineSearchCountResultList = new ArrayList<>(searchCountMap.size());
+            searchCountMap.forEach((searchName,count)->{
+                MachineSearchCountResult machineSearchCountResult = MachineSearchCountResult.newBuilder()
+                        .setSearchName(searchName)
+                        .setSearchCount(count)
+                        .build();
+                machineSearchCountResultList.add(machineSearchCountResult);
+            });
+            MachineSearchHistoryResult machineSearchHistoryResult = MachineSearchHistoryResult.newBuilder()
+                    .setMachineMacAddress(machineHardwareDetail.getMachineMacAddress())
+                    .setMachineName(machineHardwareDetail.getMachineName())
+                    .setNikeName(machineHardwareDetail.getNikeName())
+                    .setMachineType(machineHardwareDetail.getMachineType())
+                    .setMachineVersion(machineHardwareDetail.getMachineVersion())
+                    .setMachineMaker(machineHardwareDetail.getMachineMaker())
+                    .addAllMachineSearchCountResultList(machineSearchCountResultList)
+                    .build();
+            machineSearchHistoryResultList.add(machineSearchHistoryResult);
+        }
+        return machineSearchHistoryResultList;
+    }
+
+
+    private List<MachineSearchHistoryPO> fetchMachineSearchHistoryByDateRange(Long startTime,Long endTime,List<String> macAddressList){
+        Query machineHistoryQuery =  new Query();
+        machineHistoryQuery.addCriteria(Criteria.where("record_timestamp").lte(endTime)
+                .andOperator(Criteria.where("record_timestamp").gte(startTime)));
+        if(!macAddressList.isEmpty()){
+            machineHistoryQuery.addCriteria(Criteria.where("machine_address").in(macAddressList));
+        }
+        return mongoTemplate.find(machineHistoryQuery,MachineSearchHistoryPO.class);
     }
 }
