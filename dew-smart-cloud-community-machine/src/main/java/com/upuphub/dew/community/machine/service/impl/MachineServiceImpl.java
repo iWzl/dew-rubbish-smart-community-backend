@@ -243,6 +243,9 @@ public class MachineServiceImpl implements MachineService {
         for (MachineHardwareDetailPO machineHardwareDetail : machineHardwareDetailList) {
 
             Map<String,Integer> searchCountMap = searchHistoryCountMap.get(machineHardwareDetail.getMachineMacAddress());
+            if(null == searchCountMap) {
+                return Collections.emptyList();
+            }
             List<MachineSearchCountResult> machineSearchCountResultList = new ArrayList<>(searchCountMap.size());
             searchCountMap.forEach((searchName,count)->{
                 MachineSearchCountResult machineSearchCountResult = MachineSearchCountResult.newBuilder()
