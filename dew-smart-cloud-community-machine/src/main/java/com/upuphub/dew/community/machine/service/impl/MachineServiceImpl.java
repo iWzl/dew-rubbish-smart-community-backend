@@ -45,14 +45,14 @@ public class MachineServiceImpl implements MachineService {
 
     @Override
     public int registerNewMachine(MachineRegisterDTO machineRegisterInfo) {
-        if(ObjectUtil.isEmpty(machineRegisterInfo.getMachineMacAddress())){
+        if (ObjectUtil.isEmpty(machineRegisterInfo.getMachineMacAddress())) {
             return MachineConst.ERROR_CODE_COMMON_FAIL;
         }
-        if(machineHardwareDetailRepositoryDao.findById(machineRegisterInfo.getMachineMacAddress()).isPresent()){
+        if (machineHardwareDetailRepositoryDao.findById(machineRegisterInfo.getMachineMacAddress()).isPresent()) {
             return MachineConst.ERROR_CODE_ALREADY_EXISTS;
-        }else {
+        } else {
             MachineHardwareDetailPO machineHardwareDetail = new MachineHardwareDetailPO();
-            BeanUtils.copyProperties(machineRegisterInfo,machineHardwareDetail);
+            BeanUtils.copyProperties(machineRegisterInfo, machineHardwareDetail);
             machineHardwareDetail.setRegisterTime(System.currentTimeMillis());
             machineHardwareDetailRepositoryDao.save(machineHardwareDetail);
             return MachineConst.ERROR_CODE_SUCCESS;
@@ -72,7 +72,7 @@ public class MachineServiceImpl implements MachineService {
     @Override
     public int refreshMachineHealthInfo(MachineHealthDTO machineHealthInfo) {
         MachineHealthInfoPO machineHealthInfoEntity = new MachineHealthInfoPO();
-        BeanUtils.copyProperties(machineHealthInfo,machineHealthInfoEntity);
+        BeanUtils.copyProperties(machineHealthInfo, machineHealthInfoEntity);
         machineHealthInfoEntity.setRefreshTime(System.currentTimeMillis());
         machineHealthInfoRepositoryDao.save(machineHealthInfoEntity);
         return MachineConst.ERROR_CODE_SUCCESS;
@@ -80,19 +80,19 @@ public class MachineServiceImpl implements MachineService {
 
     @Override
     public int journalMachineSearchHistory(String macAddress, String searchKey) {
-        String key = String.format("%s-%s", DateUtil.getTodayKey(),macAddress);
+        String key = String.format("%s-%s", DateUtil.getTodayKey(), macAddress);
         Optional<MachineSearchHistoryPO> machineSearchHistory = machineSearchHistoryRepositoryDao.findById(key);
-        if(machineSearchHistory.isPresent()){
+        if (machineSearchHistory.isPresent()) {
             machineSearchHistory.get().getSearchKeyAndTimes().put(searchKey,
-                    (machineSearchHistory.get().getSearchKeyAndTimes().getOrDefault(searchKey,0) + 1));
+                    (machineSearchHistory.get().getSearchKeyAndTimes().getOrDefault(searchKey, 0) + 1));
             machineSearchHistoryRepositoryDao.save(machineSearchHistory.get());
-        }else {
+        } else {
             MachineSearchHistoryPO machineSearchHistoryDetail = new MachineSearchHistoryPO();
             machineSearchHistoryDetail.setKey(key);
             machineSearchHistoryDetail.setMachineAddress(macAddress);
-            machineSearchHistoryDetail.setRecordTime( DateUtil.getTodayKey());
+            machineSearchHistoryDetail.setRecordTime(DateUtil.getTodayKey());
             machineSearchHistoryDetail.setRecordTimestamp(System.currentTimeMillis());
-            machineSearchHistoryDetail.setSearchKeyAndTimes(Collections.singletonMap(searchKey,1));
+            machineSearchHistoryDetail.setSearchKeyAndTimes(Collections.singletonMap(searchKey, 1));
             machineSearchHistoryRepositoryDao.save(machineSearchHistoryDetail);
         }
         return MachineConst.ERROR_CODE_SUCCESS;
@@ -100,38 +100,38 @@ public class MachineServiceImpl implements MachineService {
 
     @Override
     public int bindHardwareDevices(MachineBindDTO machineBindInfo) {
-        if(ObjectUtil.isEmpty(machineBindInfo.getMachineMacAddress())
+        if (ObjectUtil.isEmpty(machineBindInfo.getMachineMacAddress())
                 || ObjectUtil.isEmpty(machineBindInfo.getBindKey())
-                || ObjectUtil.isEmpty(machineBindInfo.getBindUin())){
+                || ObjectUtil.isEmpty(machineBindInfo.getBindUin())) {
             return MachineConst.ERROR_CODE_COMMON_FAIL;
         }
         Optional<MachineHardwareDetailPO> machineHardwareDetailOptional = machineHardwareDetailRepositoryDao
                 .findById(machineBindInfo.getMachineMacAddress());
-        if(!machineHardwareDetailOptional.isPresent()){
+        if (!machineHardwareDetailOptional.isPresent()) {
             return MachineConst.ERROR_CODE_NOT_EXISTS;
-        }else if(!ObjectUtil.isEmpty(machineHardwareDetailOptional.get().getBindUin())){
+        } else if (!ObjectUtil.isEmpty(machineHardwareDetailOptional.get().getBindUin())) {
             return MachineConst.ERROR_CODE_ALREADY_EXISTS;
-        }else if(machineHardwareDetailOptional.get().getBindKey().equals(machineBindInfo.getBindKey())){
+        } else if (machineHardwareDetailOptional.get().getBindKey().equals(machineBindInfo.getBindKey())) {
             MachineHardwareDetailPO machineHardwareDetail = machineHardwareDetailOptional.get();
             machineHardwareDetail.setBindUin(machineBindInfo.getBindUin());
             machineHardwareDetail.setBindTime(System.currentTimeMillis());
             machineHardwareDetail.setNikeName(machineBindInfo.getMachineName());
             machineHardwareDetailRepositoryDao.save(machineHardwareDetail);
             return MachineConst.ERROR_CODE_SUCCESS;
-        }else {
-                return MachineConst.ERROR_CODE_COMMON_FAIL;
+        } else {
+            return MachineConst.ERROR_CODE_COMMON_FAIL;
         }
     }
 
     @Override
     public List<MachineHealthResult> fetchMachineInfoAndHealthByUin(Long uin) {
-        if(ObjectUtil.isEmpty(uin)){
+        if (ObjectUtil.isEmpty(uin)) {
             return Collections.emptyList();
         }
         Query machineByUinQuery = new Query();
         machineByUinQuery.addCriteria(Criteria.where("bind_uin").is(uin));
-        List<MachineHardwareDetailPO> machineHardwareDetailList = mongoTemplate.find(machineByUinQuery,MachineHardwareDetailPO.class);
-        if(machineHardwareDetailList.isEmpty()){
+        List<MachineHardwareDetailPO> machineHardwareDetailList = mongoTemplate.find(machineByUinQuery, MachineHardwareDetailPO.class);
+        if (machineHardwareDetailList.isEmpty()) {
             return Collections.emptyList();
         }
         List<MachineHealthResult> machineHealthResultList = new ArrayList<>(machineHardwareDetailList.size());
@@ -139,27 +139,32 @@ public class MachineServiceImpl implements MachineService {
         List<String> macAddressList = machineHardwareDetailList
                 .stream().map(MachineHardwareDetailPO::getMachineMacAddress).collect(Collectors.toList());
         machineHealthQuery.addCriteria(Criteria.where("_id").in(macAddressList));
-        List<MachineHealthInfoPO> machineHealthInfoList = mongoTemplate.find(machineHealthQuery,MachineHealthInfoPO.class);
-        Map<String,MachineHealthInfoPO> mackAddressAndHealthInfo = machineHealthInfoList
-                .stream().collect(Collectors.toMap(MachineHealthInfoPO::getMacAddress,(info)->info));
+        List<MachineHealthInfoPO> machineHealthInfoList = mongoTemplate.find(machineHealthQuery, MachineHealthInfoPO.class);
+        Map<String, MachineHealthInfoPO> mackAddressAndHealthInfo = machineHealthInfoList
+                .stream().collect(Collectors.toMap(MachineHealthInfoPO::getMacAddress, (info) -> info));
         for (MachineHardwareDetailPO machineHardwareDetail : machineHardwareDetailList) {
             MachineHealthInfoPO machineHealthInfo = mackAddressAndHealthInfo
-                    .getOrDefault(machineHardwareDetail.getMachineMacAddress(),new MachineHealthInfoPO());
-            HealthInfoResult healthInfoResult = HealthInfoResult.newBuilder()
-                    .setCpuCoreCount(machineHealthInfo.getCpuCoreCount())
-                    .setCpuTemperature(machineHealthInfo.getCpuTemperature())
-                    .setCpuUsageRate(machineHealthInfo.getCpuUsageRate())
-                    .setDiskUseRate(machineHealthInfo.getDiskUseRate())
-                    .setFreeDiskSize(machineHealthInfo.getFreeDiskSize())
-                    .setFreeMemorySize(machineHealthInfo.getFreeMemorySize())
-                    .setHardDiskSize(machineHealthInfo.getHardDiskSize())
-                    .setMemorySize(machineHealthInfo.getMemorySize())
-                    .setSystemName(machineHealthInfo.getSystemName())
-                    .setUsedHardDiskSize(machineHealthInfo.getUsedHardDiskSize())
-                    .setUsedMemorySize(machineHealthInfo.getUsedMemorySize())
-                    .setMacAddress(machineHealthInfo.getMacAddress())
-                    .setIpAddr(machineHealthInfo.getIpAddr())
-                    .build();
+                    .get(machineHardwareDetail.getMachineMacAddress());
+            HealthInfoResult healthInfoResult;
+            if (ObjectUtil.isEmpty(machineHealthInfo)) {
+                healthInfoResult = HealthInfoResult.newBuilder().build();
+            } else {
+                healthInfoResult = HealthInfoResult.newBuilder()
+                        .setCpuCoreCount(machineHealthInfo.getCpuCoreCount())
+                        .setCpuTemperature(machineHealthInfo.getCpuTemperature())
+                        .setCpuUsageRate(machineHealthInfo.getCpuUsageRate())
+                        .setDiskUseRate(machineHealthInfo.getDiskUseRate())
+                        .setFreeDiskSize(machineHealthInfo.getFreeDiskSize())
+                        .setFreeMemorySize(machineHealthInfo.getFreeMemorySize())
+                        .setHardDiskSize(machineHealthInfo.getHardDiskSize())
+                        .setMemorySize(machineHealthInfo.getMemorySize())
+                        .setSystemName(machineHealthInfo.getSystemName())
+                        .setUsedHardDiskSize(machineHealthInfo.getUsedHardDiskSize())
+                        .setUsedMemorySize(machineHealthInfo.getUsedMemorySize())
+                        .setMacAddress(machineHealthInfo.getMacAddress())
+                        .setIpAddr(machineHealthInfo.getIpAddr())
+                        .build();
+            }
             MachineHealthResult machineHealthResult = MachineHealthResult.newBuilder()
                     .setMachineMacAddress(machineHardwareDetail.getMachineMacAddress())
                     .setMachineName(machineHardwareDetail.getMachineName())
@@ -176,78 +181,78 @@ public class MachineServiceImpl implements MachineService {
 
     @Override
     public List<MachineSearchHistoryResult> fetchMachineSearchHistoryByUin(MachineHistorySearchDTO machineHistorySearch) {
-        if(null == machineHistorySearch){
+        if (null == machineHistorySearch) {
             return Collections.emptyList();
         }
         Query machineDetailQuery = new Query();
         boolean checkUin = false;
-        if(!ObjectUtil.isEmpty(machineHistorySearch.getMachineMacAddress())){
+        if (!ObjectUtil.isEmpty(machineHistorySearch.getMachineMacAddress())) {
             checkUin = true;
             machineDetailQuery.addCriteria(Criteria.where("_id").is(machineHistorySearch.getMachineMacAddress()));
-        }else if(!ObjectUtil.isEmpty(machineHistorySearch.getUin())){
+        } else if (!ObjectUtil.isEmpty(machineHistorySearch.getUin())) {
             machineDetailQuery.addCriteria(Criteria.where("bind_uin").is(machineHistorySearch.getUin()));
-        }else {
+        } else {
             machineDetailQuery = null;
         }
-        if(null != machineDetailQuery){
-            List<MachineHardwareDetailPO> machineHardwareDetailList = mongoTemplate.find(machineDetailQuery,MachineHardwareDetailPO.class);
-            if(checkUin && !ObjectUtil.isEmpty(machineHistorySearch.getUin()) && machineHardwareDetailList.size() == 1){
-                if(machineHardwareDetailList.get(0).getBindUin().equals(machineHistorySearch.getUin())){
+        if (null != machineDetailQuery) {
+            List<MachineHardwareDetailPO> machineHardwareDetailList = mongoTemplate.find(machineDetailQuery, MachineHardwareDetailPO.class);
+            if (checkUin && !ObjectUtil.isEmpty(machineHistorySearch.getUin()) && machineHardwareDetailList.size() == 1) {
+                if (machineHardwareDetailList.get(0).getBindUin().equals(machineHistorySearch.getUin())) {
                     // 查询满足条件的 指定Mac地址的设备检测信息
                     List<MachineSearchHistoryPO> machineSearchHistoryList = fetchMachineSearchHistoryByDateRange(
-                            machineHistorySearch.getStartTime(),machineHistorySearch.getEndTime(),Collections.singletonList(machineHistorySearch.getMachineMacAddress()));
-                    return buildMachineSearchHistoryResult(machineHardwareDetailList,machineSearchHistoryList);
-                }else {
+                            machineHistorySearch.getStartTime(), machineHistorySearch.getEndTime(), Collections.singletonList(machineHistorySearch.getMachineMacAddress()));
+                    return buildMachineSearchHistoryResult(machineHardwareDetailList, machineSearchHistoryList);
+                } else {
                     return Collections.emptyList();
                 }
-            }else {
+            } else {
                 List<String> macAddressList = machineHardwareDetailList.stream().map(MachineHardwareDetailPO::getMachineMacAddress)
                         .collect(Collectors.toList());
                 // 查询满足条件的 指定Mac地址的设备检测信息
                 List<MachineSearchHistoryPO> machineSearchHistoryList = fetchMachineSearchHistoryByDateRange(
-                        machineHistorySearch.getStartTime(),machineHistorySearch.getEndTime(),macAddressList);
-                return buildMachineSearchHistoryResult(machineHardwareDetailList,machineSearchHistoryList);
+                        machineHistorySearch.getStartTime(), machineHistorySearch.getEndTime(), macAddressList);
+                return buildMachineSearchHistoryResult(machineHardwareDetailList, machineSearchHistoryList);
             }
-        }else {
+        } else {
             // 查询所有的满足条件的设备搜索结果信息
             List<MachineSearchHistoryPO> machineSearchHistoryList = fetchMachineSearchHistoryByDateRange(
-                    machineHistorySearch.getStartTime(),machineHistorySearch.getEndTime(),Collections.emptyList());
+                    machineHistorySearch.getStartTime(), machineHistorySearch.getEndTime(), Collections.emptyList());
             List<String> machineAddressList = machineSearchHistoryList.stream().map(MachineSearchHistoryPO::getMachineAddress).collect(Collectors.toList());
             machineDetailQuery = new Query();
             machineDetailQuery.addCriteria(Criteria.where("_id").in(machineAddressList));
-            List<MachineHardwareDetailPO> machineHardwareDetailList = mongoTemplate.find(machineDetailQuery,MachineHardwareDetailPO.class);
-            return buildMachineSearchHistoryResult(machineHardwareDetailList,machineSearchHistoryList);
+            List<MachineHardwareDetailPO> machineHardwareDetailList = mongoTemplate.find(machineDetailQuery, MachineHardwareDetailPO.class);
+            return buildMachineSearchHistoryResult(machineHardwareDetailList, machineSearchHistoryList);
         }
     }
 
 
-    private List<MachineSearchHistoryResult> buildMachineSearchHistoryResult(List<MachineHardwareDetailPO> machineHardwareDetailList,List<MachineSearchHistoryPO>  machineSearchHistoryList){
+    private List<MachineSearchHistoryResult> buildMachineSearchHistoryResult(List<MachineHardwareDetailPO> machineHardwareDetailList, List<MachineSearchHistoryPO> machineSearchHistoryList) {
         List<MachineSearchHistoryResult> machineSearchHistoryResultList = new ArrayList<>(machineHardwareDetailList.size());
-        Map<String,Map<String,Integer>> searchHistoryCountMap =new HashMap<>(machineHardwareDetailList.size());
+        Map<String, Map<String, Integer>> searchHistoryCountMap = new HashMap<>(machineHardwareDetailList.size());
         for (MachineSearchHistoryPO machineSearchHistory : machineSearchHistoryList) {
-            if(searchHistoryCountMap.containsKey(machineSearchHistory.getMachineAddress())){
+            if (searchHistoryCountMap.containsKey(machineSearchHistory.getMachineAddress())) {
                 for (String searchKey : machineSearchHistory.getSearchKeyAndTimes().keySet()) {
-                    if(searchHistoryCountMap.get(machineSearchHistory.getMachineAddress()).containsKey(searchKey)){
+                    if (searchHistoryCountMap.get(machineSearchHistory.getMachineAddress()).containsKey(searchKey)) {
                         searchHistoryCountMap.get(machineSearchHistory.getMachineAddress()).put(searchKey,
                                 searchHistoryCountMap.get(machineSearchHistory.getMachineAddress()).get(searchKey)
                                         + machineSearchHistory.getSearchKeyAndTimes().get(searchKey)
-                                );
-                    }else {
-                        searchHistoryCountMap.get(machineSearchHistory.getMachineAddress()).put(searchKey,machineSearchHistory.getSearchKeyAndTimes().get(searchKey));
+                        );
+                    } else {
+                        searchHistoryCountMap.get(machineSearchHistory.getMachineAddress()).put(searchKey, machineSearchHistory.getSearchKeyAndTimes().get(searchKey));
                     }
                 }
-            }else {
-                searchHistoryCountMap.put(machineSearchHistory.getMachineAddress(),machineSearchHistory.getSearchKeyAndTimes());
+            } else {
+                searchHistoryCountMap.put(machineSearchHistory.getMachineAddress(), machineSearchHistory.getSearchKeyAndTimes());
             }
         }
         for (MachineHardwareDetailPO machineHardwareDetail : machineHardwareDetailList) {
 
-            Map<String,Integer> searchCountMap = searchHistoryCountMap.get(machineHardwareDetail.getMachineMacAddress());
-            if(null == searchCountMap) {
+            Map<String, Integer> searchCountMap = searchHistoryCountMap.get(machineHardwareDetail.getMachineMacAddress());
+            if (null == searchCountMap) {
                 return Collections.emptyList();
             }
             List<MachineSearchCountResult> machineSearchCountResultList = new ArrayList<>(searchCountMap.size());
-            searchCountMap.forEach((searchName,count)->{
+            searchCountMap.forEach((searchName, count) -> {
                 MachineSearchCountResult machineSearchCountResult = MachineSearchCountResult.newBuilder()
                         .setSearchName(searchName)
                         .setSearchCount(count)
@@ -269,13 +274,13 @@ public class MachineServiceImpl implements MachineService {
     }
 
 
-    private List<MachineSearchHistoryPO> fetchMachineSearchHistoryByDateRange(Long startTime,Long endTime,List<String> macAddressList){
-        Query machineHistoryQuery =  new Query();
+    private List<MachineSearchHistoryPO> fetchMachineSearchHistoryByDateRange(Long startTime, Long endTime, List<String> macAddressList) {
+        Query machineHistoryQuery = new Query();
         machineHistoryQuery.addCriteria(Criteria.where("record_timestamp").lte(endTime)
                 .andOperator(Criteria.where("record_timestamp").gte(startTime)));
-        if(!macAddressList.isEmpty()){
+        if (!macAddressList.isEmpty()) {
             machineHistoryQuery.addCriteria(Criteria.where("machine_address").in(macAddressList));
         }
-        return mongoTemplate.find(machineHistoryQuery,MachineSearchHistoryPO.class);
+        return mongoTemplate.find(machineHistoryQuery, MachineSearchHistoryPO.class);
     }
 }
