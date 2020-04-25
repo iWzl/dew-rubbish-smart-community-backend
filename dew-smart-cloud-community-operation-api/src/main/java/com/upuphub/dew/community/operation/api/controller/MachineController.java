@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.operation.api.controller;
 
 import com.upuphub.dew.community.operation.api.bean.vo.common.ServiceResponseMessage;
+import com.upuphub.dew.community.operation.api.bean.vo.req.DateRangeReq;
 import com.upuphub.dew.community.operation.api.bean.vo.req.MachineRegisterReq;
 import com.upuphub.dew.community.operation.api.service.MachineService;
 import io.swagger.annotations.Api;
@@ -36,4 +37,14 @@ public class MachineController {
                 machineService.registerMachineInfo(machineRegisterReq)
         );
     }
+
+    @ApiOperation(value = "获取指定注册时间范围所有硬件设备信息")
+    @ApiParam(name = "DateRangeReq",required = true,value = "时间筛选范围")
+    @PostMapping(value = "/detail",consumes =  MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ServiceResponseMessage searchMachineDetailsByDateRange(@RequestBody @Validated DateRangeReq dateRangeReq){
+        return ServiceResponseMessage.createBySuccessCodeMessage(
+                machineService.searchMachineDetailsByDateRange(dateRangeReq.getStartTime(),dateRangeReq.getEndTime())
+        );
+    }
+
 }

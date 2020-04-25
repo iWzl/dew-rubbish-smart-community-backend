@@ -32,6 +32,7 @@ public class MachineHardwareDetailPO {
     @Field("machine_maker")
     private String machineMaker;
 
+    @Indexed
     @Field("register_time")
     private Long registerTime;
 

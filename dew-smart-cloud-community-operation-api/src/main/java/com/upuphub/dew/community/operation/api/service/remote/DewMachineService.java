@@ -1,6 +1,8 @@
 package com.upuphub.dew.community.operation.api.service.remote;
 
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineRegisterDetailsRequest;
+import com.upuphub.dew.community.connection.protobuf.machine.MachineRegisterDetailsResult;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineRegisterRequest;
 import com.upuphub.dew.community.operation.api.config.ProtoFeignConfiguration;
 import com.upuphub.dew.community.operation.api.service.remote.sentinel.DewMachineServiceSentinel;
@@ -24,4 +26,15 @@ public interface DewMachineService {
      */
     @PostMapping(value = "/IoTDA/register",consumes = "application/x-protobuf",produces = "application/x-protobuf")
     RpcResultCode registerNewMachineInfo(@RequestBody MachineRegisterRequest machineRegisterRequest);
+
+
+    /**
+     * 查询机器注册相关属性参数值
+     *
+     * @param machineRegisterDetailsRequest 机器注册信息相关的处理请求
+     * @return 机器注册信息明细的请求
+     */
+    @PostMapping(value = "/IoTDA/machine/details",consumes = "application/x-protobuf",produces = "application/x-protobuf")
+    MachineRegisterDetailsResult fetchMachineDetailsByDateRange(@RequestBody MachineRegisterDetailsRequest machineRegisterDetailsRequest);
+
 }

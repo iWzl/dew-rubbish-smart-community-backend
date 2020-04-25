@@ -30,6 +30,12 @@ public interface DewMachineService {
     MachinesHealthResult fetchMachineInfoAndHealthByUin(@RequestBody MachineUinRequest machineUinRequest);
 
 
+    /**
+     * 查询机器的查询历史请求
+     *
+     * @param machineSearchHistoryRequest 机器查询记录历史请求
+     * @return 查询的返回结果
+     */
     @PostMapping(value = "/IoTDA/search/history",consumes = "application/x-protobuf",produces = "application/x-protobuf")
     MachinesSearchHistoryResult fetchMachineSearchHistoryByUin(@RequestBody MachineSearchHistoryRequest machineSearchHistoryRequest);
     }

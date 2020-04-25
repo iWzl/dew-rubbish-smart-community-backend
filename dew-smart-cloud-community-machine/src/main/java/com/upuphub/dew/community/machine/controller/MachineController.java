@@ -79,4 +79,14 @@ public class MachineController {
                 machineService.fetchMachineSearchHistoryByUin(machineHistorySearch)
         ).build();
     }
+
+
+    @PostMapping("/IoTDA/machine/details")
+    public MachineRegisterDetailsResult fetchMachineDetailsByDateRange(@RequestBody MachineRegisterDetailsRequest machineRegisterDetailsRequest) {
+        return MachineRegisterDetailsResult.newBuilder().addAllMachineRegisterDetails(
+                machineService.fetchMachineDetailsByDateRange(
+                        machineRegisterDetailsRequest.getStartTime(),machineRegisterDetailsRequest.getEndTime()
+                )
+        ).build();
+    }
 }

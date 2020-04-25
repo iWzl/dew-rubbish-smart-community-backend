@@ -59,6 +59,27 @@ message MachinesSearchHistoryResult{
     repeated MachineSearchHistoryResult machineSearchHistoryResultList = 1;
 }
 
+message MachineRegisterDetailsRequest{
+    int64 startTime = 1;
+    int64 endTime = 2;
+}
+
+message MachineRegisterDetailsResult{
+    repeated MachineRegisterDetail machineRegisterDetails = 1;
+}
+
+message MachineRegisterDetail{
+    string machineMacAddress = 1;
+    string bindKey = 2;
+    string machineName = 3;
+    int32 machineType = 4;
+    string machineVersion = 5;
+    string machineMaker = 6;
+    string nikeName = 7;
+    int64 bindUin = 8;
+    int64 bindTime = 9;
+}
+
 
 message MachineSearchHistoryResult{
     string machineMacAddress = 1;

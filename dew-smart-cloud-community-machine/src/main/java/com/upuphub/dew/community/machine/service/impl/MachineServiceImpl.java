@@ -283,4 +283,30 @@ public class MachineServiceImpl implements MachineService {
         }
         return mongoTemplate.find(machineHistoryQuery, MachineSearchHistoryPO.class);
     }
+
+    @Override
+    public List<MachineRegisterDetail> fetchMachineDetailsByDateRange(long startTime, long endTime) {
+        Query machineQuery = new Query();
+        machineQuery.addCriteria(Criteria.where("register_time").gte(startTime).andOperator(Criteria.where("register_time").lte(endTime)));
+        List<MachineHardwareDetailPO> machineHardwareDetailList = mongoTemplate.find(machineQuery, MachineHardwareDetailPO.class);
+        if (machineHardwareDetailList.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<MachineRegisterDetail> machineRegisterDetailList = new ArrayList<>(machineHardwareDetailList.size());
+        for (MachineHardwareDetailPO machineHardwareDetail : machineHardwareDetailList) {
+            MachineRegisterDetail machineRegisterDetail = MachineRegisterDetail.newBuilder()
+                    .setMachineMacAddress(machineHardwareDetail.getMachineMacAddress())
+                    .setMachineName(machineHardwareDetail.getMachineName())
+                    .setNikeName(null == machineHardwareDetail.getNikeName() ? "" : machineHardwareDetail.getNikeName())
+                    .setMachineType(machineHardwareDetail.getMachineType())
+                    .setMachineVersion(machineHardwareDetail.getMachineVersion())
+                    .setMachineMaker(machineHardwareDetail.getMachineMaker())
+                    .setBindTime(null == machineHardwareDetail.getBindTime() ? 0 : machineHardwareDetail.getBindTime())
+                    .setBindUin(null == machineHardwareDetail.getBindUin() ? 0 : machineHardwareDetail.getBindUin())
+                    .setBindKey(machineHardwareDetail.getBindKey())
+                    .build();
+            machineRegisterDetailList.add(machineRegisterDetail);
+        }
+        return machineRegisterDetailList;
+    }
 }
