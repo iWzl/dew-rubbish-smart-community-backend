@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Moment正文文本绑定的服务
@@ -68,6 +69,8 @@ public class MomentContentServiceImpl implements MomentContentService {
         return null;
     }
 
+
+
     @Override
     public MomentDynamicPO searchMomentDynamicContentByMomentId(long momentId) {
         Map<String, Object> where = Collections.singletonMap(MongoKeysConst.MOMENTS_DYNAMIC_ID, momentId);
@@ -81,6 +84,18 @@ public class MomentContentServiceImpl implements MomentContentService {
     }
 
     @Override
+    public Map<Long, MomentDynamicPO> searchMomentDynamicContentByMomentIds(List<Long> momentsIdList) {
+        Query momentSearchQuery = new Query();
+        momentSearchQuery.addCriteria(Criteria.where("_id").in(momentsIdList));
+        momentSearchQuery.with(new Sort(Sort.Direction.DESC, MongoKeysConst.MOMENTS_DYNAMIC_ID));
+        List<MomentDynamicPO> momentDynamicList = mongoTemplate.find(momentSearchQuery,MomentDynamicPO.class);
+        if(!ObjectUtil.isEmpty(momentDynamicList)){
+            return momentDynamicList.stream().collect(Collectors.toMap(MomentDynamicPO::getMomentId, (moment)->moment));
+        }
+        return Collections.emptyMap();
+    }
+
+    @Override
     public MomentCommentPO searchMomentCommentByCommentId(long commentId) {
         Map<String, Object> where = Collections.singletonMap("_id", commentId);
         MomentCommentPO momentCommentInfo = mongoTemplate.findOne(createEasyQuery(mongoSelectKeysList(MomentCommentPO.class, Collections.emptySet()), where, 1)
@@ -89,6 +104,31 @@ public class MomentContentServiceImpl implements MomentContentService {
             return momentCommentInfo;
         }
         return null;
+    }
+
+    @Override
+    public Map<Long, List<MomentCommentPO>> searchMomentsCommentByMomentIds(List<Long> momentsIdList) {
+        if(null == momentsIdList || momentsIdList.isEmpty()){
+            return Collections.emptyMap();
+        }
+        Query momentCommentQuery = new Query();
+        momentCommentQuery.addCriteria(Criteria.where(MongoKeysConst.MOMENTS_DYNAMIC_ID).in(momentsIdList));
+        momentCommentQuery.with(new Sort(Sort.Direction.DESC, MongoKeysConst.MOMENTS_COMMENT_ID));
+        List<MomentCommentPO> momentCommentInfos = mongoTemplate.find(momentCommentQuery,MomentCommentPO.class);
+        if(!ObjectUtil.isEmpty(momentCommentInfos)){
+            Map<Long, List<MomentCommentPO>> momentsCommentMap = new HashMap<>();
+            for (MomentCommentPO momentCommentInfo : momentCommentInfos) {
+                if(momentsCommentMap.containsKey(momentCommentInfo.getMomentId())){
+                    momentsCommentMap.get((momentCommentInfo.getMomentId())).add(momentCommentInfo);
+                }else {
+                    List<MomentCommentPO> momentCommentList = new ArrayList<>();
+                    momentCommentList.add(momentCommentInfo);
+                    momentsCommentMap.put(momentCommentInfo.getMomentId(),momentCommentList);
+                }
+            }
+            return momentsCommentMap;
+        }
+        return Collections.emptyMap();
     }
 
     @Override
@@ -123,6 +163,32 @@ public class MomentContentServiceImpl implements MomentContentService {
             return momentReplyList;
         }
         return null;
+    }
+
+    @Override
+    public Map<Long, List<MomentReplyPO>> searchMomentsCommentReplyByCommentIds(List<Long> momentCommentIdList) {
+        if(ObjectUtil.isEmpty(momentCommentIdList)){
+            return Collections.emptyMap();
+        }
+        Query momentReplyQuery = new Query();
+        momentReplyQuery.addCriteria(Criteria.where("comment_id").in(momentCommentIdList));
+        momentReplyQuery.with(new Sort(Sort.Direction.DESC, "create_time"));
+        List<MomentReplyPO> momentReplyList = mongoTemplate.find(momentReplyQuery,MomentReplyPO.class);
+        if(momentReplyList.isEmpty()){
+            return Collections.emptyMap();
+        }else {
+            Map<Long, List<MomentReplyPO>> momentsReplyMap = new HashMap<>();
+            for (MomentReplyPO momentReplyInfo : momentReplyList) {
+                if(momentsReplyMap.containsKey(momentReplyInfo.getCommentId())){
+                    momentsReplyMap.get((momentReplyInfo.getCommentId())).add(momentReplyInfo);
+                }else {
+                    List<MomentReplyPO> newMomentReplyList = new ArrayList<>();
+                    newMomentReplyList.add(momentReplyInfo);
+                    momentsReplyMap.put(momentReplyInfo.getCommentId(),newMomentReplyList);
+                }
+            }
+            return momentsReplyMap;
+        }
     }
 
     @Override

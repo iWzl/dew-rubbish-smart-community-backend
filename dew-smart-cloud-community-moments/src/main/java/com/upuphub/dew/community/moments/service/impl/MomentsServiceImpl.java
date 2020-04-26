@@ -11,8 +11,6 @@ import com.upuphub.dew.community.moments.bean.dto.MomentsDetailsDTO;
 import com.upuphub.dew.community.moments.bean.po.*;
 import com.upuphub.dew.community.moments.component.SnowflakeId;
 import com.upuphub.dew.community.moments.dao.MomentsPublishMomentsPublishDao;
-import com.upuphub.dew.community.moments.exception.MomentNotExistException;
-import com.upuphub.dew.community.moments.exception.MomentParamException;
 import com.upuphub.dew.community.moments.service.MomentContentService;
 import com.upuphub.dew.community.moments.service.MomentsService;
 import com.upuphub.dew.community.moments.utils.EdsUtil;
@@ -21,12 +19,10 @@ import com.upuphub.dew.community.moments.utils.ObjectUtil;
 
 import com.upuphub.dew.community.moments.utils.ReplaceUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author LeoWang
@@ -107,11 +103,11 @@ public class MomentsServiceImpl implements MomentsService {
         if (null == momentComment) {
             return MomentsConst.ERROR_CODE_COMMON_FAIL;
         }
-        if(momentCommentRequest.getCommentType().equals(MOMENTS_COMMENT_TYPE.FAVORITE)){
+        if (momentCommentRequest.getCommentType().equals(MOMENTS_COMMENT_TYPE.FAVORITE)) {
             List<MomentCommentPO> momentFavorCommentList =
                     momentContentService.searchMomentsCommentByMomentIdAndCommentType(
-                            momentComment.getMomentId(),MOMENTS_COMMENT_TYPE.FAVORITE_VALUE);
-            if(!ObjectUtil.isEmpty(momentFavorCommentList)){
+                            momentComment.getMomentId(), MOMENTS_COMMENT_TYPE.FAVORITE_VALUE);
+            if (!ObjectUtil.isEmpty(momentFavorCommentList)) {
                 for (MomentCommentPO momentFavorComment : momentFavorCommentList) {
                     momentContentService.deleteMomentCommentByCommentId(momentFavorComment.getId());
                 }
@@ -220,16 +216,16 @@ public class MomentsServiceImpl implements MomentsService {
         String rangeGeoHash = null;
         if (0 != momentDetailsLocationRequest.getLatitude() && 0 != momentDetailsLocationRequest.getLongitude()) {
             rangeGeoHash = GeoHashUtil.buildGeoHashCityRange(
-                    momentDetailsLocationRequest.getLatitude(),momentDetailsLocationRequest.getLongitude());
+                    momentDetailsLocationRequest.getLatitude(), momentDetailsLocationRequest.getLongitude());
         }
-        PageHelper.startPage(momentDetailsLocationRequest.getPageNum(),momentDetailsLocationRequest.getPageSize());
+        PageHelper.startPage(momentDetailsLocationRequest.getPageNum(), momentDetailsLocationRequest.getPageSize());
         List<MomentsPublishPO> momentsPublishList = momentsPublishMomentsPublishDao.selectMomentPublishRecordByLocation(rangeGeoHash);
         return buildMomentsDetailsResult(momentsPublishList);
     }
 
     @Override
     public MomentsDetailsDTO fetchMomentsDetailByUin(MomentDetailsUinRequest momentDetailsUinRequest) {
-        PageHelper.startPage(momentDetailsUinRequest.getPageNum(),momentDetailsUinRequest.getPageSize());
+        PageHelper.startPage(momentDetailsUinRequest.getPageNum(), momentDetailsUinRequest.getPageSize());
         List<MomentsPublishPO> momentsPublishList = momentsPublishMomentsPublishDao
                 .selectMomentPublishRecordByUin(momentDetailsUinRequest.getUin());
         return buildMomentsDetailsResult(momentsPublishList);
@@ -237,7 +233,7 @@ public class MomentsServiceImpl implements MomentsService {
 
     @Override
     public MomentsDetailsDTO fetchMomentsDetailByClassify(MomentDetailsClassifyRequest momentDetailsClassifyRequest) {
-        PageHelper.startPage(momentDetailsClassifyRequest.getPageNum(),momentDetailsClassifyRequest.getPageSize());
+        PageHelper.startPage(momentDetailsClassifyRequest.getPageNum(), momentDetailsClassifyRequest.getPageSize());
         List<MomentsPublishPO> momentsPublishList = momentsPublishMomentsPublishDao
                 .selectMomentPublishRecordByClassify(momentDetailsClassifyRequest.getClassify());
         return buildMomentsDetailsResult(momentsPublishList);
@@ -245,7 +241,7 @@ public class MomentsServiceImpl implements MomentsService {
 
     @Override
     public MomentsDetailsDTO fetchMomentsDetailByTopic(MomentDetailsTopicRequest momentDetailsTopicRequest) {
-        PageHelper.startPage(momentDetailsTopicRequest.getPageNum(),momentDetailsTopicRequest.getPageSize());
+        PageHelper.startPage(momentDetailsTopicRequest.getPageNum(), momentDetailsTopicRequest.getPageSize());
         List<MomentsPublishPO> momentsPublishList = momentsPublishMomentsPublishDao
                 .selectMomentPublishRecordByTopic(momentDetailsTopicRequest.getTopic());
         return buildMomentsDetailsResult(momentsPublishList);
@@ -253,9 +249,9 @@ public class MomentsServiceImpl implements MomentsService {
 
     @Override
     public MomentContentDetailResult fetchMomentDetailByMomentId(long momentId) {
-        if(0 != momentId) {
+        if (0 != momentId) {
             MomentsPublishPO momentDynamicPO = momentsPublishMomentsPublishDao.selectMomentPublishRecordByDynamicId(momentId);
-            if(null != momentDynamicPO){
+            if (null != momentDynamicPO) {
                 return buildMomentsDetailsResult(Collections.singletonList(momentDynamicPO)).getMomentCommentDetailResults().get(0);
             }
         }
@@ -276,8 +272,8 @@ public class MomentsServiceImpl implements MomentsService {
 
     private MomentsDetailsDTO buildMomentsDetailsResult(List<MomentsPublishPO> momentsPublishList) {
         PageInfo<MomentsPublishPO> pageOfMomentsPublishList = new PageInfo<>(momentsPublishList);
-        if(!pageOfMomentsPublishList.getList().isEmpty()){
-            return  MomentsDetailsDTO.builder()
+        if (!pageOfMomentsPublishList.getList().isEmpty()) {
+            return MomentsDetailsDTO.builder()
                     .momentCommentDetailResults(fetchMomentContentDetailByPublishList(pageOfMomentsPublishList.getList()))
                     .pageInfo(EdsUtil.toProtobufPageInfo(pageOfMomentsPublishList))
                     .build();
@@ -288,10 +284,17 @@ public class MomentsServiceImpl implements MomentsService {
                 .build();
     }
 
-    private List<MomentContentDetailResult> fetchMomentContentDetailByPublishList(List<MomentsPublishPO> momentsPublishList){
+    private List<MomentContentDetailResult> fetchMomentContentDetailByPublishList(List<MomentsPublishPO> momentsPublishList) {
         List<MomentContentDetailResult> momentContentDetailResults = new ArrayList<>(momentsPublishList.size());
+        List<Long> momentsIdList = momentsPublishList.stream().map(MomentsPublishPO::getDynamicId).collect(Collectors.toList());
+        Map<Long, MomentDynamicPO> momentDynamicMap = momentContentService.searchMomentDynamicContentByMomentIds(
+                momentsIdList);
+        if (momentDynamicMap.isEmpty()) {
+            return Collections.emptyList();
+        }
+        Map<Long, List<MomentCommentPO>> momentCommentListMap = momentContentService.searchMomentsCommentByMomentIds(momentsIdList);
         for (MomentsPublishPO momentsPublish : momentsPublishList) {
-            MomentDynamicPO momentDynamic = momentContentService.searchMomentDynamicContentByMomentId(momentsPublish.getDynamicId());
+            MomentDynamicPO momentDynamic = momentDynamicMap.getOrDefault(momentsPublish.getDynamicId(), new MomentDynamicPO());
             MomentContentDetailResult momentContentDetailResult = MomentContentDetailResult.newBuilder()
                     .setMomentId(momentsPublish.getDynamicId())
                     .setPublisher(momentsPublish.getPublishBy())
@@ -305,27 +308,27 @@ public class MomentsServiceImpl implements MomentsService {
                     .setTopic(momentDynamic.getTopic())
                     .setTitle(momentDynamic.getTitle())
                     .addAllPictures(momentDynamic.getPictures())
-                    .addAllMomentCommentDetailResults(fetchMomentCommentDetailByMomentId(momentsPublish.getDynamicId()))
+                    .addAllMomentCommentDetailResults(fetchMomentCommentDetailByMomentId(momentCommentListMap.get(momentsPublish.getDynamicId())))
                     .build();
             momentContentDetailResults.add(momentContentDetailResult);
         }
-       return momentContentDetailResults;
+        return momentContentDetailResults;
     }
 
-    private List<MomentCommentDetailResult> fetchMomentCommentDetailByMomentId(Long momentId){
-        List<MomentCommentPO> momentCommentList = momentContentService.searchMomentsCommentByMomentId(momentId);
-        if(ObjectUtil.isEmpty(momentCommentList)){
+    private List<MomentCommentDetailResult> fetchMomentCommentDetailByMomentId(List<MomentCommentPO> momentCommentList) {
+        if (null == momentCommentList || ObjectUtil.isEmpty(momentCommentList)) {
             return Collections.emptyList();
-        }else{
+        } else {
             List<MomentCommentDetailResult> momentCommentDetailResults = new ArrayList<>(momentCommentList.size());
-            for (MomentCommentPO momentComment: momentCommentList) {
+            Map<Long, List<MomentReplyPO>> momentReplyList = momentContentService.searchMomentsCommentReplyByCommentIds(momentCommentList.stream().map(MomentCommentPO::getId).collect(Collectors.toList()));
+            for (MomentCommentPO momentComment : momentCommentList) {
                 MomentCommentDetailResult momentCommentDetailResult = MomentCommentDetailResult.newBuilder()
                         .setCommentId(momentComment.getId())
                         .setCommentType(momentComment.getContentType())
                         .setContent(momentComment.getContent())
                         .setCommentator(momentComment.getFromUin())
                         .setCommentDate(momentComment.getCreateTime())
-                        .addAllCommentReplyDetailResults(fetchMomentCommentReplyDetailByCommentId(momentComment.getId()))
+                        .addAllCommentReplyDetailResults(fetchMomentCommentReplyDetailByCommentId(momentReplyList.get(momentComment.getId())))
                         .build();
                 momentCommentDetailResults.add(momentCommentDetailResult);
             }
@@ -333,11 +336,10 @@ public class MomentsServiceImpl implements MomentsService {
         }
     }
 
-    private List<CommentReplyDetailResult> fetchMomentCommentReplyDetailByCommentId(Long commentId){
-        List<MomentReplyPO> momentReplyList = momentContentService.searchMomentsCommentReplyByCommentId(commentId);
-        if(ObjectUtil.isEmpty(momentReplyList)){
+    private List<CommentReplyDetailResult> fetchMomentCommentReplyDetailByCommentId(List<MomentReplyPO> momentReplyList) {
+        if (ObjectUtil.isEmpty(momentReplyList)) {
             return Collections.emptyList();
-        }else{
+        } else {
             List<CommentReplyDetailResult> commentReplyDetailResults = new ArrayList<>(momentReplyList.size());
             for (MomentReplyPO momentReply : momentReplyList) {
                 CommentReplyDetailResult commentReplyDetailResult = CommentReplyDetailResult.newBuilder()
@@ -351,7 +353,6 @@ public class MomentsServiceImpl implements MomentsService {
             return commentReplyDetailResults;
         }
     }
-
 
     private void notifyMomentActivityUin(Long momentId, Long byUin, List<Long> notifyUinList, MOMENTS_COMMENT_TYPE momentsCommentType) {
         switch (momentsCommentType) {

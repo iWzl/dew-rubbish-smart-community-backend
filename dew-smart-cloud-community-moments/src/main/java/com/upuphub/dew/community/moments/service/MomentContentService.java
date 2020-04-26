@@ -1,12 +1,13 @@
 package com.upuphub.dew.community.moments.service;
 
-import com.upuphub.dew.community.connection.protobuf.moments.MOMENTS_COMMENT_TYPE;
 import com.upuphub.dew.community.moments.bean.po.MomentActivityPO;
 import com.upuphub.dew.community.moments.bean.po.MomentCommentPO;
 import com.upuphub.dew.community.moments.bean.po.MomentDynamicPO;
 import com.upuphub.dew.community.moments.bean.po.MomentReplyPO;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 public interface MomentContentService {
     /**
@@ -26,6 +27,15 @@ public interface MomentContentService {
      */
     MomentDynamicPO searchMomentDynamicContent(long uin);
 
+
+    /**
+     * 批量查询Moment信息通过MomentsIdList
+     *
+     * @param momentsIdList MomentsIdList
+     * @return 查询到的Moments信息
+     */
+    Map<Long, MomentDynamicPO> searchMomentDynamicContentByMomentIds(List<Long> momentsIdList);
+
     /**
      * 根据Moments查询用户的Moment信息(检验Moments是否存在)
      *
@@ -33,6 +43,15 @@ public interface MomentContentService {
      * @return MomentsId
      */
     MomentDynamicPO searchMomentDynamicContentByMomentId(long momentId);
+
+
+    /**
+     * 通过评论Id 批量获取Moment评论信息
+     *
+     * @param momentCommentIdList moment评论Id
+     * @return 回复信息组合
+     */
+    Map<Long, List<MomentReplyPO>> searchMomentsCommentReplyByCommentIds(List<Long> momentCommentIdList);
 
 
     /**
@@ -59,6 +78,14 @@ public interface MomentContentService {
      * @return 评论的详细信息
      */
     List<MomentCommentPO> searchMomentsCommentByMomentIdAndCommentType(Long momentId, int typeValue);
+
+    /**
+     * 批量查询Moments下的评论信息
+     *
+     * @param momentsIdList 评论信息列表
+     * @return 查询到的所有评论信息列表的集合
+     */
+    Map<Long, List<MomentCommentPO>> searchMomentsCommentByMomentIds(List<Long> momentsIdList);
 
     /**
      * 查询MomentId下的所有评论
