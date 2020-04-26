@@ -105,8 +105,8 @@ public class MomentsServiceImpl implements MomentsService {
         }
         if (momentCommentRequest.getCommentType().equals(MOMENTS_COMMENT_TYPE.FAVORITE)) {
             List<MomentCommentPO> momentFavorCommentList =
-                    momentContentService.searchMomentsCommentByMomentIdAndCommentType(
-                            momentComment.getMomentId(), MOMENTS_COMMENT_TYPE.FAVORITE_VALUE);
+                    momentContentService.searchMomentsCommentByMomentIdAndCommentTypeAndUin(
+                            momentComment.getMomentId(), MOMENTS_COMMENT_TYPE.FAVORITE_VALUE,momentComment.getFromUin());
             if (!ObjectUtil.isEmpty(momentFavorCommentList)) {
                 for (MomentCommentPO momentFavorComment : momentFavorCommentList) {
                     momentContentService.deleteMomentCommentByCommentId(momentFavorComment.getId());

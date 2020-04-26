@@ -79,6 +79,17 @@ public interface MomentContentService {
      */
     List<MomentCommentPO> searchMomentsCommentByMomentIdAndCommentType(Long momentId, int typeValue);
 
+
+    /**
+     * 根据MomentID和类型查询评论信息
+     *
+     * @param momentId  评论ID
+     * @param typeValue 类型
+     * @param fromUin 详细信息
+     * @return 评论的详细信息
+     */
+    List<MomentCommentPO> searchMomentsCommentByMomentIdAndCommentTypeAndUin(Long momentId, int typeValue, Long fromUin);
+
     /**
      * 批量查询Moments下的评论信息
      *

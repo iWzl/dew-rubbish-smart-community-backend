@@ -145,6 +145,15 @@ public class MomentContentServiceImpl implements MomentContentService {
         return searchMomentsCommentByWhereMap(where);
     }
 
+    @Override
+    public List<MomentCommentPO> searchMomentsCommentByMomentIdAndCommentTypeAndUin(Long momentId, int typeValue, Long fromUin) {
+        Map<String, Object> where = new HashMap<>();
+        where.put("from_uin", fromUin);
+        where.put(MongoKeysConst.MOMENTS_DYNAMIC_ID, momentId);
+        where.put("content_type",typeValue);
+        return searchMomentsCommentByWhereMap(where);
+    }
+
     private List<MomentCommentPO> searchMomentsCommentByWhereMap(Map<String, Object> where) {
         List<MomentCommentPO> momentCommentInfos = mongoTemplate.find(createEasyQueryNoResetKeys(mongoSelectKeysList(MomentCommentPO.class, Collections.emptySet()), where,null)
                 .with(new Sort(Sort.Direction.DESC, MongoKeysConst.MOMENTS_COMMENT_ID)), MomentCommentPO.class);
