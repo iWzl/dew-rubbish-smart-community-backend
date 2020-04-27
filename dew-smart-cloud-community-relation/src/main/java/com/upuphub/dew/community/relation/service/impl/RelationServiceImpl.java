@@ -53,12 +53,17 @@ public class RelationServiceImpl implements RelationService {
 
     @Override
     public List<RelationPersistResultDTO> fetchRelationPersistResults(RelationSearchDTO relationSearch) {
-        return null;
+        List<RelationDetailPO> relationDetailsList = relationPositiveDao.selectRelationDetailsByUinAndRelationType(relationSearch.getSearchUin(),relationSearch.getRelationTypes(),relationSearch.isReverse());
+        return buildRelationPersistResultList(relationDetailsList);
     }
 
     @Override
     public List<RelationPersistResultDTO> fetchMatchRelationPersistResults(long uin) {
         List<RelationDetailPO> relationDetailsList = relationPositiveDao.selectMatchRelationDetailsByUin(uin);
+        return buildRelationPersistResultList(relationDetailsList);
+    }
+
+    private List<RelationPersistResultDTO> buildRelationPersistResultList(List<RelationDetailPO> relationDetailsList) {
         if(null != relationDetailsList && !relationDetailsList.isEmpty()){
             List<RelationPersistResultDTO> relationPersistResultList = new ArrayList<>(relationDetailsList.size());
             for (RelationDetailPO relationDetail : relationDetailsList) {
@@ -70,4 +75,6 @@ public class RelationServiceImpl implements RelationService {
         }
         return Collections.emptyList();
     }
+
+
 }

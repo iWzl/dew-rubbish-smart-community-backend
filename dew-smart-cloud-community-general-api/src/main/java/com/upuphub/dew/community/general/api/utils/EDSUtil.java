@@ -11,6 +11,7 @@ import com.upuphub.dew.community.connection.protobuf.push.EmailTemplateAndParams
 import com.upuphub.dew.community.connection.protobuf.relation.RELATION_SOURCE;
 import com.upuphub.dew.community.connection.protobuf.relation.RELATION_TYPE;
 import com.upuphub.dew.community.connection.protobuf.relation.RelationPersistRequest;
+import com.upuphub.dew.community.connection.protobuf.relation.RelationSearchRequest;
 import com.upuphub.dew.community.general.api.bean.vo.req.*;
 import com.upuphub.dew.community.general.api.bean.vo.resp.*;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Leo Wang
@@ -252,6 +254,15 @@ public class EDSUtil {
                 .setStartTime(startTime)
                 .setMachineMacAddress(null == macAddress ? "" : macAddress)
                 .setUin(HttpUtil.getUserUin())
+                .build();
+    }
+
+    public static RelationSearchRequest toProtobufMessage(Long uin, List<PersistRelationSearchReq.RELATION_TYPE> relationTypeList, boolean reverse) {
+        return RelationSearchRequest.newBuilder()
+                .setIsReverse(reverse)
+                .addAllRelationTypesValue(relationTypeList.stream().map(
+                        PersistRelationSearchReq.RELATION_TYPE::getType).collect(Collectors.toList()))
+                .setSearchUin(uin)
                 .build();
     }
 }

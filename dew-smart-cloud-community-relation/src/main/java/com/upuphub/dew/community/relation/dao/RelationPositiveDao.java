@@ -58,4 +58,14 @@ public interface RelationPositiveDao {
      * @return 查询到的关系详细结果
      */
     List<RelationDetailPO> selectMatchRelationDetailsByUin(@Param("uin") Long uin);
+
+    /**
+     * 查询好友的指定关系明细
+     *
+     * @param searchUin     查询的UIN
+     * @param relationTypes 所有的关系类型
+     * @param reverse       查询正向或反向的好友关系
+     * @return 查询到的好友关系处理结果
+     */
+    List<RelationDetailPO> selectRelationDetailsByUinAndRelationType(@Param("searchUin") Long searchUin, @Param("relationTypes") List<Integer> relationTypes, @Param("reverse") boolean reverse);
 }

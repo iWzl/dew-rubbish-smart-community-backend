@@ -11,8 +11,8 @@ spring:
         server-addr: support.upuphub.com:8848
 
   datasource:
-    url: jdbc:mysql://10.147.20.155:13306/dew_relation?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    name: dew_account
+    url: jdbc:mysql://10.147.20.20:3306/dew_relation?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    name: dew_relation
     username: Leo
     password: A!@#456bnm
     driver-class-name: com.mysql.cj.jdbc.Driver

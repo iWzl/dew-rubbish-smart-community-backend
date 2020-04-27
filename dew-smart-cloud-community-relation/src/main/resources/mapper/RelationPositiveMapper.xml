@@ -48,4 +48,21 @@
         where (sponsor = #{uin}
          or recipient= #{uin}) and relation_type = 40
     </select>
+    <select id="selectRelationDetailsByUinAndRelationType"
+            resultType="com.upuphub.dew.community.relation.bean.po.RelationDetailPO">
+        select sponsor, recipient, relation_type, relation_source, refresh_time, status
+        from relation_positive
+        <where>
+            <if test="reverse">
+                recipient = #{searchUin}
+            </if>
+            <if test="!reverse">
+                sponsor = #{searchUin}
+            </if>
+            and relation_type in
+            <foreach collection="relationTypes" index="index" item="uin" separator="," open="(" close=")">
+                #{uin}
+            </foreach>
+        </where>
+    </select>
 </mapper>
