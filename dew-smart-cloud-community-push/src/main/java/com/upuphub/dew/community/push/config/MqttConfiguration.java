@@ -2,6 +2,7 @@ package com.upuphub.dew.community.push.config;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.upuphub.dew.community.connection.constant.MqttConst;
+import com.upuphub.dew.community.connection.protobuf.mqtt.MqttHeartBeatMessage;
 import com.upuphub.dew.community.connection.protobuf.mqtt.MqttMessage;
 import com.upuphub.dew.community.push.annotation.MqttTopic;
 import com.upuphub.dew.community.push.service.MqttHandlerService;
@@ -54,6 +55,8 @@ public class MqttConfiguration {
      */
     public static final String CHANNEL_NAME_OUT = "mqttOutboundChannel";
 
+    public static final String DEW_MQTT_HEART_BEAT_TOPIC = "DEW_MQTT_HEART_BEAT_TOPIC";
+
     @Value("${push.mqtt.username}")
     private String username;
 
@@ -74,6 +77,9 @@ public class MqttConfiguration {
 
     @Value("${push.mqtt.consumer.defaultTopic}")
     private String consumerDefaultTopic;
+
+    @Value("${push.mqtt.syncOnline}")
+    private boolean syncOnline;
 
     @Autowired
     MqttHandlerService mqttHandlerService;
@@ -166,10 +172,12 @@ public class MqttConfiguration {
     @Bean
     public MessageProducer inbound() {
         // 可以同时消费（订阅）多个Topic
+        consumerDefaultTopic = "".equals(consumerDefaultTopic)? DEW_MQTT_HEART_BEAT_TOPIC:String.format("%s,%s",DEW_MQTT_HEART_BEAT_TOPIC,consumerDefaultTopic);
+        String[] topics = StringUtils.split(consumerDefaultTopic, ",");
         MqttPahoMessageDrivenChannelAdapter adapter =
                 new MqttPahoMessageDrivenChannelAdapter(
-                        consumerClientId, mqttClientFactory(),
-                        StringUtils.split(consumerDefaultTopic, ","));
+                        consumerClientId, mqttClientFactory(),topics
+                        );
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(1);
@@ -198,12 +206,19 @@ public class MqttConfiguration {
     public MessageHandler handler() {
         return message -> {
             try {
-                MqttMessage mqttMessage = MqttMessage.parseFrom(Base64.getDecoder().decode((String)message.getPayload()));
                 String topic = (String) message.getHeaders().get("mqtt_receivedTopic");
+                if(DEW_MQTT_HEART_BEAT_TOPIC.equals(topic) && syncOnline){
+                    MqttHeartBeatMessage mqttHeartBeatMessage = MqttHeartBeatMessage.parseFrom(Base64.getDecoder().decode((String)message.getPayload()));
+                    if(null == mqttHeartBeatMessage){
+                        return;
+                    }
+                    mqttHandlerService.syncDewHeartBeatActivity(mqttHeartBeatMessage);
+                }
                 boolean checkTopic = (null != topic && !"".equals(topic)) && mqttHandlerMapper.containsKey(topic);
                 if(!checkTopic){
                     return;
                 }
+                MqttMessage mqttMessage = MqttMessage.parseFrom(Base64.getDecoder().decode((String)message.getPayload()));
                 Method method = mqttHandlerMapper.get(topic).getOrDefault(mqttMessage.getTag(),null);
                 if(null != method){
                     method.invoke(mqttHandlerService,mqttMessage.getPayload());

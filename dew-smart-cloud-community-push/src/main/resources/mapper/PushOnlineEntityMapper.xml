@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upuphub.dew.community.push.dao.PushOnlineDao">
+
+
+    <select id="selectPushOnlineDetailByUin" resultType="com.upuphub.dew.community.push.bean.po.PushOnlinePO">
+        select uin, client_id, refresh_time, notify_time, status
+        from push_online
+        where uin = #{uin}
+        limit 1
+    </select>
+    <update id="updatePushOnlineInfo">
+        update push_online
+        set client_id    = #{clientId},
+            notify_time  = #{notifyTime},
+            refresh_time = UNIX_TIMESTAMP(now()) * 1000
+        where uin = #{uin}
+        limit 1
+    </update>
+    <select id="selectPushOnlineUinWithUin" resultType="java.lang.Long">
+        select uin
+        from push_online
+        where uin = #{uin}
+        limit 1
+    </select>
+    <select id="selectPushOnlineClientIdByUin" resultType="java.lang.String">
+        select client_id
+        from push_online
+        where uin = #{uin}
+          and refresh_time > (UNIX_TIMESTAMP(now()) * 1000 - 180 * 1000)
+        limit 1
+    </select>
+    <insert id="insertNewPushOnline">
+        insert into push_online(uin, client_id, refresh_time, notify_time, status)
+        VALUES (#{uin}, #{clientId}, UNIX_TIMESTAMP(now()) * 1000, #{notifyTime}, 0)
+    </insert>
+</mapper>

@@ -2,6 +2,7 @@ package com.upuphub.dew.community.push.service;
 
 import com.google.protobuf.ByteString;
 import com.upuphub.dew.community.connection.constant.MqttConst;
+import com.upuphub.dew.community.connection.protobuf.mqtt.MqttHeartBeatMessage;
 import com.upuphub.dew.community.push.annotation.MqttTopic;
 import org.springframework.scheduling.annotation.Async;
 
@@ -15,4 +16,7 @@ public interface MqttHandlerService {
     @MqttTopic(topic = MqttConst.TOPIC_MOMENTS,tag = MqttConst.TAG_MOMENT_SYNC_ACTIVITY)
     @Async("mqttHandlerExecutor")
     void pushSyncMomentActivity(ByteString payload);
+
+    @Async("mqttHandlerExecutor")
+    void syncDewHeartBeatActivity(MqttHeartBeatMessage payload);
 }

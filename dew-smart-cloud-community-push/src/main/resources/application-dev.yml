@@ -52,6 +52,7 @@ push:
 
 
   mqtt:
+    syncOnline: true
     username: DewDevTest
     password: DewDevTest
     # 推送信息的连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613,tcp://192.168.1.61:616
@@ -65,7 +66,7 @@ push:
       # 连接服务器默认客户端ID
       clientId: PushDevConsumer
       # 默认的接收主题，可以订阅多个Topic，逗号分隔
-      defaultTopic: RBC_API_SVR,DEW_MOMENTS
+      defaultTopic: DEW_MOMENTS
 
 management:
   endpoints:
