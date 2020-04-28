@@ -27,7 +27,7 @@
         select client_id
         from push_online
         where uin = #{uin}
-          and refresh_time > (UNIX_TIMESTAMP(now()) * 1000 - 180 * 1000)
+          and refresh_time > ((UNIX_TIMESTAMP(now()) * 1000) - 180000)
         limit 1
     </select>
     <insert id="insertNewPushOnline">
