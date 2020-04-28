@@ -53,8 +53,8 @@ push:
 
   mqtt:
     syncOnline: true
-    username: DewDevTest
-    password: DewDevTest
+    username: DewPushSvr001@155
+    password: DewPushSvr001@155
     # 推送信息的连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613,tcp://192.168.1.61:616
     url: tcp://support.upuphub.com:6788 #tcp://119.3.147.11:19099
     producer:
@@ -64,7 +64,7 @@ push:
       defaultTopic: SystemDev
     consumer:
       # 连接服务器默认客户端ID
-      clientId: PushDevConsumer
+      clientId: DewPushSvr001@Consumer
       # 默认的接收主题，可以订阅多个Topic，逗号分隔
       defaultTopic: DEW_MOMENTS
 

@@ -22,3 +22,16 @@ message MomentSyncActivityNotify{
     int32 activityType = 4;
     int64 momentId = 5;
 }
+
+
+message SyncMachineHealth{
+    int64 uin = 1;
+    int64 timestamp = 2;
+}
+
+message SyncMachineSearchInfo{
+    int64 uin = 1;
+    string searchKey = 2;
+    int64 timestamp = 3;
+    string machineNikeName = 4;
+}

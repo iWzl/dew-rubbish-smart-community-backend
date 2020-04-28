@@ -33,4 +33,6 @@ public interface MachineService {
      */
     @Async
     void asyncTrackMachineSearchHistory(String searchKey,String machineMacAddress);
+
+    void fireMachineHealth(String macAddress);
 }

@@ -6,11 +6,15 @@ import com.upuphub.dew.community.connection.protobuf.machine.MachineHealthReques
 import com.upuphub.dew.community.connection.protobuf.machine.MachineMacAddressRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSearchJournalRequest;
 import com.upuphub.dew.community.connection.protobuf.machine.MachineSimpleInfoResult;
+import com.upuphub.dew.community.connection.protobuf.push.SyncMachineHealth;
+import com.upuphub.dew.community.connection.protobuf.push.SyncMachineSearchInfo;
 import com.upuphub.dew.community.machine.api.bean.vo.req.MachineHealthReq;
 import com.upuphub.dew.community.machine.api.service.MachineService;
 import com.upuphub.dew.community.machine.api.service.remote.DewMachineService;
+import com.upuphub.dew.community.machine.api.service.remote.DewPushService;
 import com.upuphub.dew.community.machine.api.utils.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +31,8 @@ public class MachineServiceImpl implements MachineService {
 
     @Resource
     DewMachineService dewMachineService;
+    @Resource
+    DewPushService dewPushService;
 
     @Override
     public int hardwareHealthMonitoring(MachineHealthReq machineHealthReq) {
@@ -38,6 +44,7 @@ public class MachineServiceImpl implements MachineService {
                         .setIpAddr(HttpUtil.getIpAddr()).build();
         RpcResultCode rpcResultCode = dewMachineService.refreshMachineHealthInfo(machineHealthRequest);
         if(null != rpcResultCode){
+            fireMachineHealth(HttpUtil.getMachineMacAddr());
             return rpcResultCode.getCode();
         }
         return -1;
@@ -64,5 +71,30 @@ public class MachineServiceImpl implements MachineService {
                         .setSearchKey(searchKey)
                         .setMacAddress(machineMacAddress)
                         .build());
+        MachineSimpleInfoResult machineSimpleInfoResult
+                = dewMachineService.fetchSimpleMachineInfoByMacAddress(MachineMacAddressRequest.newBuilder().setMacAddress(machineMacAddress).build());
+        if (null != machineSimpleInfoResult && machineSimpleInfoResult.getBindUin() > 10000){
+            dewPushService.syncMachineSearch(SyncMachineSearchInfo.newBuilder()
+                    .setMachineNikeName(machineSimpleInfoResult.getMachineName())
+                    .setSearchKey(searchKey)
+                    .setTimestamp(System.currentTimeMillis())
+                    .setUin(machineSimpleInfoResult.getBindUin())
+                    .build()
+            );
+        }
+
+    }
+
+    @Async
+    public void fireMachineHealth(String macAddress){
+        MachineSimpleInfoResult machineSimpleInfoResult
+                = dewMachineService.fetchSimpleMachineInfoByMacAddress(MachineMacAddressRequest.newBuilder().setMacAddress(macAddress).build());
+        if (null != machineSimpleInfoResult && machineSimpleInfoResult.getBindUin() > 10000){
+            dewPushService.syncMachineHealthInfo(SyncMachineHealth.newBuilder()
+                    .setUin(machineSimpleInfoResult.getBindUin())
+                    .setTimestamp(System.currentTimeMillis())
+                    .build());
+        }
+
     }
 }
