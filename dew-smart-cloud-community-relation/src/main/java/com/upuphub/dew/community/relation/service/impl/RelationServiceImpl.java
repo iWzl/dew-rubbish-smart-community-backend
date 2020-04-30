@@ -15,6 +15,7 @@ import com.upuphub.dew.community.relation.service.MqttSenderService;
 import com.upuphub.dew.community.relation.service.RelationService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Bean;
+import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,6 +97,6 @@ public class RelationServiceImpl implements RelationService {
                 .setRelationTypeValue(relationType)
                 .setRelationSourceValue(relationSource)
                 .setRefreshTime(System.currentTimeMillis()).build());
-        mqttSenderService.sendToMqtt(payload);
+        mqttSenderService.sendToMqtt(2,payload);
     }
 }

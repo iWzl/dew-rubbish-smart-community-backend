@@ -21,15 +21,13 @@ import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
+import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author Leo Wang
@@ -157,7 +155,7 @@ public class MqttConfiguration {
     @ServiceActivator(inputChannel = CHANNEL_NAME_OUT)
     public MessageHandler mqttOutbound() {
         MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(
-                producerClientId,
+                String.format("%s@%s",producerClientId, UUID.randomUUID().toString().substring(6)),
                 mqttClientFactory());
         messageHandler.setAsync(true);
         messageHandler.setDefaultTopic(producerDefaultTopic);
@@ -176,7 +174,8 @@ public class MqttConfiguration {
         String[] topics = StringUtils.split(consumerDefaultTopic, ",");
         MqttPahoMessageDrivenChannelAdapter adapter =
                 new MqttPahoMessageDrivenChannelAdapter(
-                        consumerClientId, mqttClientFactory(),topics
+                        String.format("%s@%s",consumerClientId, UUID.randomUUID().toString().substring(6)),
+                        mqttClientFactory(),topics
                         );
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
@@ -206,7 +205,7 @@ public class MqttConfiguration {
     public MessageHandler handler() {
         return message -> {
             try {
-                String topic = (String) message.getHeaders().get("mqtt_receivedTopic");
+                String topic = (String) message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC);
                 if(DEW_MQTT_HEART_BEAT_TOPIC.equals(topic) && syncOnline){
                     MqttHeartBeatMessage mqttHeartBeatMessage = MqttHeartBeatMessage.parseFrom(Base64.getDecoder().decode((String)message.getPayload()));
                     if(null == mqttHeartBeatMessage){

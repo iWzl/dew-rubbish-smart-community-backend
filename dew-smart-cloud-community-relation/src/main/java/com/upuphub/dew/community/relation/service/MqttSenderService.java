@@ -21,7 +21,7 @@ public interface MqttSenderService {
      *
      * @param data 发送的文本
      */
-    void sendToMqtt(String data);
+    void sendToMqtt(@Header(MqttHeaders.QOS) int qos,String data);
 
     /**
      * 发送信息到MQTT服务器
