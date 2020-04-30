@@ -97,6 +97,6 @@ public class RelationServiceImpl implements RelationService {
                 .setRelationTypeValue(relationType)
                 .setRelationSourceValue(relationSource)
                 .setRefreshTime(System.currentTimeMillis()).build());
-        mqttSenderService.sendToMqtt(2,payload);
+        mqttSenderService.sendToMqtt(1,payload);
     }
 }

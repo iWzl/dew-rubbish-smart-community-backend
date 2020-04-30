@@ -28,7 +28,7 @@ public class PushServiceImpl implements PushService {
         String clientId= pushOnlineDao.selectPushOnlineClientIdByUin(uin);
         if(null != clientId && !"".equals(clientId)){
             Header header = NotifyMessageUtil.buildMessageHeader(uin, NotifyType.SYNC_MACHINE_HEALTH_VALUE);
-            mqttSender.sendToMqtt(clientId,2,NotifyMessageUtil.buildMessageNotifyString(header, String.valueOf(timestamp)));
+            mqttSender.sendToMqtt(clientId,1,NotifyMessageUtil.buildMessageNotifyString(header, String.valueOf(timestamp)));
         }
         return PushConst.ERROR_CODE_SUCCESS;
     }
@@ -44,7 +44,7 @@ public class PushServiceImpl implements PushService {
                     .setTimestamp(syncMachineSearchInfo.getTimestamp())
                     .build();
             String machineNotifyMessagePayload = Base64.getEncoder().encodeToString(machineNotifyMessage.toByteArray());
-            mqttSender.sendToMqtt(clientId,2,NotifyMessageUtil.buildMessageNotifyString(header,machineNotifyMessagePayload));
+            mqttSender.sendToMqtt(clientId,NotifyMessageUtil.buildMessageNotifyString(header,machineNotifyMessagePayload));
         }
         return PushConst.ERROR_CODE_SUCCESS;
     }
@@ -52,7 +52,7 @@ public class PushServiceImpl implements PushService {
     @Override
     public void fireCommonMqttNotify(String clientId, Header header, Message message) {
         String payloadString = Base64.getEncoder().encodeToString(message.toByteArray());
-        mqttSender.sendToMqtt(clientId,2,NotifyMessageUtil.buildMessageNotifyString(header,payloadString));
+        mqttSender.sendToMqtt(clientId,NotifyMessageUtil.buildMessageNotifyString(header,payloadString));
     }
 
 }
