@@ -1,5 +1,5 @@
 server:
-  port: 8796
+  port: 8695
 
 spring:
   application:
@@ -22,6 +22,18 @@ mybatis:
   mapper-locations: classpath:/mapper/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
+
+dew:
+  mqtt:
+    username: DewRelationSvr001@155
+    password: DewRelationSvr001@155
+    # 推送信息的连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613,tcp://192.168.1.61:616
+    url: tcp://support.upuphub.com:6788 #tcp://119.3.147.11:19099
+    producer:
+      # 连接服务器默认客户端ID
+      clientId: DewRelation@Producer
+      # 默认的推送主题，实际可在调用接口时指定
+      defaultTopic: DEW_RELATION_TOPIC
 
 logging:
   level:

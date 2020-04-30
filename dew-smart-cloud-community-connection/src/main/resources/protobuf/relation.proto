@@ -1,27 +1,27 @@
 syntax = "proto3"; // 定义语法类型，通常proto3好于proto2，proto2好于proto1
 
 
-option java_package = "com.upuphub.dew.community.connection.protobuf.relation";      // 定义报名
+option java_package = "com.upuphub.dew.community.connection.protobuf.relation"; // 定义报名
 option java_multiple_files = true;
 
-message RelationPersistRequest{
+message RelationPersistRequest {
     int64 sponsor = 1;
     int64 recipient = 2;
     RELATION_TYPE relationType = 3;
     RELATION_SOURCE relationSource = 4;
 }
 
-message RelationSearchRequest{
+message RelationSearchRequest {
     int64 searchUin = 1;
-    bool isReverse= 2;
+    bool isReverse = 2;
     repeated RELATION_TYPE relationTypes = 3;
 }
 
-message RelationSearchUinRequest{
+message RelationSearchUinRequest {
     int64 uin = 1;
 }
 
-message RelationPersistResult{
+message RelationPersistResult {
     int64 sponsor = 1;
     int64 recipient = 2;
     int32 relationType = 3;
@@ -29,11 +29,20 @@ message RelationPersistResult{
     int64 refreshTime = 5;
 }
 
-message RelationPersistResults{
+message RelationPersistResults {
     repeated RelationPersistResult relationPersistResults = 1;
 }
 
-enum RELATION_TYPE{
+message RelationMqttMessage {
+    int64 sponsor = 1;
+    int64 recipient = 2;
+    RELATION_TYPE relationType = 3;
+    RELATION_SOURCE relationSource = 4;
+    int64 refreshTime = 5;
+
+}
+
+enum RELATION_TYPE {
     NONE = 0;
     BLACK = 10;
     TEMP = 20;
@@ -41,8 +50,8 @@ enum RELATION_TYPE{
     MATCH = 40;
 }
 
-enum RELATION_SOURCE{
-    DEFAULT= 0;
+enum RELATION_SOURCE {
+    DEFAULT = 0;
     MOMENTS = 1;
     SEARCH = 2;
 }

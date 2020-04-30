@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.push.service;
 
 import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.upuphub.dew.community.connection.constant.MqttConst;
 import com.upuphub.dew.community.connection.protobuf.mqtt.MqttHeartBeatMessage;
 import com.upuphub.dew.community.push.annotation.MqttTopic;
@@ -13,9 +14,9 @@ import org.springframework.scheduling.annotation.Async;
  */
 public interface MqttHandlerService {
 
-    @MqttTopic(topic = MqttConst.TOPIC_MOMENTS,tag = MqttConst.TAG_MOMENT_SYNC_ACTIVITY)
+    @MqttTopic(topic = MqttConst.TOPIC_RELATION,tag = MqttConst.TAG_RELATION_SYNC_RELATION)
     @Async("mqttHandlerExecutor")
-    void pushSyncMomentActivity(ByteString payload);
+    void fireRelationChange(ByteString payload) throws InvalidProtocolBufferException;
 
     @Async("mqttHandlerExecutor")
     void syncDewHeartBeatActivity(MqttHeartBeatMessage payload);

@@ -141,7 +141,7 @@
                     <includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
                     <daemons>
                         <daemon>
-                            <id>push-svr</id>
+                            <id>dew-push-svr</id>
                             <mainClass>com.upuphub.dew.community.push.DewPushApplication</mainClass>
                             <!--<commandLineArguments>-->
                             <!--<commandLineArgument>start</commandLineArgument>-->

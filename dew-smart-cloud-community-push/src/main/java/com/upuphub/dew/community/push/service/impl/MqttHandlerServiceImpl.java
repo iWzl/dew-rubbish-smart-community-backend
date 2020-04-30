@@ -4,6 +4,8 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.upuphub.dew.community.connection.protobuf.mqtt.MqttHeartBeatMessage;
 import com.upuphub.dew.community.connection.protobuf.push.MomentSyncActivityNotify;
+import com.upuphub.dew.community.connection.protobuf.relation.RelationMqttMessage;
+import com.upuphub.dew.community.push.component.sender.MqttSender;
 import com.upuphub.dew.community.push.dao.PushOnlineDao;
 import com.upuphub.dew.community.push.service.MailService;
 import com.upuphub.dew.community.push.service.MqttHandlerService;
@@ -24,18 +26,20 @@ import java.util.Base64;
 @Slf4j
 public class MqttHandlerServiceImpl implements MqttHandlerService {
 
+
+    @Resource
+    MqttSender mqttSender;
     @Resource
     MailService mailService;
     @Resource
     PushOnlineDao pushOnlineDao;
 
     @Override
-    public void pushSyncMomentActivity(ByteString payload) {
-        try {
-            MomentSyncActivityNotify momentSyncActivityNotify = MomentSyncActivityNotify.parseFrom(payload);
-            // todo 通知用户拉取moment信息
-            System.out.println();
-        } catch (InvalidProtocolBufferException ignore) { }
+    public void fireRelationChange(ByteString payload) throws InvalidProtocolBufferException {
+        RelationMqttMessage relationMqttMessage = RelationMqttMessage.parseFrom(payload);
+
+
+
     }
 
     @Override

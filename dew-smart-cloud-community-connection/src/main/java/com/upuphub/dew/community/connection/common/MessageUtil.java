@@ -232,6 +232,14 @@ public class MessageUtil {
     }
 
 
+    public static String buildBase64Message(Message message) {
+        return Base64
+                .getEncoder()
+                .encodeToString(
+                      message.toByteArray());
+    }
+
+
     /**
      * 元素参数类型转换
      *
