@@ -1,5 +1,8 @@
 package com.upuphub.dew.community.push.service;
 
+import com.google.protobuf.ByteString;
+import com.google.protobuf.Message;
+import com.upuphub.dew.community.connection.protobuf.mqtt.Header;
 import com.upuphub.dew.community.connection.protobuf.push.SyncMachineSearchInfo;
 
 public interface PushService {
@@ -20,4 +23,7 @@ public interface PushService {
      * @return 推送的机器处理结果
      */
     int fireMachineSearch(SyncMachineSearchInfo syncMachineSearchInfo);
+
+
+    void fireCommonMqttNotify(String clientId,Header header, Message message);
 }

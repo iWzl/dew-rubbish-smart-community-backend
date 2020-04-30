@@ -93,11 +93,9 @@ public class RelationServiceImpl implements RelationService {
         String payload = MessageUtil.buildBase64MqttMessage(MqttConst.TAG_RELATION_SYNC_RELATION,RelationMqttMessage.newBuilder()
                 .setSponsor(fromUin)
                 .setRecipient(toUin)
-                .setRelationSourceValue(relationType)
+                .setRelationTypeValue(relationType)
                 .setRelationSourceValue(relationSource)
                 .setRefreshTime(System.currentTimeMillis()).build());
         mqttSenderService.sendToMqtt(payload);
     }
-
-
 }

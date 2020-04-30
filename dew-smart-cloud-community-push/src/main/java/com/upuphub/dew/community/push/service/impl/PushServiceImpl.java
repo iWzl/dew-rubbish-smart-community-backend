@@ -1,5 +1,6 @@
 package com.upuphub.dew.community.push.service.impl;
 
+import com.google.protobuf.Message;
 import com.upuphub.dew.community.connection.constant.PushConst;
 import com.upuphub.dew.community.connection.protobuf.mqtt.Header;
 import com.upuphub.dew.community.connection.protobuf.mqtt.MachineNotifyMessage;
@@ -47,4 +48,11 @@ public class PushServiceImpl implements PushService {
         }
         return PushConst.ERROR_CODE_SUCCESS;
     }
+
+    @Override
+    public void fireCommonMqttNotify(String clientId, Header header, Message message) {
+        String payloadString = Base64.getEncoder().encodeToString(message.toByteArray());
+        mqttSender.sendToMqtt(clientId,NotifyMessageUtil.buildMessageNotifyString(header,payloadString));
+    }
+
 }

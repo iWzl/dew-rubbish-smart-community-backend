@@ -67,7 +67,7 @@ push:
       # 连接服务器默认客户端ID
       clientId: DewPushSvr001@Consumer
       # 默认的接收主题，可以订阅多个Topic，逗号分隔
-      defaultTopic: DEW_MOMENTS
+      defaultTopic: DEW_RELATION_TOPIC
 
 management:
   endpoints:

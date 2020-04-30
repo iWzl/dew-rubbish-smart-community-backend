@@ -213,6 +213,7 @@ public class MqttConfiguration {
                         return;
                     }
                     mqttHandlerService.syncDewHeartBeatActivity(mqttHeartBeatMessage);
+                    return;
                 }
                 boolean checkTopic = (null != topic && !"".equals(topic)) && mqttHandlerMapper.containsKey(topic);
                 if(!checkTopic){

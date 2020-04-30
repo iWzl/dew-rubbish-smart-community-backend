@@ -2,19 +2,20 @@ package com.upuphub.dew.community.push.service.impl;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.upuphub.dew.community.connection.protobuf.mqtt.Header;
 import com.upuphub.dew.community.connection.protobuf.mqtt.MqttHeartBeatMessage;
-import com.upuphub.dew.community.connection.protobuf.push.MomentSyncActivityNotify;
+import com.upuphub.dew.community.connection.protobuf.mqtt.NotifyType;
+import com.upuphub.dew.community.connection.protobuf.mqtt.RelationChangeMessage;
 import com.upuphub.dew.community.connection.protobuf.relation.RelationMqttMessage;
 import com.upuphub.dew.community.push.component.sender.MqttSender;
 import com.upuphub.dew.community.push.dao.PushOnlineDao;
-import com.upuphub.dew.community.push.service.MailService;
 import com.upuphub.dew.community.push.service.MqttHandlerService;
+import com.upuphub.dew.community.push.service.PushService;
+import com.upuphub.dew.community.push.utils.NotifyMessageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.Base64;
 
 /**
  * @author Leo Wang
@@ -26,20 +27,24 @@ import java.util.Base64;
 @Slf4j
 public class MqttHandlerServiceImpl implements MqttHandlerService {
 
-
     @Resource
-    MqttSender mqttSender;
-    @Resource
-    MailService mailService;
+    PushService pushService;
     @Resource
     PushOnlineDao pushOnlineDao;
 
     @Override
     public void fireRelationChange(ByteString payload) throws InvalidProtocolBufferException {
         RelationMqttMessage relationMqttMessage = RelationMqttMessage.parseFrom(payload);
-
-
-
+        String clientId = pushOnlineDao.selectPushOnlineClientIdByUin(relationMqttMessage.getRecipient());
+        if(null != clientId && !"".equals(clientId)){
+            RelationChangeMessage relationChangeMessage = RelationChangeMessage.newBuilder()
+                    .setRefreshTime(relationMqttMessage.getRefreshTime())
+                    .setRelationType(relationMqttMessage.getRelationTypeValue())
+                    .setRelationSource(relationMqttMessage.getRelationSourceValue())
+                    .setSponsor(relationMqttMessage.getSponsor()).build();
+            Header header = NotifyMessageUtil.buildMessageHeader(relationMqttMessage.getRecipient(), NotifyType.NOTIFY_RELATION_CHANGE_VALUE);
+            pushService.fireCommonMqttNotify(clientId,header,relationChangeMessage);
+        }
     }
 
     @Override
