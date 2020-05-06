@@ -3,7 +3,6 @@ package com.upuphub.dew.community.relation.service.impl;
 import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.constant.MqttConst;
 import com.upuphub.dew.community.connection.constant.RelationConst;
-import com.upuphub.dew.community.connection.protobuf.mqtt.MqttMessage;
 import com.upuphub.dew.community.connection.protobuf.relation.RELATION_TYPE;
 import com.upuphub.dew.community.connection.protobuf.relation.RelationMqttMessage;
 import com.upuphub.dew.community.relation.bean.dto.RelationPersistResultDTO;
@@ -14,8 +13,6 @@ import com.upuphub.dew.community.relation.dao.RelationPositiveDao;
 import com.upuphub.dew.community.relation.service.MqttSenderService;
 import com.upuphub.dew.community.relation.service.RelationService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
-import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +20,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class RelationServiceImpl implements RelationService {
