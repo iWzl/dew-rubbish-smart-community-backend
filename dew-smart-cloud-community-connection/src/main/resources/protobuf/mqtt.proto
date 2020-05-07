@@ -29,6 +29,7 @@ enum NotifyType{
     NOTIFY_MACHINE_SEARCH = 4;
     SYNC_MACHINE_HEALTH = 5;
     NOTIFY_RELATION_CHANGE = 6;
+    SYNC_NEW_MESSAGE = 7;
 }
 
 message NotifyMessage{
@@ -63,6 +64,5 @@ message MomentsNotifyMessage{
 }
 
 message ChatNotifyMessage{
-    string messageContent = 1;
-    int64 time = 2;
+    string messagePayload = 1;
 }

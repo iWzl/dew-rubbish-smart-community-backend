@@ -2,6 +2,7 @@ package com.upuphub.dew.community.push.service;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
+import com.upuphub.dew.community.connection.protobuf.message.MessagePayload;
 import com.upuphub.dew.community.connection.protobuf.mqtt.Header;
 import com.upuphub.dew.community.connection.protobuf.push.SyncMachineSearchInfo;
 
@@ -24,6 +25,16 @@ public interface PushService {
      */
     int fireMachineSearch(SyncMachineSearchInfo syncMachineSearchInfo);
 
+    /**
+     * 通知推送新消息道道
+     *
+     * @param messagePayload 新消息信息
+     * @return 推送的处理结果
+     */
+    int fireMessageHasArrived(MessagePayload messagePayload);
+
 
     void fireCommonMqttNotify(String clientId,Header header, Message message);
+
+
 }

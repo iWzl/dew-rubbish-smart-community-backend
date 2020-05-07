@@ -1,7 +1,10 @@
 package com.upuphub.dew.community.push.service.impl;
 
 import com.google.protobuf.Message;
+import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.constant.PushConst;
+import com.upuphub.dew.community.connection.protobuf.message.MessagePayload;
+import com.upuphub.dew.community.connection.protobuf.mqtt.ChatNotifyMessage;
 import com.upuphub.dew.community.connection.protobuf.mqtt.Header;
 import com.upuphub.dew.community.connection.protobuf.mqtt.MachineNotifyMessage;
 import com.upuphub.dew.community.connection.protobuf.mqtt.NotifyType;
@@ -44,6 +47,20 @@ public class PushServiceImpl implements PushService {
                     .setTimestamp(syncMachineSearchInfo.getTimestamp())
                     .build();
             String machineNotifyMessagePayload = Base64.getEncoder().encodeToString(machineNotifyMessage.toByteArray());
+            mqttSender.sendToMqtt(clientId,NotifyMessageUtil.buildMessageNotifyString(header,machineNotifyMessagePayload));
+        }
+        return PushConst.ERROR_CODE_SUCCESS;
+    }
+
+    @Override
+    public int fireMessageHasArrived(MessagePayload messagePayload) {
+        String clientId= pushOnlineDao.selectPushOnlineClientIdByUin(messagePayload.getReceiver());
+        if(null != clientId && !"".equals(clientId)){
+            Header header = NotifyMessageUtil.buildMessageHeader(messagePayload.getReceiver(), NotifyType.SYNC_NEW_MESSAGE_VALUE);
+            ChatNotifyMessage chatNotifyMessage = ChatNotifyMessage.newBuilder()
+                    .setMessagePayload(MessageUtil.buildBase64Message(messagePayload))
+                    .build();
+            String machineNotifyMessagePayload = Base64.getEncoder().encodeToString(chatNotifyMessage.toByteArray());
             mqttSender.sendToMqtt(clientId,NotifyMessageUtil.buildMessageNotifyString(header,machineNotifyMessagePayload));
         }
         return PushConst.ERROR_CODE_SUCCESS;

@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.push.controller;
 
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.message.MessagePayload;
 import com.upuphub.dew.community.connection.protobuf.push.EmailTemplateAndParams;
 import com.upuphub.dew.community.connection.protobuf.push.SyncMachineHealth;
 import com.upuphub.dew.community.connection.protobuf.push.SyncMachineSearchInfo;
@@ -49,6 +50,13 @@ public class PushController {
     public RpcResultCode syncMachineSearch(@RequestBody SyncMachineSearchInfo syncMachineSearchInfo) {
         return RpcResultCode.newBuilder().setCode(
                 pushService.fireMachineSearch(syncMachineSearchInfo)
+        ).build();
+    }
+
+    @PostMapping("/push/message/arrived/fire")
+    public RpcResultCode fireMessageHasArrived(@RequestBody MessagePayload messagePayload){
+        return RpcResultCode.newBuilder().setCode(
+                pushService.fireMessageHasArrived(messagePayload)
         ).build();
     }
 }

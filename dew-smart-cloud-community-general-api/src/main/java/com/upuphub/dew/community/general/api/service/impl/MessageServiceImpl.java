@@ -5,6 +5,7 @@ import com.upuphub.dew.community.connection.constant.MessageConst;
 import com.upuphub.dew.community.connection.protobuf.message.*;
 import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessage;
 import com.upuphub.dew.community.general.api.service.MessageService;
+import com.upuphub.dew.community.general.api.service.PushService;
 import com.upuphub.dew.community.general.api.service.remote.DewMessageService;
 import com.upuphub.dew.community.general.api.utils.HttpUtil;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class MessageServiceImpl implements MessageService {
 
     @Resource
     DewMessageService dewMessageService;
+    @Resource
+    PushService pushService;
 
     @Override
     public ServiceResponseMessage persistMessage(long receiver, int messageType, String content) {
@@ -30,7 +33,10 @@ public class MessageServiceImpl implements MessageService {
                 .build();
         MessageResultCode rpcResultCode = dewMessageService.persistMessage(messagePayload);
         if(rpcResultCode.getCode() == MessageConst.ERROR_CODE_SUCCESS){
-            return ServiceResponseMessage.createBySuccessCodeMessage("发送成功", Collections.singletonMap("messageId",rpcResultCode.getMessageId()));
+            pushService.fireMessageHasArrived(rpcResultCode.getMessagePayload());
+
+            return ServiceResponseMessage.createBySuccessCodeMessage("发送成功", Collections.singletonMap("messagePayload",
+                    MessageUtil.buildBase64Message(rpcResultCode.getMessagePayload())));
         }
         return ServiceResponseMessage.createByFailCodeMessage("发送失败");
     }

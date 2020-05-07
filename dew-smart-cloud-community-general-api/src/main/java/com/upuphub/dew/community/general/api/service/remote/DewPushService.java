@@ -1,6 +1,7 @@
 package com.upuphub.dew.community.general.api.service.remote;
 
 import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
+import com.upuphub.dew.community.connection.protobuf.message.MessagePayload;
 import com.upuphub.dew.community.connection.protobuf.push.EmailAndCode;
 import com.upuphub.dew.community.connection.protobuf.push.EmailTemplateAndParams;
 import com.upuphub.dew.community.general.api.config.ProtoFeignConfiguration;
@@ -25,5 +26,9 @@ public interface DewPushService {
      * @return 邮件发送调用的处理结果
      */
     @PostMapping(value = "/push/email/template",consumes = "application/x-protobuf",produces = "application/x-protobuf")
-    public RpcResultCode sendEmailWithTemplateCode(@RequestBody EmailTemplateAndParams emailTemplateAndParams);
+    RpcResultCode sendEmailWithTemplateCode(@RequestBody EmailTemplateAndParams emailTemplateAndParams);
+
+
+    @PostMapping(value = "/push/message/arrived/fire",consumes = "application/x-protobuf",produces = "application/x-protobuf")
+    RpcResultCode fireMessageHasArrived(@RequestBody MessagePayload messagePayload);
 }
