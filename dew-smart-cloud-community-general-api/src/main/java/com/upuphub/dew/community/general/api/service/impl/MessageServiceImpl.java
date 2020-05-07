@@ -16,7 +16,6 @@ import java.util.Collections;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-
     @Resource
     DewMessageService dewMessageService;
     @Resource
