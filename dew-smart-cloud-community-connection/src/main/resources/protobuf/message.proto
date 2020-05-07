@@ -1,0 +1,47 @@
+syntax = "proto3"; // 定义语法类型，通常proto3好于proto2，proto2好于proto1
+option java_package = "com.upuphub.dew.community.connection.protobuf.message"; // 定义报名
+option java_multiple_files = true;
+
+
+message MessageResultCode {
+    int32 code = 1;
+    int64 messageId = 2;
+    MessagePayload messagePayload = 3;
+}
+
+message MessagePayload {
+    int64 sender = 1;
+    int64 receiver = 2;
+    MESSAGE_TYPE messageType = 3;
+    int64 timestamp = 4;
+    string content = 5;
+    MESSAGE_OP_TYPE opType = 6;
+    int64 messageId = 7;
+}
+
+message MessagePayloads {
+    repeated string messagePayloadList = 1;
+}
+
+message MessageSearchByTimeLine {
+    string timeLineId = 1;
+    int64 sequenceId = 2;
+    bool forward = 3;
+    int32 size = 4;
+}
+
+enum MESSAGE_OP_TYPE {
+    MSG_OP_SET = 0;
+    MSG_OP_DEL = 1;
+}
+
+enum MESSAGE_TYPE {
+    MSG_TEXT = 0;
+    MSG_PIC = 1;
+    MSG_NOTIFY = 2;
+    MSG_WARNING = 3;
+    MSG_FILE = 4;
+    MSG_VIDEO = 5;
+    MSG_BANNER = 6;
+    MSG_MOMENTS = 7;
+}

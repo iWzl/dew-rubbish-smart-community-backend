@@ -7,7 +7,6 @@ import com.upuphub.dew.community.connection.protobuf.mqtt.MqttHeartBeatMessage;
 import com.upuphub.dew.community.connection.protobuf.mqtt.NotifyType;
 import com.upuphub.dew.community.connection.protobuf.mqtt.RelationChangeMessage;
 import com.upuphub.dew.community.connection.protobuf.relation.RelationMqttMessage;
-import com.upuphub.dew.community.push.component.sender.MqttSender;
 import com.upuphub.dew.community.push.dao.PushOnlineDao;
 import com.upuphub.dew.community.push.service.MqttHandlerService;
 import com.upuphub.dew.community.push.service.PushService;

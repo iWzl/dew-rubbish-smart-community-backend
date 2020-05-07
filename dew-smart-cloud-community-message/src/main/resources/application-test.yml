@@ -1,0 +1,53 @@
+server:
+  port: 8782
+
+
+spring:
+  application:
+    name: dew-smart-community-push
+  cloud:
+    # SpringCloud-Alibaba-Nacos服务注册中心配置
+    nacos:
+      discovery:
+        server-addr: 119.3.147.11:8848
+
+  mail:
+    host: smtp.163.com
+    username: Corlizi@163.com
+    password: Password2Mail
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    default-encoding: UTF-8
+
+
+
+##################
+#  MQTT 配置
+##################
+push:
+  mqtt:
+    username: DewPush
+    password: DewPush
+    # 推送信息的连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613,tcp://192.168.1.61:616
+    url: tcp://119.3.147.11:19099
+    producer:
+      # 连接服务器默认客户端ID
+      clientId: PushProducer
+      # 默认的推送主题，实际可在调用接口时指定
+      defaultTopic: System
+    consumer:
+      # 连接服务器默认客户端ID
+      clientId: PushConsumer
+      # 默认的接收主题，可以订阅多个Topic，逗号分隔
+      defaultTopic: System,RBC_API_SVR
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

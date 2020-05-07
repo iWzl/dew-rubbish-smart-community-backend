@@ -5,6 +5,7 @@ import com.upuphub.dew.community.general.api.bean.vo.common.ServiceResponseMessa
 import com.upuphub.dew.community.general.api.service.GarbageSearchService;
 import com.upuphub.dew.community.general.api.service.PushService;
 import com.upuphub.dew.community.general.api.service.QiNiuCloudService;
+import com.upuphub.dew.community.general.api.utils.DewOpenIdUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,6 +18,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 辅助通用功能的前端控制器
@@ -67,5 +71,20 @@ public class CommonController {
     @GetMapping(value = "/tools/game/question",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ServiceResponseMessage searchRandomGarbageGameQuestion(){
         return garbageSearchService.searchRandomGarbageGameQuestion();
+    }
+
+    @ApiOperation(value = "openId转换")
+    @GetMapping(value = "/tools/openId",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ServiceResponseMessage changeOpenIdToUin(@RequestParam(value = "uin",required = false) Long uin,
+                                                    @RequestParam(value = "openId",required = false)String openId){
+        if(uin != null && uin != 0){
+            return ServiceResponseMessage.createBySuccessCodeMessage("转换成功", Collections.singletonMap("openId", DewOpenIdUtil.generateOpenId(uin)));
+        }
+        if(openId != null && !"".equals(openId)){
+            return ServiceResponseMessage.createBySuccessCodeMessage("转换成功", Collections.singletonMap("uin", DewOpenIdUtil.generateUin(openId)));
+        }
+        return ServiceResponseMessage.createByFailCodeMessage("Error");
+
+
     }
 }

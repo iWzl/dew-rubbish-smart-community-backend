@@ -19,8 +19,6 @@ import com.upuphub.dew.community.connection.common.MessageUtil;
 import com.upuphub.dew.community.connection.common.RegexUtils;
 import com.upuphub.dew.community.connection.constant.AccountConst;
 import com.upuphub.dew.community.connection.protobuf.account.*;
-import com.upuphub.dew.community.connection.protocol.mqtt.PUSH_MESSAGE_TYPE;
-import com.upuphub.dew.community.connection.protocol.mqtt.PushMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -107,8 +105,9 @@ public class AccountServiceImpl implements AccountService {
                 ACCOUNT_LOGIN_VERIFY_STATUS.ENABLE.name());
         if(error == 1){
             // 成功以后发出同步Profile信息的通知
-            PushMessage pushMessage = new PushMessage(PUSH_MESSAGE_TYPE.SYNC_PROFILE.value(), System.currentTimeMillis());
-            mqttSenderService.sendToMqtt(String.format(topicTemplate,baseProfile.getUin()),2, JsonHelper.allToJson(pushMessage));
+            // todo 同步Profile
+            /*PushMessage pushMessage = new PushMessage(PUSH_MESSAGE_TYPE.SYNC_PROFILE.value(), System.currentTimeMillis());
+            mqttSenderService.sendToMqtt(String.format(topicTemplate,baseProfile.getUin()),2, JsonHelper.allToJson(pushMessage));*/
             return AccountConst.ERROR_CODE_SUCCESS;
         }else {
             return AccountConst.ERROR_CODE_COMMON_FAIL;
