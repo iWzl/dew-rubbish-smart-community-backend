@@ -9,7 +9,7 @@ spring:
       # SpringCloud-Alibaba-Nacos服务注册中心配置
     nacos:
       discovery:
-        ip: 10.147.20.215
+        ip: 10.147.20.155
         server-addr: support.upuphub.com:8848
 
   mail:
@@ -60,12 +60,12 @@ push:
     url: tcp://support.upuphub.com:6788 #tcp://119.3.147.11:19099
     producer:
       # 连接服务器默认客户端ID
-      clientId: PushDevProducer
+      clientId: DewPushSvr001Producer
       # 默认的推送主题，实际可在调用接口时指定
       defaultTopic: SystemDev
     consumer:
       # 连接服务器默认客户端ID
-      clientId: DewPushSvr001
+      clientId: DewPushSvr001Consumer
       # 默认的接收主题，可以订阅多个Topic，逗号分隔
       defaultTopic: DEW_RELATION_TOPIC
 
