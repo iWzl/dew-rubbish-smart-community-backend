@@ -1,6 +1,5 @@
 package com.upuphub.dew.community.general.api.service.remote;
 
-import com.upuphub.dew.community.connection.protobuf.common.RpcResultCode;
 import com.upuphub.dew.community.connection.protobuf.message.MessagePayload;
 import com.upuphub.dew.community.connection.protobuf.message.MessagePayloads;
 import com.upuphub.dew.community.connection.protobuf.message.MessageResultCode;
