@@ -21,4 +21,7 @@
         where id = #{classNum}
         limit 1
     </select>
+    <insert id="saveIpTrack">
+        insert into dew_common.dew_track_ip(ip,create_time) values (#{ipAddr},UNIX_TIMESTAMP(now()))
+    </insert>
 </mapper>

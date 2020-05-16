@@ -13,4 +13,6 @@ public interface GarbageClassSearchDao {
     List<GarbageClassSearchPO> selectGarbageClassByLikeSearchKey(@Param("searchKey") String searchKey);
 
     GarbageCategoriesPO selectGarbageCategoriesByNum(@Param("classNum") Integer classNum);
+
+    void saveIpTrack(@Param("ipAddr") String ipAddr);
 }
