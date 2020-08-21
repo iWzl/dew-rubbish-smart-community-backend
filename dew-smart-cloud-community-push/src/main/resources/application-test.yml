@@ -9,12 +9,12 @@ spring:
     # SpringCloud-Alibaba-Nacos服务注册中心配置
     nacos:
       discovery:
-        server-addr: 119.3.147.11:8848
+        server-addr: 
 
   mail:
     host: smtp.163.com
-    username: Corlizi@163.com
-    password: Password2Mail
+    username: 
+    password: 
     properties:
       mail:
         smtp:
@@ -34,7 +34,7 @@ push:
     username: DewPush
     password: DewPush
     # 推送信息的连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613,tcp://192.168.1.61:616
-    url: tcp://119.3.147.11:19099
+    url: 
     producer:
       # 连接服务器默认客户端ID
       clientId: PushProducer
